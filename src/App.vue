@@ -1,6 +1,16 @@
 <template>
-  <router-view />
+  <div class="container">
+    <app-logo></app-logo>
+    <router-view />
+  </div>
 </template>
+
+<script setup>
+import AppLogo from "./components/AppLogo.vue";
+import router from "@/router";
+
+router.push({ name: "login" });
+</script>
 
 <style lang="scss">
 #app {
