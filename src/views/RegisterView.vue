@@ -1,15 +1,25 @@
 <template>
   <content-panel>
-    <template #header>Login</template>
+    <template #header>Sign in</template>
     <template #default>
       <form
         action=""
         class="text-xs min-[350px]:text-base max-w-sm mx-auto p-2 md:max-w-md"
       >
         <div class="flex justify-between">
-          <label for="login">Login/email</label>
+          <label for="login">Email</label>
           <input
             placeholder="example@gmail.com"
+            type="email"
+            name="email"
+            id="email"
+            class="pl-1 border-b border-solid border-gray-400 mb-5 text-gray-400 focus:text-black focus:outline-none"
+          />
+        </div>
+        <div class="flex justify-between">
+          <label for="login">Username</label>
+          <input
+            placeholder="Create an username"
             type="text"
             name="login"
             id="login"
@@ -26,30 +36,29 @@
             class="pl-1 border-b border-solid border-gray-400 mb-5 text-gray-400 focus:text-black focus:outline-none"
           />
         </div>
-        <div class="flex mb-2">
-          <input type="checkbox" name="isRemember" id="remember" class="mr-1" />
-          <label for="remember">Remember me</label>
+        <div class="flex justify-between md:text-md">
+          <label for="password">Repeat password</label>
+          <input
+            placeholder="Repeat your password"
+            type="password"
+            name="password"
+            id="password-repeat"
+            class="pl-1 border-b border-solid border-gray-400 mb-5 text-gray-400 focus:text-black focus:outline-none"
+          />
         </div>
+
         <button
-          class="hover:scale-105 transition-transform border-none bg-sky-200 pl-3 pr-3 rounded-md"
+          class="hover:scale-105 transition-transform border-none bg-sky-200 pl-3 pr-3 rounded-md mb-2"
         >
-          Sign in
-        </button>
-        <div class="leading-5 mt-1">or</div>
-        <button @click.prevent="goToRegister" class="text-xs hover:underline">
           Sign up
         </button>
-      </form></template
-    >
+      </form>
+    </template>
   </content-panel>
 </template>
 
 <script setup>
 import ContentPanel from "../components/ContentPanel.vue";
-import router from "@/router";
-const goToRegister = () => {
-  router.push({ name: "register" });
-};
 </script>
 
 <style lang="scss" scoped></style>
