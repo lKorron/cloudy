@@ -48,6 +48,7 @@
         </div>
 
         <button
+          @click.prevent="register"
           class="hover:scale-105 transition-transform border-none bg-sky-200 pl-3 pr-3 rounded-md mb-2"
         >
           Sign up
@@ -59,6 +60,20 @@
 
 <script setup>
 import ContentPanel from "../components/ContentPanel.vue";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
+const register = () => {
+  createUserWithEmailAndPassword(getAuth(), "lkorron@yandex.ru", "roboher1991")
+    .then((userCredentianal) => {})
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+
+      console.error(
+        `Creating user error ${errorMessage} with code ${errorCode}`
+      );
+    });
+};
 </script>
 
 <style lang="scss" scoped></style>
