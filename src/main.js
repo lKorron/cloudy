@@ -3,6 +3,12 @@ import App from "./App.vue";
 import router from "./router";
 import "./assets/tailwind.css";
 import { initializeApp } from "firebase/app";
+import { defineRule } from "vee-validate";
+import { required, email, is } from "@vee-validate/rules";
+
+defineRule("required", required);
+defineRule("email", email);
+defineRule("is", is);
 
 const firebaseConfig = {
   apiKey: "AIzaSyAtkvfPAph6V8TFIPw3z83Wa9aq8WeC_OE",
