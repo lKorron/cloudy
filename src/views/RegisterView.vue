@@ -2,13 +2,13 @@
   <content-panel>
     <template #header>Sign in</template>
     <template #default>
-      <form
-        action=""
+      <Form
+        @submit="register"
         class="text-xs min-[350px]:text-base max-w-sm mx-auto p-2 md:max-w-md"
       >
         <div class="flex justify-between">
           <label for="login">Email</label>
-          <input
+          <Field
             placeholder="example@gmail.com"
             type="email"
             name="email"
@@ -18,7 +18,7 @@
         </div>
         <div class="flex justify-between">
           <label for="login">Username</label>
-          <input
+          <Field
             placeholder="Create an username"
             type="text"
             name="login"
@@ -28,7 +28,7 @@
         </div>
         <div class="flex justify-between">
           <label for="password" class="mr-5">Password</label>
-          <input
+          <Field
             placeholder="Enter your password"
             type="password"
             name="password"
@@ -38,7 +38,7 @@
         </div>
         <div class="flex justify-between md:text-md">
           <label for="password">Repeat password</label>
-          <input
+          <Field
             placeholder="Repeat your password"
             type="password"
             name="password"
@@ -48,18 +48,18 @@
         </div>
 
         <button
-          @click.prevent="register"
           class="hover:scale-105 transition-transform border-none bg-sky-200 pl-3 pr-3 rounded-md mb-2"
         >
           Sign up
         </button>
-      </form>
+      </Form>
     </template>
   </content-panel>
 </template>
 
 <script setup>
 import ContentPanel from "../components/ContentPanel.vue";
+import { Form, Field } from "vee-validate";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const register = () => {
