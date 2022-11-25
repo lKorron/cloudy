@@ -3,7 +3,7 @@
     <template #header>Sign in</template>
     <template #default>
       <Form
-        @submit="register"
+        @submit="signUp"
         v-slot="{ meta }"
         class="text-xs min-[350px]:text-base max-w-sm mx-auto p-2 md:max-w-md"
       >
@@ -84,6 +84,7 @@
           :class="{
             'opacity-25 cursor-not-allowed hover:transform-none': !meta.valid,
           }"
+          :disabled="!meta.valid"
         >
           Sign up
         </button>
@@ -104,7 +105,7 @@ const login = ref();
 const password = ref();
 const confirmPassword = ref();
 
-const register = () => {
+const signUp = () => {
   createUserWithEmailAndPassword(getAuth(), email.value, password.value)
     .then((userCredentianal) => {})
     .catch((error) => {

@@ -9,7 +9,7 @@
 import AppLogo from "./components/AppLogo.vue";
 import router from "@/router";
 
-router.push({ name: "register" });
+router.push({ name: "login" });
 </script>
 
 <style lang="scss">
