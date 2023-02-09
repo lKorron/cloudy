@@ -75,7 +75,10 @@ const password = ref("");
 
 const signIn = () => {
   signInWithEmailAndPassword(getAuth(), email.value, password.value)
-    .then((userCredential) => {})
+    .then((userCredential) => {
+      console.log("successfully signed up");
+      goToMainPage();
+    })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -85,6 +88,10 @@ const signIn = () => {
 
 const goToRegister = () => {
   router.push({ name: "register" });
+};
+
+const goToMainPage = () => {
+  router.push({ name: "main" });
 };
 </script>
 

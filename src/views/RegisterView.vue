@@ -103,6 +103,7 @@ import {
   sendEmailVerification,
   updateProfile,
 } from "firebase/auth";
+import router from "@/router";
 
 const email = ref("");
 const login = ref("");
@@ -118,6 +119,7 @@ const signUp = () => {
       updateProfile(user, { displayName: login.value }).then(() => {
         sendEmailVerification(auth.currentUser).then(() => {
           console.log("email sended");
+          router.push({ name: "login" });
         });
       });
     })
