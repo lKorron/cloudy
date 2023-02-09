@@ -97,17 +97,30 @@
 import { ref } from "vue";
 import ContentPanel from "../components/ContentPanel.vue";
 import { Form, Field, ErrorMessage } from "vee-validate";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  updateProfile,
+} from "firebase/auth";
 
-const email = ref();
-const login = ref();
+const email = ref("");
+const login = ref("");
 
-const password = ref();
-const confirmPassword = ref();
+const password = ref("");
+const confirmPassword = ref("");
 
 const signUp = () => {
-  createUserWithEmailAndPassword(getAuth(), email.value, password.value)
-    .then((userCredentianal) => {})
+  const auth = getAuth();
+
+  createUserWithEmailAndPassword(auth, email.value, password.value)
+    .then(({ user }) => {
+      updateProfile(user, { displayName: login.value }).then(() => {
+        sendEmailVerification(auth.currentUser).then(() => {
+          console.log("email sended");
+        });
+      });
+    })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
