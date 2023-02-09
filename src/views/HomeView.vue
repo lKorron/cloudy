@@ -11,4 +11,8 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import router from "@/router";
+
+router.push({ name: "login" });
+</script>

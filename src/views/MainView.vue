@@ -1,5 +1,5 @@
 <template>
-  <ContentPanel>
+  <ContentPanel desktop>
     <template #header>Store files</template>
     <template #default>storage</template>
   </ContentPanel>
@@ -10,7 +10,6 @@ import ContentPanel from "@/components/ContentPanel.vue";
 import router from "@/router";
 
 import { getAuth } from "@firebase/auth";
-import { onMounted } from "vue";
 
 const auth = getAuth();
 
