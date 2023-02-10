@@ -10,6 +10,12 @@
         id="file"
         @change="onFileUploaded"
       />
+      <button
+        class="bg-blue-500 p-2 text-white hover:opacity-75"
+        @click="showFiles"
+      >
+        Показать файлы
+      </button>
     </template>
   </ContentPanel>
 </template>
@@ -20,7 +26,7 @@ import router from "@/router";
 import { reactive } from "vue";
 
 import { getAuth } from "@firebase/auth";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { getStorage, ref, uploadBytes, listAll } from "firebase/storage";
 
 const auth = getAuth();
 const username = reactive({ value: "" });
@@ -46,6 +52,15 @@ const uploadToStorage = (file) => {
       console.log("file uploaded");
     })
     .catch((err) => console.log(err));
+};
+
+const showFiles = () => {
+  const storage = getStorage();
+  const listRef = ref(storage);
+
+  listAll(listRef).then((res) =>
+    res.items.forEach((item) => console.log(item.name))
+  );
 };
 </script>
 
