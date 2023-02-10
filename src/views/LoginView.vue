@@ -52,7 +52,7 @@
           }"
           :disabled="!meta.valid"
         >
-          Sign up
+          Sign in
         </button>
         <div class="leading-5 mt-1">or</div>
         <button @click.prevent="goToRegister" class="text-xs hover:underline">
