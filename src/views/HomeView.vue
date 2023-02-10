@@ -14,5 +14,14 @@
 <script setup>
 import router from "@/router";
 
-router.push({ name: "login" });
+import { getAuth } from "@firebase/auth";
+const auth = getAuth();
+
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    router.replace({ name: "main" });
+  } else {
+    router.replace({ name: "login" });
+  }
+});
 </script>
