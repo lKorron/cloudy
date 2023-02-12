@@ -1,6 +1,6 @@
 <template>
   <div class="grid grid-cols-8 gap-2 p-2">
-    <FileCell v-for="name in [1, 2, 3, 4]" :key="name">{{ name }}</FileCell>
+    <FileCell v-for="name in fileList" :key="name">{{ name }}</FileCell>
   </div>
 </template>
 
