@@ -3,6 +3,7 @@
     <template #header>Store files</template>
     <template #default>
       <div class="mb-5">Login as {{ username.value }}</div>
+      <FileGrid :file-list="fileList"></FileGrid>
       <input
         class="mb-10"
         type="file"
@@ -22,6 +23,7 @@
 
 <script setup>
 import ContentPanel from "@/components/ContentPanel.vue";
+import FileGrid from "./FileGrid.vue";
 import router from "@/router";
 import { reactive } from "vue";
 
@@ -30,6 +32,8 @@ import { getStorage, ref, uploadBytes, listAll } from "firebase/storage";
 
 const auth = getAuth();
 const username = reactive({ value: "" });
+
+let fileList = reactive([]);
 
 auth.onAuthStateChanged((user) => {
   if (!user) {
@@ -59,9 +63,21 @@ const showFiles = () => {
   const listRef = ref(storage);
 
   listAll(listRef).then((res) =>
-    res.items.forEach((item) => console.log(item.name))
+    res.items.forEach((item) => console.log(item.bucket))
   );
 };
+
+const setFileList = () => {
+  const storage = getStorage();
+  const listRef = ref(storage);
+
+  listAll(listRef).then((res) => {
+    fileList = res.items;
+    console.log(fileList);
+  });
+};
+
+setFileList();
 </script>
 
 <style lang="scss" scoped></style>
