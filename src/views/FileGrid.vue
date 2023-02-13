@@ -1,5 +1,7 @@
 <template>
-  <div class="grid grid-cols-8 gap-2 p-2">
+  <div
+    class="grid grid-cols-2 gap-2 p-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
+  >
     <FileCell v-for="name in fileList" :key="name">{{ name }}</FileCell>
   </div>
 </template>
