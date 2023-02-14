@@ -1,5 +1,7 @@
 <template>
   <div
+    @click.self="onClickSelf"
+    v-click-outside="onClickOutside"
     class="grid grid-cols-2 gap-2 p-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
   >
     <FileCell
@@ -29,5 +31,13 @@ const isChosen = (name) => name === chosenCellName.value;
 
 const onClick = (name) => {
   chosenCellName.value = name;
+};
+
+const onClickOutside = () => {
+  chosenCellName.value = null;
+};
+
+const onClickSelf = () => {
+  chosenCellName.value = null;
 };
 </script>

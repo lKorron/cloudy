@@ -26,7 +26,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["cellClicked"]);
+const emit = defineEmits(["cellClicked", "clickedOutside"]);
 
 const onClick = () => {
   emit("cellClicked", key);

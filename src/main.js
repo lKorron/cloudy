@@ -5,6 +5,7 @@ import "./assets/tailwind.css";
 import { initializeApp } from "firebase/app";
 import { defineRule } from "vee-validate";
 import { required, email, is } from "@vee-validate/rules";
+import vClickOutside from "click-outside-vue3";
 
 const requiredWrapper = (value) => {
   return required(value) || "This field is required";
@@ -37,6 +38,6 @@ const firebaseConfig = {
   appId: "1:948042477004:web:a1aa1bb08f06da402c4169",
 };
 
-const app = initializeApp(firebaseConfig);
+const fierebaseApp = initializeApp(firebaseConfig);
 
-createApp(App).use(router).mount("#app");
+const app = createApp(App).use(router).use(vClickOutside).mount("#app");
