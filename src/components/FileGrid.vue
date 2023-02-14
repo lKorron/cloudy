@@ -1,5 +1,13 @@
 <template>
+  <ContextMenu
+    :active="isContextMenuActive"
+    :x-position="cursorXposition"
+    :y-position="cursorYposition"
+  ></ContextMenu>
   <div
+    @contextmenu.capture.prevent
+    @click.left="onLeftClick"
+    @click.right="onRightClick"
     @click.self="onClickSelf"
     v-click-outside="onClickOutside"
     class="grid grid-cols-2 gap-2 p-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
@@ -15,9 +23,13 @@
 </template>
 
 <script setup>
-import ContextMenu from "../components/ContextMenu.vue";
+import ContextMenu from "./ContextMenu.vue";
 import FileCell from "./FileCell.vue";
 import { defineProps, ref } from "vue";
+
+const isContextMenuActive = ref(false);
+const cursorXposition = ref(0);
+const cursorYposition = ref(0);
 
 const chosenCellName = ref(null);
 
@@ -36,9 +48,21 @@ const onClick = (name) => {
 
 const onClickOutside = () => {
   chosenCellName.value = null;
+  isContextMenuActive.value = false;
 };
 
 const onClickSelf = () => {
   chosenCellName.value = null;
+};
+
+const onLeftClick = () => {
+  isContextMenuActive.value = false;
+};
+
+const onRightClick = (evt) => {
+  isContextMenuActive.value = true;
+
+  cursorXposition.value = evt.clientX;
+  cursorYposition.value = evt.clientY;
 };
 </script>
