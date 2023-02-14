@@ -11,12 +11,6 @@
         id="file"
         @change="onFileUploaded"
       />
-      <button
-        class="bg-blue-500 p-2 text-white hover:opacity-75"
-        @click="showFiles"
-      >
-        Показать файлы
-      </button>
     </template>
   </ContentPanel>
 </template>
@@ -28,7 +22,7 @@ import FileGrid from "./FileGrid.vue";
 import { useStorage, useAuth } from "@/composables/storage";
 
 const { username } = useAuth();
-const { fileNamesList, uploadToStorage, showFiles } = useStorage();
+const { fileNamesList, uploadToStorage } = useStorage();
 
 const onFileUploaded = (evt) => {
   console.log(evt.target.files[0].name);

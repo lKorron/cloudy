@@ -32,25 +32,25 @@ export function useStorage() {
     res.items.forEach((item) => fileList.value.push(item))
   );
 
-  listAll(storageRef).then((res) =>
-    res.items.forEach((item) => fileNamesList.value.push(item.name))
-  );
+  const updateList = () => {
+    fileNamesList.value = [];
+    listAll(storageRef).then((res) =>
+      res.items.forEach((item) => fileNamesList.value.push(item.name))
+    );
+  };
+
+  updateList();
 
   const uploadToStorage = (file) => {
     const fileRef = fref(storage, file.name);
 
     uploadBytes(fileRef, file)
       .then((snapshot) => {
+        updateList();
         console.log("file uploaded");
       })
       .catch((err) => console.log(err));
   };
 
-  const showFiles = () => {
-    listAll(storageRef).then((res) =>
-      res.items.forEach((item) => console.log(item.name))
-    );
-  };
-
-  return { fileList, fileNamesList, uploadToStorage, showFiles };
+  return { fileList, fileNamesList, uploadToStorage };
 }
