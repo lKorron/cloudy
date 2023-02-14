@@ -15,6 +15,7 @@
 </template>
 
 <script setup>
+import ContextMenu from "../components/ContextMenu.vue";
 import FileCell from "./FileCell.vue";
 import { defineProps, ref } from "vue";
 

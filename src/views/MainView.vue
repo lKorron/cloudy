@@ -17,7 +17,7 @@
 
 <script setup>
 import ContentPanel from "@/components/ContentPanel.vue";
-import FileGrid from "./FileGrid.vue";
+import FileGrid from "../components/FileGrid.vue";
 
 import { useStorage, useAuth } from "@/composables/storage";
 
