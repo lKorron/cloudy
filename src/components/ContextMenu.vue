@@ -1,8 +1,8 @@
 <template>
   <div
+    ref="element"
     v-show="active"
     class="w-52 bg-white border rounded-md shadow-md absolute cursor-pointer"
-    :style="{ left: x, top: y }"
   >
     <div class="hover:bg-slate-300 rounded-t-md">Create folder</div>
     <div class="hover:bg-slate-300 rounded-b-md">Upload file</div>
@@ -10,10 +10,8 @@
 </template>
 
 <script setup>
-import { defineProps, computed } from "vue";
-
-const x = computed(() => props.xPosition + "px");
-const y = computed(() => props.yPosition + "px");
+import { defineProps, ref, onMounted, watch } from "vue";
+import { createPopper } from "@popperjs/core";
 
 const props = defineProps({
   active: {
@@ -26,4 +24,39 @@ const props = defineProps({
     type: Number,
   },
 });
+
+const element = ref(null);
+
+watch(
+  () => props.xPosition,
+  () => openMenu()
+);
+
+watch(
+  () => props.yPosition,
+  () => openMenu()
+);
+
+const generateGetBoundingClientRect = (x = 0, y = 0) => {
+  return () => ({
+    width: 0,
+    height: 0,
+    top: y,
+    right: x,
+    bottom: y,
+    left: x,
+  });
+};
+
+const virtualElement = {
+  getBoundingClientRect: generateGetBoundingClientRect(),
+};
+
+const openMenu = () => {
+  virtualElement.getBoundingClientRect = generateGetBoundingClientRect(
+    props.xPosition,
+    props.yPosition
+  );
+  createPopper(virtualElement, element.value, { placement: "right-start" });
+};
 </script>
