@@ -25,7 +25,15 @@
 <script setup>
 import ContextMenu from "./ContextMenu.vue";
 import FileCell from "./FileCell.vue";
-import { defineProps, ref } from "vue";
+import { defineProps, ref, onMounted, onUnmounted } from "vue";
+
+onMounted(() => {
+  document.addEventListener("contextmenu", onContextMenuOutside);
+});
+
+onUnmounted(() => {
+  document.removeEventListener("contextmenu", onContextMenuOutside);
+});
 
 const isContextMenuActive = ref(false);
 const cursorXposition = ref(0);
@@ -64,5 +72,13 @@ const onRightClick = (evt) => {
 
   cursorXposition.value = evt.clientX;
   cursorYposition.value = evt.clientY;
+};
+
+const onContextMenuOutside = (evt) => {
+  const inside = evt.target.closest(".grid");
+
+  if (!inside) {
+    isContextMenuActive.value = false;
+  }
 };
 </script>
