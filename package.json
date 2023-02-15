@@ -9,6 +9,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.6",
     "@vee-validate/rules": "^4.7.3",
     "autoprefixer": "^10",
     "click-outside-vue3": "^4.0.1",
