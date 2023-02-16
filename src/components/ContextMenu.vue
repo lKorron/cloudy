@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref, watch } from "vue";
+import { defineProps, ref, watch, onMounted } from "vue";
 import { createPopper } from "@popperjs/core";
 
 const props = defineProps({
@@ -29,6 +29,7 @@ const props = defineProps({
 });
 
 const element = ref(null);
+let popper;
 
 watch(
   () => props.xPosition,
@@ -38,6 +39,11 @@ watch(
 watch(
   () => props.yPosition,
   () => openMenu()
+);
+
+watch(
+  () => props.boudariesElement,
+  () => setPopper()
 );
 
 const generateGetBoundingClientRect = (x = 0, y = 0) => {
@@ -55,13 +61,8 @@ const virtualElement = {
   getBoundingClientRect: generateGetBoundingClientRect(),
 };
 
-const openMenu = () => {
-  virtualElement.getBoundingClientRect = generateGetBoundingClientRect(
-    props.xPosition,
-    props.yPosition
-  );
-
-  createPopper(virtualElement, element.value, {
+const setPopper = () => {
+  popper = createPopper(virtualElement, element.value, {
     placement: "right-start",
     modifiers: [
       {
@@ -72,5 +73,14 @@ const openMenu = () => {
       },
     ],
   });
+};
+
+const openMenu = () => {
+  virtualElement.getBoundingClientRect = generateGetBoundingClientRect(
+    props.xPosition,
+    props.yPosition
+  );
+
+  popper.update();
 };
 </script>
