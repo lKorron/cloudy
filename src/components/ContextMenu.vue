@@ -5,12 +5,14 @@
     class="w-52 bg-white border rounded-md shadow-md absolute cursor-pointer"
   >
     <div class="hover:bg-slate-300 rounded-t-md">Create folder</div>
-    <div class="hover:bg-slate-300 rounded-b-md">Upload file</div>
+    <div @click="uploadFile" class="hover:bg-slate-300 rounded-b-md">
+      Upload file
+    </div>
   </div>
 </template>
 
 <script setup>
-import { defineProps, ref, watch, onMounted } from "vue";
+import { defineProps, ref, watch } from "vue";
 import { createPopper } from "@popperjs/core";
 
 const props = defineProps({
@@ -39,11 +41,6 @@ watch(
 watch(
   () => props.yPosition,
   () => openMenu()
-);
-
-watch(
-  () => props.boudariesElement,
-  () => setPopper()
 );
 
 const generateGetBoundingClientRect = (x = 0, y = 0) => {
@@ -81,6 +78,14 @@ const openMenu = () => {
     props.yPosition
   );
 
-  popper.update();
+  if (popper) {
+    popper.update();
+  } else {
+    setPopper();
+  }
+};
+
+const uploadFile = () => {
+  window.showOpenFilePicker();
 };
 </script>
