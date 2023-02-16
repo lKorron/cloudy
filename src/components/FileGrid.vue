@@ -1,10 +1,12 @@
 <template>
   <ContextMenu
+    :boudaries-element="selfElement"
     :active="isContextMenuActive"
     :x-position="cursorXposition"
     :y-position="cursorYposition"
   ></ContextMenu>
   <div
+    ref="selfElement"
     @contextmenu.capture.prevent
     @click.left="onLeftClick"
     @click.right="onRightClick"
@@ -34,6 +36,8 @@ onMounted(() => {
 onUnmounted(() => {
   document.removeEventListener("contextmenu", onContextMenuOutside);
 });
+
+const selfElement = ref(null);
 
 const isContextMenuActive = ref(false);
 const cursorXposition = ref(0);

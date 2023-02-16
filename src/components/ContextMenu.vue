@@ -10,10 +10,13 @@
 </template>
 
 <script setup>
-import { defineProps, ref, onMounted, watch } from "vue";
+import { defineProps, ref, watch } from "vue";
 import { createPopper } from "@popperjs/core";
 
 const props = defineProps({
+  boudariesElement: {
+    required: true,
+  },
   active: {
     type: Boolean,
   },
@@ -57,6 +60,17 @@ const openMenu = () => {
     props.xPosition,
     props.yPosition
   );
-  createPopper(virtualElement, element.value, { placement: "right-start" });
+
+  createPopper(virtualElement, element.value, {
+    placement: "right-start",
+    modifiers: [
+      {
+        name: "flip",
+        options: {
+          boundary: props.boudariesElement,
+        },
+      },
+    ],
+  });
 };
 </script>
