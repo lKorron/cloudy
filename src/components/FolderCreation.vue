@@ -12,9 +12,11 @@
           type="text"
         />
       </div>
-      <div class="flex justify-end mt-10"><button>Submit</button></div>
+      <div class="flex justify-end mt-10"><BlueButton></BlueButton></div>
     </form>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import BlueButton from "./BlueButton.vue";
+</script>

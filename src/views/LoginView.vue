@@ -45,16 +45,11 @@
           <input type="checkbox" name="isRemember" id="remember" class="mr-1" />
           <label for="remember">Remember me</label>
         </div>
-        <button
-          class="hover:scale-105 transition-transform border-none bg-sky-200 pl-3 pr-3 rounded-md mb-2 cursor-pointer"
-          :class="{
-            'opacity-25 cursor-not-allowed hover:transform-none': !meta.valid,
-          }"
-          :disabled="!meta.valid"
-        >
-          Sign in
-        </button>
+
+        <BlueButton :disabled="!meta.valid">Sign in</BlueButton>
+
         <div class="leading-5 mt-1">or</div>
+
         <button @click.prevent="goToRegister" class="text-xs hover:underline">
           Sign up
         </button>
@@ -69,6 +64,7 @@ import { Form, Field, ErrorMessage } from "vee-validate";
 import ContentPanel from "../components/ContentPanel.vue";
 import router from "@/router";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import BlueButton from "@/components/BlueButton.vue";
 
 const email = ref("");
 const password = ref("");

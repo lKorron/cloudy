@@ -1,6 +1,6 @@
 <template>
   <content-panel>
-    <template #header>Sign in</template>
+    <template #header>Sign up</template>
     <template #default>
       <Form
         @submit="signUp"
@@ -79,15 +79,7 @@
           </ErrorMessage>
         </div>
 
-        <button
-          class="hover:scale-105 transition-transform border-none bg-sky-200 pl-3 pr-3 rounded-md mb-2 cursor-pointer"
-          :class="{
-            'opacity-25 cursor-not-allowed hover:transform-none': !meta.valid,
-          }"
-          :disabled="!meta.valid"
-        >
-          Sign up
-        </button>
+        <BlueButton :disabled="!meta.valid">Sign up</BlueButton>
       </Form>
     </template>
   </content-panel>
@@ -104,6 +96,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import router from "@/router";
+import BlueButton from "@/components/BlueButton.vue";
 
 const email = ref("");
 const login = ref("");
