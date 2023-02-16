@@ -1,6 +1,6 @@
 <template>
   <ContextMenu
-    :boudaries-element="gridElement"
+    :boundaries-element="gridElement"
     :active="isContextMenuActive"
     :x-position="cursorXposition"
     :y-position="cursorYposition"

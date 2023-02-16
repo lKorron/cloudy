@@ -5,10 +5,10 @@
       <div class="mb-5">Login as {{ username }}</div>
       <FileGrid :file-list="fileNamesList"></FileGrid>
       <input
-        class="mb-10"
+        class="mb-10 hidden"
         type="file"
         name="file"
-        id="file"
+        id="fileElem"
         @change="onFileUploaded"
       />
     </template>

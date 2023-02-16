@@ -14,9 +14,10 @@
 <script setup>
 import { defineProps, ref, watch } from "vue";
 import { createPopper } from "@popperjs/core";
+import { useStorage } from "@/composables/storage";
 
 const props = defineProps({
-  boudariesElement: {
+  boundariesElement: {
     required: true,
   },
   active: {
@@ -29,6 +30,8 @@ const props = defineProps({
     type: Number,
   },
 });
+
+const { uploadToStorage } = useStorage();
 
 const element = ref(null);
 let popper;
@@ -65,7 +68,7 @@ const setPopper = () => {
       {
         name: "flip",
         options: {
-          boundary: props.boudariesElement,
+          boundary: props.boundariesElement,
         },
       },
     ],
@@ -86,6 +89,8 @@ const openMenu = () => {
 };
 
 const uploadFile = () => {
-  window.showOpenFilePicker();
+  const fileElem = document.getElementById("fileElem");
+
+  fileElem?.click();
 };
 </script>
