@@ -1,5 +1,5 @@
 <template>
-  <AsyncPopup ref="popup"></AsyncPopup>
+  <AsyncPopup ref="popup"><FolderCreation></FolderCreation> </AsyncPopup>
   <ContentPanel desktop>
     <template #header>Store files</template>
     <template #default>
@@ -23,9 +23,10 @@
 import ContentPanel from "@/components/ContentPanel.vue";
 import FileGrid from "../components/FileGrid.vue";
 
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { useStorage, useAuth } from "@/composables/storage";
 import AsyncPopup from "@/components/AsyncPopup.vue";
+import FolderCreation from "@/components/FolderCreation.vue";
 
 const { username } = useAuth();
 const { fileNamesList, uploadToStorage } = useStorage();
@@ -37,10 +38,6 @@ const onFileUploaded = (evt) => {
   const file = evt.target.files[0];
   uploadToStorage(file);
 };
-
-onMounted(() => {
-  popup.value.open();
-});
 </script>
 
 <style lang="scss" scoped></style>

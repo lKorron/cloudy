@@ -1,0 +1,20 @@
+<template>
+  <div class="w-96">
+    <div class="flex flex-start">
+      <h2 class="font-bold text-lg">Enter folder name</h2>
+    </div>
+
+    <form @submit.prevent class="mt-10">
+      <div>
+        <input
+          value="New folder"
+          class="border-gray-400 border-2 pl-2 rounded focus:border-blue-400 focus:border-2 focus:outline-none w-[100%] h-9"
+          type="text"
+        />
+      </div>
+      <div class="flex justify-end mt-10"><button>Submit</button></div>
+    </form>
+  </div>
+</template>
+
+<script setup></script>

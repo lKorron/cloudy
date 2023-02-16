@@ -5,8 +5,8 @@
       class="backdrop backdrop-blur-sm flex flex-row justify-center"
       @click="ignoreKeys ? '' : close()"
     >
-      <div class="mb-40 bg-white rounded-md shadow-md max-w-md" @click.stop>
-        <div class="popup__content">
+      <div class="mb-40 bg-white rounded-md shadow-md relative p-3" @click.stop>
+        <div>
           <slot
             >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui
             reprehenderit dolor et aut nostrum quisquam, nisi earum mollitia
@@ -16,7 +16,9 @@
         </div>
 
         <slot name="button"
-          ><button class="button" @click="close">x</button></slot
+          ><button class="button absolute top-1 right-2" @click="close">
+            X
+          </button></slot
         >
       </div>
     </div>
