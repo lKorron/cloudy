@@ -4,7 +4,9 @@
     v-show="active"
     class="w-52 bg-white border rounded-md shadow-md absolute cursor-pointer"
   >
-    <div class="hover:bg-slate-300 rounded-t-md">Create folder</div>
+    <div @click="createFolder" class="hover:bg-slate-300 rounded-t-md">
+      Create folder
+    </div>
     <div @click="uploadFile" class="hover:bg-slate-300 rounded-b-md">
       Upload file
     </div>
@@ -12,9 +14,8 @@
 </template>
 
 <script setup>
-import { defineProps, ref, watch } from "vue";
+import { defineProps, defineEmits, ref, watch } from "vue";
 import { createPopper } from "@popperjs/core";
-import { useStorage } from "@/composables/storage";
 
 const props = defineProps({
   boundariesElement: {
@@ -31,7 +32,7 @@ const props = defineProps({
   },
 });
 
-const { uploadToStorage } = useStorage();
+const emit = defineEmits(["create-folder"]);
 
 const element = ref(null);
 let popper;
@@ -86,6 +87,10 @@ const openMenu = () => {
   } else {
     setPopper();
   }
+};
+
+const createFolder = () => {
+  emit("create-folder");
 };
 
 const uploadFile = () => {

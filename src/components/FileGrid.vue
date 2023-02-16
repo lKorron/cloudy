@@ -4,6 +4,7 @@
     :active="isContextMenuActive"
     :x-position="cursorXposition"
     :y-position="cursorYposition"
+    @create-folder="createFolder"
   ></ContextMenu>
   <div
     ref="gridElement"
@@ -27,7 +28,7 @@
 <script setup>
 import ContextMenu from "./ContextMenu.vue";
 import FileCell from "./FileCell.vue";
-import { defineProps, ref, onMounted, onUnmounted } from "vue";
+import { defineProps, defineEmits, ref, onMounted, onUnmounted } from "vue";
 
 onMounted(() => {
   document.addEventListener("contextmenu", onContextMenuOutside);
@@ -51,6 +52,8 @@ const props = defineProps({
     required: true,
   },
 });
+
+const emit = defineEmits(["create-folder"]);
 
 const isChosen = (name) => name === chosenCellName.value;
 
@@ -84,5 +87,9 @@ const onContextMenuOutside = (evt) => {
   if (!inside) {
     isContextMenuActive.value = false;
   }
+};
+
+const createFolder = () => {
+  emit("create-folder");
 };
 </script>
