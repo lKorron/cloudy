@@ -5,6 +5,7 @@ import {
   getStorage,
   ref as fref,
   uploadBytes,
+  uploadString,
   listAll,
 } from "firebase/storage";
 
@@ -28,15 +29,21 @@ export function useStorage() {
   const storage = getStorage();
   const storageRef = fref(storage);
 
-  listAll(storageRef).then((res) =>
-    res.items.forEach((item) => fileList.value.push(item))
-  );
+  listAll(storageRef).then((res) => {
+    res.items.forEach((item) => fileList.value.push(item));
+  });
 
   const updateList = () => {
     fileNamesList.value = [];
     listAll(storageRef).then((res) =>
       res.items.forEach((item) => fileNamesList.value.push(item.name))
     );
+
+    listAll(storageRef).then(({ prefixes }) => {
+      prefixes.forEach((prefix) => {
+        fileNamesList.value.push(prefix.name);
+      });
+    });
   };
 
   updateList();
@@ -52,5 +59,16 @@ export function useStorage() {
       .catch((err) => console.log(err));
   };
 
-  return { fileList, fileNamesList, uploadToStorage };
+  const createFolder = async (folderName) => {
+    const directory = fref(storageRef, folderName);
+    const ghostFile = fref(directory, ".ghostfile");
+
+    try {
+      await uploadString(ghostFile, "");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return { fileList, fileNamesList, uploadToStorage, createFolder };
 }

@@ -1,5 +1,7 @@
 <template>
-  <AsyncPopup ref="popup"><FolderCreation></FolderCreation> </AsyncPopup>
+  <AsyncPopup ref="popup"
+    ><FolderCreation @folder-created="popup.close()"></FolderCreation>
+  </AsyncPopup>
   <ContentPanel desktop>
     <template #header>Store files</template>
     <template #default>

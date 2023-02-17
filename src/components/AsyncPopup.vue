@@ -15,8 +15,11 @@
           >
         </div>
 
-        <slot name="button"
-          ><button class="button absolute top-1 right-2" @click="close">
+        <slot name="close-button"
+          ><button
+            class="button absolute top-1 right-2 hover:scale-110 transition-transform"
+            @click="close"
+          >
             X
           </button></slot
         >

@@ -4,10 +4,11 @@
       <h2 class="font-bold text-lg">Enter folder name</h2>
     </div>
 
-    <form @submit.prevent class="mt-10">
+    <form @submit.prevent="submit" class="mt-10">
       <div>
         <input
-          value="New folder"
+          v-model="folderName"
+          placeholder="New folder"
           class="border-gray-400 border-2 pl-2 rounded focus:border-blue-400 focus:border-2 focus:outline-none w-[100%] h-9"
           type="text"
         />
@@ -19,4 +20,17 @@
 
 <script setup>
 import BlueButton from "./BlueButton.vue";
+import { useStorage } from "../composables/storage";
+import { ref, defineEmits } from "vue";
+
+const { createFolder } = useStorage();
+
+const emit = defineEmits(["folder-created"]);
+
+const folderName = ref("");
+
+const submit = () => {
+  emit("folder-created");
+  createFolder(folderName.value);
+};
 </script>
