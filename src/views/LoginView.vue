@@ -1,5 +1,5 @@
 <template>
-  <content-panel>
+  <ContentPanel>
     <template #header>Login</template>
     <template #default>
       <Form
@@ -46,7 +46,7 @@
           <label for="remember">Remember me</label>
         </div>
 
-        <BlueButton :disabled="!meta.valid">Sign in</BlueButton>
+        <BaseButton :disabled="!meta.valid">Sign in</BaseButton>
 
         <div class="leading-5 mt-1">or</div>
 
@@ -55,7 +55,7 @@
         </button>
       </Form></template
     >
-  </content-panel>
+  </ContentPanel>
 </template>
 
 <script setup>
@@ -64,7 +64,7 @@ import { Form, Field, ErrorMessage } from "vee-validate";
 import ContentPanel from "../components/ContentPanel.vue";
 import router from "@/router";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import BlueButton from "@/components/BlueButton.vue";
+import BaseButton from "@/components/base/BaseButton.vue";
 
 const email = ref("");
 const password = ref("");

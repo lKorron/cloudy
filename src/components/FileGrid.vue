@@ -5,7 +5,7 @@
     :x-position="cursorXposition"
     :y-position="cursorYposition"
     @create-folder="createFolder"
-  ></ContextMenu>
+  />
   <div
     ref="gridElement"
     @contextmenu.capture.prevent
@@ -15,20 +15,20 @@
     v-click-outside="onClickOutside"
     class="grid grid-cols-2 gap-2 p-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
   >
-    <FileCell
+    <FileGridCell
       :selected="isChosen(name)"
       @cell-clicked="onClick"
       v-for="{ name, type } in fileList"
       :type="type"
       :key="name"
-      >{{ name }}</FileCell
+      >{{ name }}</FileGridCell
     >
   </div>
 </template>
 
 <script setup>
 import ContextMenu from "./ContextMenu.vue";
-import FileCell from "./FileCell.vue";
+import FileGridCell from "./FileGridCell.vue";
 import { defineProps, defineEmits, ref, onMounted, onUnmounted } from "vue";
 
 onMounted(() => {

@@ -1,15 +1,13 @@
 <template>
-  <AsyncPopup ref="popup"
-    ><FolderCreation @form-submitted="uploadFolder"></FolderCreation>
+  <AsyncPopup ref="popup">
+    <FolderCreation @form-submitted="uploadFolder" />
   </AsyncPopup>
+
   <ContentPanel desktop>
     <template #header>Store files</template>
     <template #default>
       <div class="mb-5">Login as {{ username }}</div>
-      <FileGrid
-        :file-list="sortedFileList"
-        @create-folder="popup.open()"
-      ></FileGrid>
+      <FileGrid :file-list="sortedFileList" @create-folder="popup.open()" />
       <input
         class="mb-10 hidden"
         type="file"

@@ -1,13 +1,12 @@
 <template>
   <div class="container">
-    <app-logo></app-logo>
-    <router-view />
+    <BaseLogo />
+    <RouterView />
   </div>
 </template>
 
 <script setup>
-import AppLogo from "./components/AppLogo.vue";
-//router push
+import BaseLogo from "./components/base/BaseLogo.vue";
 </script>
 
 <style lang="scss">

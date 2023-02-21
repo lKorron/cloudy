@@ -32,29 +32,14 @@ export function useStorage() {
     fileList.value.sort((a, b) => (a.name > b.name ? 1 : -1))
   );
 
-  const updateList = () => {
-    fileList.value = [];
-    listAll(storageRef).then((res) =>
-      res.items.forEach((item) =>
-        fileList.value.push({ name: item.name, type: "document" })
-      )
-    );
-
-    listAll(storageRef).then(({ prefixes }) => {
-      prefixes.forEach((prefix) => {
-        fileList.value.push({ name: prefix.name, type: "folder" });
-      });
-    });
-  };
-
-  updateList();
+  updateList(fileList, storageRef);
 
   const uploadToStorage = (file) => {
     const fileRef = fref(storage, file.name);
 
     uploadBytes(fileRef, file)
       .then((snapshot) => {
-        updateList();
+        updateList(fileList, storageRef);
         console.log("file uploaded");
       })
       .catch((err) => console.log(err));
@@ -66,11 +51,26 @@ export function useStorage() {
 
     try {
       await uploadString(ghostFile, "");
-      updateList();
+      updateList(fileList, storageRef);
     } catch (error) {
       console.error(error);
     }
   };
 
   return { fileList, sortedFileList, uploadToStorage, createFolder };
+}
+
+function updateList(fileList, storageRef) {
+  fileList.value = [];
+  listAll(storageRef).then((res) =>
+    res.items.forEach((item) =>
+      fileList.value.push({ name: item.name, type: "document" })
+    )
+  );
+
+  listAll(storageRef).then(({ prefixes }) => {
+    prefixes.forEach((prefix) => {
+      fileList.value.push({ name: prefix.name, type: "folder" });
+    });
+  });
 }

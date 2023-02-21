@@ -14,14 +14,14 @@
         />
       </div>
       <div class="flex justify-end mt-10">
-        <BlueButton :disabled="!isValid"></BlueButton>
+        <BaseButton :disabled="!isValid" />
       </div>
     </form>
   </div>
 </template>
 
 <script setup>
-import BlueButton from "./BlueButton.vue";
+import BaseButton from "./base/BaseButton.vue";
 import { ref, defineEmits, computed } from "vue";
 
 const emit = defineEmits(["form-submitted"]);

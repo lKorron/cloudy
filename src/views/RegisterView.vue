@@ -1,5 +1,5 @@
 <template>
-  <content-panel>
+  <ContentPanel>
     <template #header>Sign up</template>
     <template #default>
       <Form
@@ -79,10 +79,10 @@
           </ErrorMessage>
         </div>
 
-        <BlueButton :disabled="!meta.valid">Sign up</BlueButton>
+        <BaseButton :disabled="!meta.valid">Sign up</BaseButton>
       </Form>
     </template>
-  </content-panel>
+  </ContentPanel>
 </template>
 
 <script setup>
@@ -96,7 +96,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import router from "@/router";
-import BlueButton from "@/components/BlueButton.vue";
+import BaseButton from "@/components/base/BaseButton.vue";
 
 const email = ref("");
 const login = ref("");
