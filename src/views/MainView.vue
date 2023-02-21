@@ -1,13 +1,13 @@
 <template>
   <AsyncPopup ref="popup"
-    ><FolderCreation @folder-created="popup.close()"></FolderCreation>
+    ><FolderCreation @folder-created="uploadFolder"></FolderCreation>
   </AsyncPopup>
   <ContentPanel desktop>
     <template #header>Store files</template>
     <template #default>
       <div class="mb-5">Login as {{ username }}</div>
       <FileGrid
-        :file-list="fileNamesList"
+        :file-list="sortedFileList"
         @create-folder="popup.open()"
       ></FileGrid>
       <input
@@ -31,7 +31,7 @@ import AsyncPopup from "@/components/AsyncPopup.vue";
 import FolderCreation from "@/components/FolderCreation.vue";
 
 const { username } = useAuth();
-const { fileNamesList, uploadToStorage } = useStorage();
+const { sortedFileList, uploadToStorage, createFolder } = useStorage();
 
 const popup = ref(null);
 
@@ -39,6 +39,11 @@ const onFileUploaded = (evt) => {
   console.log(evt.target.files[0].name);
   const file = evt.target.files[0];
   uploadToStorage(file);
+};
+
+const uploadFolder = (folderName) => {
+  createFolder(folderName);
+  popup.value.close();
 };
 </script>
 

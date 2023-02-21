@@ -30,7 +30,6 @@ const emit = defineEmits(["folder-created"]);
 const folderName = ref("");
 
 const submit = () => {
-  emit("folder-created");
-  createFolder(folderName.value);
+  emit("folder-created", folderName.value);
 };
 </script>

@@ -9,7 +9,18 @@
   >
     <h1 class="last break-words mt-2"><slot></slot></h1>
     <div class="h-[80px] w-[80px] my-0 mx-auto mt-2">
-      <img class="h-[80px]" src="../assets/docs.png" alt="document" />
+      <img
+        v-if="type === 'document'"
+        class="h-[80px]"
+        src="../assets/docs.png"
+        alt="document"
+      />
+      <img
+        v-else-if="type === 'folder'"
+        src="../assets/yellow-folder.png"
+        alt="folder"
+        class="h-[80px] w-[80px] my-0 mx-auto mt-2"
+      />
     </div>
   </div>
 </template>
@@ -23,6 +34,9 @@ const props = defineProps({
   selected: {
     type: Boolean,
     required: false,
+  },
+  type: {
+    type: String,
   },
 });
 

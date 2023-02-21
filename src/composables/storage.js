@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import router from "@/router";
 import { getAuth } from "@firebase/auth";
 import {
@@ -24,26 +24,29 @@ export function useAuth() {
 
 export function useStorage() {
   const fileList = ref([]);
-  const fileNamesList = ref([]);
 
   const storage = getStorage();
   const storageRef = fref(storage);
 
-  listAll(storageRef).then((res) => {
-    res.items.forEach((item) => fileList.value.push(item));
-  });
+  const sortedFileList = computed(() =>
+    fileList.value.sort((a, b) => (a.name > b.name ? 1 : -1))
+  );
 
   const updateList = () => {
-    fileNamesList.value = [];
+    fileList.value = [];
     listAll(storageRef).then((res) =>
-      res.items.forEach((item) => fileNamesList.value.push(item.name))
+      res.items.forEach((item) =>
+        fileList.value.push({ name: item.name, type: "document" })
+      )
     );
 
     listAll(storageRef).then(({ prefixes }) => {
       prefixes.forEach((prefix) => {
-        fileNamesList.value.push(prefix.name);
+        fileList.value.push({ name: prefix.name, type: "folder" });
       });
     });
+
+    console.log(fileList.value);
   };
 
   updateList();
@@ -65,10 +68,11 @@ export function useStorage() {
 
     try {
       await uploadString(ghostFile, "");
+      updateList();
     } catch (error) {
       console.error(error);
     }
   };
 
-  return { fileList, fileNamesList, uploadToStorage, createFolder };
+  return { fileList, sortedFileList, uploadToStorage, createFolder };
 }

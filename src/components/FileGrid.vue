@@ -18,7 +18,8 @@
     <FileCell
       :selected="isChosen(name)"
       @cell-clicked="onClick"
-      v-for="name in fileList"
+      v-for="{ name, type } in fileList"
+      :type="type"
       :key="name"
       >{{ name }}</FileCell
     >
