@@ -45,8 +45,6 @@ export function useStorage() {
         fileList.value.push({ name: prefix.name, type: "folder" });
       });
     });
-
-    console.log(fileList.value);
   };
 
   updateList();

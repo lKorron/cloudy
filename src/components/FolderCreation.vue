@@ -13,23 +13,23 @@
           type="text"
         />
       </div>
-      <div class="flex justify-end mt-10"><BlueButton></BlueButton></div>
+      <div class="flex justify-end mt-10">
+        <BlueButton :disabled="!isValid"></BlueButton>
+      </div>
     </form>
   </div>
 </template>
 
 <script setup>
 import BlueButton from "./BlueButton.vue";
-import { useStorage } from "../composables/storage";
-import { ref, defineEmits } from "vue";
+import { ref, defineEmits, computed } from "vue";
 
-const { createFolder } = useStorage();
-
-const emit = defineEmits(["folder-created"]);
+const emit = defineEmits(["form-submitted"]);
 
 const folderName = ref("");
+const isValid = computed(() => folderName.value.length > 0);
 
 const submit = () => {
-  emit("folder-created", folderName.value);
+  emit("form-submitted", folderName.value);
 };
 </script>

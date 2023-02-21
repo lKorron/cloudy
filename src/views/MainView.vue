@@ -1,6 +1,6 @@
 <template>
   <AsyncPopup ref="popup"
-    ><FolderCreation @folder-created="uploadFolder"></FolderCreation>
+    ><FolderCreation @form-submitted="uploadFolder"></FolderCreation>
   </AsyncPopup>
   <ContentPanel desktop>
     <template #header>Store files</template>
@@ -15,7 +15,7 @@
         type="file"
         name="file"
         id="fileElem"
-        @change="onFileUploaded"
+        @change="uploadFile"
       />
     </template>
   </ContentPanel>
@@ -35,8 +35,7 @@ const { sortedFileList, uploadToStorage, createFolder } = useStorage();
 
 const popup = ref(null);
 
-const onFileUploaded = (evt) => {
-  console.log(evt.target.files[0].name);
+const uploadFile = (evt) => {
   const file = evt.target.files[0];
   uploadToStorage(file);
 };
