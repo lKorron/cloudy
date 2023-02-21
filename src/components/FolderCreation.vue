@@ -4,7 +4,10 @@
       <h2 class="font-bold text-lg">Enter folder name</h2>
     </div>
 
-    <form @submit.prevent="submit" class="mt-10">
+    <form
+      class="mt-10"
+      @submit.prevent="submit"
+    >
       <div>
         <input
           v-model="folderName"

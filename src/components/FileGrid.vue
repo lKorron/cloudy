@@ -8,19 +8,19 @@
   />
   <div
     ref="gridElement"
+    v-click-outside="onClickOutside"
+    class="grid grid-cols-2 gap-2 p-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
     @contextmenu.capture.prevent
     @click.left="onLeftClick"
     @click.right="onRightClick"
     @click.self="onClickSelf"
-    v-click-outside="onClickOutside"
-    class="grid grid-cols-2 gap-2 p-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
   >
     <FileGridCell
-      :selected="isChosen(name)"
-      @cell-clicked="onClick"
       v-for="{ name, type } in fileList"
-      :type="type"
       :key="name"
+      :selected="isChosen(name)"
+      :type="type"
+      @cell-clicked="onClick"
       >{{ name }}</FileGridCell
     >
   </div>

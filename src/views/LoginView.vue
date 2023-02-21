@@ -3,46 +3,61 @@
     <template #header>Login</template>
     <template #default>
       <Form
-        @submit="signIn"
         v-slot="{ meta }"
         class="text-xs min-[350px]:text-base max-w-sm mx-auto p-2 md:max-w-md"
+        @submit="signIn"
       >
         <div class="mb-5">
           <div class="flex justify-between items-center">
             <label for="login">Email</label>
             <Field
+              id="email"
               v-model="email"
               rules="required|email"
               placeholder="example@gmail.com"
               type="email"
               name="email"
-              id="email"
               class="pl-1 border-b border-solid border-gray-400 focus:outline-none"
             />
           </div>
-          <ErrorMessage name="email" v-slot="{ message }">
+          <ErrorMessage
+            v-slot="{ message }"
+            name="email"
+          >
             <div class="text-right text-red-500">{{ message }}</div>
           </ErrorMessage>
         </div>
         <div class="mb-5">
           <div class="flex justify-between items-center">
-            <label for="password" class="mr-5">Password</label>
+            <label
+              for="password"
+              class="mr-5"
+              >Password</label
+            >
             <Field
+              id="password"
               v-model="password"
               :rules="{ required: true, min: 6 }"
               placeholder="Enter your password"
               type="password"
               name="password"
-              id="password"
               class="pl-1 border-b border-solid border-gray-400 focus:outline-none"
             />
           </div>
-          <ErrorMessage name="password" v-slot="{ message }">
+          <ErrorMessage
+            v-slot="{ message }"
+            name="password"
+          >
             <div class="text-right text-red-500">{{ message }}</div>
           </ErrorMessage>
         </div>
         <div class="flex mb-2">
-          <input type="checkbox" name="isRemember" id="remember" class="mr-1" />
+          <input
+            id="remember"
+            type="checkbox"
+            name="isRemember"
+            class="mr-1"
+          />
           <label for="remember">Remember me</label>
         </div>
 
@@ -50,7 +65,10 @@
 
         <div class="leading-5 mt-1">or</div>
 
-        <button @click.prevent="goToRegister" class="text-xs hover:underline">
+        <button
+          class="text-xs hover:underline"
+          @click.prevent="goToRegister"
+        >
           Sign up
         </button>
       </Form></template

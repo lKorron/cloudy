@@ -1,11 +1,17 @@
 <template>
-  <Transition name="popup" appear>
+  <Transition
+    name="popup"
+    appear
+  >
     <div
       v-if="isOpen"
       class="backdrop backdrop-blur-sm flex flex-row justify-center"
       @click="ignoreKeys ? '' : close()"
     >
-      <div class="mb-40 bg-white rounded-md shadow-md relative p-3" @click.stop>
+      <div
+        class="mb-40 bg-white rounded-md shadow-md relative p-3"
+        @click.stop
+      >
         <div>
           <slot
             >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui
@@ -26,7 +32,10 @@
       </div>
     </div>
   </Transition>
-  <div v-if="isOpen && darkBackground" class="background dark-background"></div>
+  <div
+    v-if="isOpen && darkBackground"
+    class="background dark-background"
+  ></div>
 </template>
 
 <script>
@@ -44,18 +53,18 @@ export default {
 
   popupController: null,
 
+  data() {
+    return {
+      isOpen: false,
+    };
+  },
+
   mounted() {
     document.addEventListener("keydown", this.handleKeydown);
   },
 
   beforeUnmount() {
     document.removeEventListener("keydown", this.handleKeydown);
-  },
-
-  data() {
-    return {
-      isOpen: false,
-    };
   },
 
   methods: {

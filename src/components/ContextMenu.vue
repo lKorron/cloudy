@@ -1,13 +1,19 @@
 <template>
   <div
-    ref="element"
     v-show="active"
+    ref="element"
     class="w-52 bg-white border rounded-md shadow-md absolute cursor-pointer"
   >
-    <div @click="createFolder" class="hover:bg-slate-300 rounded-t-md">
+    <div
+      class="hover:bg-slate-300 rounded-t-md"
+      @click="createFolder"
+    >
       Create folder
     </div>
-    <div @click="uploadFile" class="hover:bg-slate-300 rounded-b-md">
+    <div
+      class="hover:bg-slate-300 rounded-b-md"
+      @click="uploadFile"
+    >
       Upload file
     </div>
   </div>
@@ -20,15 +26,18 @@ import { createPopper } from "@popperjs/core";
 const props = defineProps({
   boundariesElement: {
     required: true,
+    type: null,
   },
   active: {
     type: Boolean,
   },
   xPosition: {
     type: Number,
+    default: 0,
   },
   yPosition: {
     type: Number,
+    default: 0,
   },
 });
 

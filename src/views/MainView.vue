@@ -7,12 +7,15 @@
     <template #header>Store files</template>
     <template #default>
       <div class="mb-5">Login as {{ username }}</div>
-      <FileGrid :file-list="sortedFileList" @create-folder="popup.open()" />
+      <FileGrid
+        :file-list="sortedFileList"
+        @create-folder="popup.open()"
+      />
       <input
+        id="fileElem"
         class="mb-10 hidden"
         type="file"
         name="file"
-        id="fileElem"
         @change="uploadFile"
       />
     </template>
