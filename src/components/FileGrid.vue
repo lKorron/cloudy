@@ -1,7 +1,7 @@
 <template>
   <FileGridContextMenu
+    :is-active="isContextMenuActive"
     :boundaries-element="gridElement"
-    :active="isContextMenuActive"
     :x-position="cursorXposition"
     :y-position="cursorYposition"
     @create-folder="createFolder"

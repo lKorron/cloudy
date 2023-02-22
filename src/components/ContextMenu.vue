@@ -1,6 +1,6 @@
 <template>
   <div
-    v-show="active"
+    v-show="isActive"
     ref="element"
     class="w-52 bg-white border rounded-md shadow-md absolute cursor-pointer"
   >
@@ -17,7 +17,7 @@ const props = defineProps({
     required: true,
     type: null,
   },
-  active: {
+  isActive: {
     type: Boolean,
   },
   xPosition: {

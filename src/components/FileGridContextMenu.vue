@@ -1,11 +1,12 @@
 <template>
   <div>
     <ContextMenu
-      :active="active"
+      :is-active="isActive"
       :boundaries-element="boundariesElement"
       :x-position="xPosition"
       :y-position="yPosition"
-      ><ContextMenuItem
+    >
+      <ContextMenuItem
         class="hover:rounded-t-md"
         @item-click="createFolder"
       >
@@ -17,8 +18,8 @@
         @item-click="uploadFile"
       >
         Upload file
-      </ContextMenuItem></ContextMenu
-    >
+      </ContextMenuItem>
+    </ContextMenu>
   </div>
 </template>
 
@@ -27,7 +28,7 @@ import ContextMenu from "./ContextMenu.vue";
 import ContextMenuItem from "./ContextMenuItem.vue";
 
 const props = defineProps({
-  active: {
+  isActive: {
     type: Boolean,
   },
 
