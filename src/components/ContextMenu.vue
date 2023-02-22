@@ -4,24 +4,26 @@
     ref="element"
     class="w-52 bg-white border rounded-md shadow-md absolute cursor-pointer"
   >
-    <div
-      class="hover:bg-slate-300 rounded-t-md"
-      @click="createFolder"
+    <ContextMenuItem
+      class="hover:rounded-t-md"
+      @item-click="createFolder"
     >
-      Create folder
-    </div>
-    <div
-      class="hover:bg-slate-300 rounded-b-md"
-      @click="uploadFile"
+      Create forlder
+    </ContextMenuItem>
+
+    <ContextMenuItem
+      class="hover:rounded-b-md"
+      @item-click="uploadFile"
     >
       Upload file
-    </div>
+    </ContextMenuItem>
   </div>
 </template>
 
 <script setup>
 import { defineProps, defineEmits, ref, watch } from "vue";
 import { createPopper } from "@popperjs/core";
+import ContextMenuItem from "./ContextMenuItem.vue";
 
 const props = defineProps({
   boundariesElement: {

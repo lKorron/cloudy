@@ -5,7 +5,8 @@
       'bg-gray-100 border-gray-100 hover:bg-gray-200 hover:border-gray-200':
         selected,
     }"
-    @click="onClick"
+    @click="click"
+    @click.right="clickRight"
   >
     <h1 class="last break-words mt-2"><slot></slot></h1>
     <div class="h-[80px] w-[80px] my-0 mx-auto mt-2">
@@ -28,8 +29,6 @@
 <script setup>
 import { defineProps, getCurrentInstance, defineEmits } from "vue";
 
-const key = getCurrentInstance().vnode.key;
-
 const props = defineProps({
   selected: {
     type: Boolean,
@@ -43,7 +42,13 @@ const props = defineProps({
 
 const emit = defineEmits(["cellClicked", "clickedOutside"]);
 
-const onClick = () => {
+const key = getCurrentInstance().vnode.key;
+
+const click = () => {
   emit("cellClicked", key);
+};
+
+const clickRight = () => {
+  // console.log("right clicked");
 };
 </script>
