@@ -8,16 +8,16 @@
     >
       <ContextMenuItem
         class="hover:rounded-t-md"
-        @item-click="createFolder"
+        @item-click="renameFile"
       >
-        Create folder
+        Rename
       </ContextMenuItem>
 
       <ContextMenuItem
         class="hover:rounded-b-md"
-        @item-click="uploadFile"
+        @item-click="deleteFile"
       >
-        Upload file
+        Delete
       </ContextMenuItem>
     </ContextMenu>
   </div>
@@ -48,15 +48,11 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["create-folder"]);
-
-const createFolder = () => {
-  emit("create-folder");
+const renameFile = () => {
+  console.log("renaming");
 };
 
-const uploadFile = () => {
-  const fileElem = document.getElementById("fileElem");
-
-  fileElem?.click();
+const deleteFile = () => {
+  console.log("deleting");
 };
 </script>

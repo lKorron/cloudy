@@ -8,16 +8,17 @@
   />
   <div
     ref="gridElement"
-    v-click-outside="onClickOutside"
+    v-click-outside="clickOutsideConfig"
     class="grid grid-cols-2 gap-2 p-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
     @contextmenu.capture.prevent
     @click.left="onLeftClick"
-    @click.right="onRightClick"
+    @click.self.right="onRightClick"
     @click.self="onClickSelf"
   >
     <FileGridCell
       v-for="{ name, type } in fileList"
       :key="name"
+      :boundaries-element="gridElement"
       :selected="isChosen(name)"
       :type="type"
       @cell-clicked="onClick"
@@ -29,15 +30,7 @@
 <script setup>
 import FileGridContextMenu from "./FileGridContextMenu.vue";
 import FileGridCell from "./FileGridCell.vue";
-import { defineProps, defineEmits, ref, onMounted, onUnmounted } from "vue";
-
-onMounted(() => {
-  document.addEventListener("contextmenu", onContextMenuOutside);
-});
-
-onUnmounted(() => {
-  document.removeEventListener("contextmenu", onContextMenuOutside);
-});
+import { defineProps, defineEmits, ref } from "vue";
 
 const gridElement = ref(null);
 
@@ -57,10 +50,6 @@ const props = defineProps({
 const emit = defineEmits(["create-folder"]);
 
 const isChosen = (name) => name === chosenCellName.value;
-
-const onClick = (name) => {
-  chosenCellName.value = name;
-};
 
 const onClickOutside = () => {
   chosenCellName.value = null;
@@ -82,15 +71,17 @@ const onRightClick = (evt) => {
   cursorYposition.value = evt.clientY;
 };
 
-const onContextMenuOutside = (evt) => {
-  const inside = evt.target.closest(".grid");
-
-  if (!inside) {
-    isContextMenuActive.value = false;
-  }
+const onClick = (name) => {
+  chosenCellName.value = name;
+  isContextMenuActive.value = false;
 };
 
 const createFolder = () => {
   emit("create-folder");
+};
+
+const clickOutsideConfig = {
+  handler: onClickOutside,
+  events: ["dblclick", "click", "contextmenu"],
 };
 </script>
