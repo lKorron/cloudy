@@ -1,5 +1,5 @@
 <template>
-  <ContextMenu
+  <FileGridContextMenu
     :boundaries-element="gridElement"
     :active="isContextMenuActive"
     :x-position="cursorXposition"
@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import ContextMenu from "./ContextMenu.vue";
+import FileGridContextMenu from "./FileGridContextMenu.vue";
 import FileGridCell from "./FileGridCell.vue";
 import { defineProps, defineEmits, ref, onMounted, onUnmounted } from "vue";
 
