@@ -23,6 +23,7 @@
       :selected="isChosen(name)"
       :type="type"
       @cell-clicked="onClick"
+      @delete-file="deleteFile"
       >{{ name }}</FileGridCell
     >
   </div>
@@ -34,11 +35,9 @@ import FileGridCell from "./FileGridCell.vue";
 import { defineProps, defineEmits, ref } from "vue";
 
 const gridElement = ref(null);
-
 const isContextMenuActive = ref(false);
 const cursorXposition = ref(0);
 const cursorYposition = ref(0);
-
 const chosenCellName = ref(null);
 
 const props = defineProps({
@@ -48,7 +47,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["create-folder"]);
+const emit = defineEmits(["create-folder", "deleteFile"]);
 
 const isChosen = (name) => name === chosenCellName.value;
 
@@ -79,6 +78,10 @@ const onClick = (name) => {
 
 const createFolder = () => {
   emit("create-folder");
+};
+
+const deleteFile = (fileName) => {
+  emit("deleteFile", fileName);
 };
 
 const clickOutsideConfig = {

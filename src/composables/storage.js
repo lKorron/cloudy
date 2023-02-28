@@ -53,6 +53,10 @@ export function useStorage() {
       .then(() => {
         console.log("file deleted");
       })
+      .then(() => {
+        updateList(fileList, storageRef);
+        console.log(sortedFileList.value);
+      })
       .catch((err) => {
         console.error(err);
       });
@@ -70,7 +74,13 @@ export function useStorage() {
     }
   };
 
-  return { fileList, sortedFileList, uploadToStorage, createFolder };
+  return {
+    fileList,
+    sortedFileList,
+    uploadToStorage,
+    deleteFromStorage,
+    createFolder,
+  };
 }
 
 function updateList(fileList, storageRef) {

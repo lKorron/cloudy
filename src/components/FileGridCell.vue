@@ -37,6 +37,9 @@
 <script setup>
 import { defineProps, getCurrentInstance, defineEmits, ref } from "vue";
 import CellContextMenu from "./CellContextMenu.vue";
+import { useStorage } from "@/composables/storage";
+
+const { deleteFromStorage } = useStorage();
 
 const props = defineProps({
   name: {
@@ -58,7 +61,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["cellClicked", "clickedOutside"]);
+const emit = defineEmits(["cellClicked", "clickedOutside", "deleteFile"]);
 
 const isContextMenuActive = ref(false);
 const cursorXposition = ref(0);
@@ -90,6 +93,6 @@ const clickOutsideConfig = {
 };
 
 const deleteFile = () => {
-  console.log("deleting");
+  emit("deleteFile", props.name);
 };
 </script>
