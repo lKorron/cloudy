@@ -18,6 +18,7 @@
     <FileGridCell
       v-for="{ name, type } in fileList"
       :key="name"
+      :name="name"
       :boundaries-element="gridElement"
       :selected="isChosen(name)"
       :type="type"

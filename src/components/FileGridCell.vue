@@ -16,7 +16,7 @@
       :y-position="cursorYposition"
       @delete-file="deleteFile"
     />
-    <h1 class="last break-words mt-2"><slot></slot></h1>
+    <h1 class="last break-words mt-2">{{ props.name }}</h1>
     <div class="h-[80px] w-[80px] my-0 mx-auto mt-2">
       <img
         v-if="type === 'document'"
@@ -39,6 +39,10 @@ import { defineProps, getCurrentInstance, defineEmits, ref } from "vue";
 import CellContextMenu from "./CellContextMenu.vue";
 
 const props = defineProps({
+  name: {
+    type: String,
+    required: true,
+  },
   selected: {
     type: Boolean,
     required: false,
@@ -69,7 +73,6 @@ const click = () => {
 };
 
 const clickRight = (evt) => {
-  // console.log("right clicked");
   isContextMenuActive.value = true;
 
   cursorXposition.value = evt.clientX;
@@ -87,6 +90,6 @@ const clickOutsideConfig = {
 };
 
 const deleteFile = () => {
-  console.log("deleteing");
+  console.log("deleting");
 };
 </script>
