@@ -48,11 +48,13 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits(["delete-file"]);
+
 const renameFile = () => {
   console.log("renaming");
 };
 
 const deleteFile = () => {
-  console.log("deleting");
+  emit("delete-file");
 };
 </script>

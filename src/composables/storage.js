@@ -6,6 +6,7 @@ import {
   ref as fref,
   uploadBytes,
   uploadString,
+  deleteObject,
   listAll,
 } from "firebase/storage";
 
@@ -42,7 +43,19 @@ export function useStorage() {
         updateList(fileList, storageRef);
         console.log("file uploaded");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
+  };
+
+  const deleteFromStorage = (fileName) => {
+    const fileRef = fref(storage, fileName);
+
+    deleteObject(fileRef)
+      .then(() => {
+        console.log("file deleted");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   const createFolder = async (folderName) => {

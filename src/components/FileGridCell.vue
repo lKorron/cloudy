@@ -14,6 +14,7 @@
       :boundaries-element="boundariesElement"
       :x-position="cursorXposition"
       :y-position="cursorYposition"
+      @delete-file="deleteFile"
     />
     <h1 class="last break-words mt-2"><slot></slot></h1>
     <div class="h-[80px] w-[80px] my-0 mx-auto mt-2">
@@ -83,5 +84,9 @@ const clickOutside = () => {
 const clickOutsideConfig = {
   handler: clickOutside,
   events: ["dblclick", "click", "contextmenu"],
+};
+
+const deleteFile = () => {
+  console.log("deleteing");
 };
 </script>
