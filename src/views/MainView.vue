@@ -10,7 +10,8 @@
       <FileGrid
         :file-list="sortedFileList"
         @create-folder="popup.open()"
-        @delete-file="deleteFile"
+        @delete-document="deleteDocument"
+        @delete-folder="deleteFolder"
       />
       <input
         id="fileElem"
@@ -33,8 +34,13 @@ import AsyncPopup from "@/components/AsyncPopup.vue";
 import FolderCreation from "@/components/FolderCreation.vue";
 
 const { username } = useAuth();
-const { sortedFileList, uploadToStorage, createFolder, deleteFromStorage } =
-  useStorage();
+const {
+  sortedFileList,
+  uploadToStorage,
+  createFolder,
+  deleteFileFromStorage,
+  deleteFolderFromStorage,
+} = useStorage();
 
 const popup = ref(null);
 
@@ -48,7 +54,11 @@ const uploadFolder = (folderName) => {
   popup.value.close();
 };
 
-const deleteFile = (fileName) => {
-  deleteFromStorage(fileName);
+const deleteDocument = (fileName) => {
+  deleteFileFromStorage(fileName);
+};
+
+const deleteFolder = (folderName) => {
+  deleteFolderFromStorage(folderName);
 };
 </script>

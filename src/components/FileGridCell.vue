@@ -61,7 +61,12 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["cellClicked", "clickedOutside", "deleteFile"]);
+const emit = defineEmits([
+  "cellClicked",
+  "clickedOutside",
+  "deleteFile",
+  "deleteFolder",
+]);
 
 const isContextMenuActive = ref(false);
 const cursorXposition = ref(0);
@@ -93,6 +98,6 @@ const clickOutsideConfig = {
 };
 
 const deleteFile = () => {
-  emit("deleteFile", props.name);
+  emit("deleteFile", props.name, props.type);
 };
 </script>

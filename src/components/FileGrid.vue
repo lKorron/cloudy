@@ -47,7 +47,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["create-folder", "deleteFile"]);
+const emit = defineEmits(["createFolder", "deleteDocument", "deleteFolder"]);
 
 const isChosen = (name) => name === chosenCellName.value;
 
@@ -77,11 +77,20 @@ const onClick = (name) => {
 };
 
 const createFolder = () => {
-  emit("create-folder");
+  emit("createFolder");
 };
 
-const deleteFile = (fileName) => {
-  emit("deleteFile", fileName);
+const deleteFile = (fileName, fileType) => {
+  switch (fileType) {
+    case "document":
+      emit("deleteDocument", fileName);
+      break;
+    case "folder":
+      emit("deleteFolder", fileName);
+      break;
+    default:
+      break;
+  }
 };
 
 const clickOutsideConfig = {

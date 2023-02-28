@@ -46,20 +46,21 @@ export function useStorage() {
       .catch((err) => console.error(err));
   };
 
-  const deleteFromStorage = (fileName) => {
+  const deleteFileFromStorage = (fileName) => {
     const fileRef = fref(storage, fileName);
 
     deleteObject(fileRef)
       .then(() => {
-        console.log("file deleted");
-      })
-      .then(() => {
         updateList(fileList, storageRef);
-        console.log(sortedFileList.value);
+        console.log("file deleted");
       })
       .catch((err) => {
         console.error(err);
       });
+  };
+
+  const deleteFolderFromStorage = (folderName) => {
+    console.log("folder deleting");
   };
 
   const createFolder = async (folderName) => {
@@ -78,7 +79,8 @@ export function useStorage() {
     fileList,
     sortedFileList,
     uploadToStorage,
-    deleteFromStorage,
+    deleteFileFromStorage,
+    deleteFolderFromStorage,
     createFolder,
   };
 }
