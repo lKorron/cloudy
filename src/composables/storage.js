@@ -50,7 +50,7 @@ export function useStorage() {
 
     deleteObject(fileRef)
       .then(() => {
-        removeFromList(fileList, fileName);
+        removeFromList(fileList, fileName, "document");
       })
       .catch((err) => {
         console.error(err);
@@ -70,7 +70,7 @@ export function useStorage() {
         });
       })
       .then(() => {
-        removeFromList(fileList, folderName);
+        removeFromList(fileList, folderName, "folder");
       })
       .catch((error) => console.log(error));
   };
@@ -118,9 +118,9 @@ function addToList(fileList, fileName, fileType) {
   }
 }
 
-function removeFromList(fileList, fileName) {
+function removeFromList(fileList, fileName, fileType) {
   fileList.value = fileList.value.filter((el) => {
-    return el.name !== fileName;
+    return el.name !== fileName || el.type !== fileType;
   });
 }
 
