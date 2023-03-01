@@ -37,9 +37,6 @@
 <script setup>
 import { defineProps, getCurrentInstance, defineEmits, ref } from "vue";
 import CellContextMenu from "./CellContextMenu.vue";
-import { useStorage } from "@/composables/storage";
-
-const { deleteFromStorage } = useStorage();
 
 const props = defineProps({
   name: {

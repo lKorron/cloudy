@@ -73,9 +73,6 @@ export function useStorage() {
           console.log(folderRef.fullPath);
         });
       })
-      .then(() => {
-        updateList(fileList, storageRef);
-      })
       .catch((error) => console.log(error));
   };
 
@@ -114,4 +111,6 @@ function updateList(fileList, storageRef) {
       fileList.value.push({ name: prefix.name, type: "folder" });
     });
   });
+
+  console.log("updated");
 }
