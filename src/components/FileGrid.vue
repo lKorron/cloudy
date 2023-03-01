@@ -24,6 +24,7 @@
       :type="type"
       @cell-clicked="onClick"
       @delete-file="deleteFile"
+      @download-file="downloadFile"
       >{{ name }}</FileGridCell
     >
   </div>
@@ -47,7 +48,12 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["createFolder", "deleteDocument", "deleteFolder"]);
+const emit = defineEmits([
+  "createFolder",
+  "deleteDocument",
+  "deleteFolder",
+  "downloadFile",
+]);
 
 const isChosen = (name) => name === chosenCellName.value;
 
@@ -91,6 +97,10 @@ const deleteFile = (fileName, fileType) => {
     default:
       break;
   }
+};
+
+const downloadFile = (fileName, fileType) => {
+  emit("downloadFile", fileName, fileType);
 };
 
 const clickOutsideConfig = {

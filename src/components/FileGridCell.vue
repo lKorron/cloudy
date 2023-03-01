@@ -15,6 +15,7 @@
       :x-position="cursorXposition"
       :y-position="cursorYposition"
       @delete-file="deleteFile"
+      @download-file="downloadFile"
     />
     <h1 class="last break-words mt-2">{{ props.name }}</h1>
     <div class="h-[80px] w-[80px] my-0 mx-auto mt-2">
@@ -63,6 +64,7 @@ const emit = defineEmits([
   "clickedOutside",
   "deleteFile",
   "deleteFolder",
+  "downloadFile",
 ]);
 
 const isContextMenuActive = ref(false);
@@ -96,5 +98,9 @@ const clickOutsideConfig = {
 
 const deleteFile = () => {
   emit("deleteFile", props.name, props.type);
+};
+
+const downloadFile = () => {
+  emit("downloadFile", props.name, props.type);
 };
 </script>

@@ -13,11 +13,13 @@
         Rename
       </ContextMenuItem>
 
+      <ContextMenuItem @item-click="deleteFile"> Delete </ContextMenuItem>
+
       <ContextMenuItem
-        class="hover:rounded-b-md"
-        @item-click="deleteFile"
+        class="border-t-2 hover:rounded-b-md"
+        @item-click="downloadFile"
       >
-        Delete
+        Download
       </ContextMenuItem>
     </ContextMenu>
   </div>
@@ -48,13 +50,17 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["delete-file"]);
+const emit = defineEmits(["deleteFile", "downloadFile"]);
 
 const renameFile = () => {
   console.log("renaming");
 };
 
 const deleteFile = () => {
-  emit("delete-file");
+  emit("deleteFile");
+};
+
+const downloadFile = () => {
+  emit("downloadFile");
 };
 </script>

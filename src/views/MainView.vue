@@ -12,6 +12,7 @@
         @create-folder="popup.open()"
         @delete-document="deleteDocument"
         @delete-folder="deleteFolder"
+        @download-file="downloadFile"
       />
       <input
         id="fileElem"
@@ -60,5 +61,9 @@ const deleteDocument = (fileName) => {
 
 const deleteFolder = (folderName) => {
   deleteFolderFromStorage(folderName);
+};
+
+const downloadFile = (fileName, fileType) => {
+  console.log(fileName, fileType);
 };
 </script>
