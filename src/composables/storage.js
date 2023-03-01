@@ -61,6 +61,22 @@ export function useStorage() {
 
   const deleteFolderFromStorage = (folderName) => {
     console.log("folder deleting");
+    const folderRef = fref(storage, folderName);
+
+    listAll(folderRef)
+      .then((dir) => {
+        dir.items.forEach((fileRef) => {
+          deleteFileFromStorage(fileRef.fullPath);
+        });
+        dir.prefixes.forEach((folderRef) => {
+          deleteFolderFromStorage(folderRef.fullPath);
+          console.log(folderRef.fullPath);
+        });
+      })
+      .then(() => {
+        updateList(fileList, storageRef);
+      })
+      .catch((error) => console.log(error));
   };
 
   const createFolder = async (folderName) => {
