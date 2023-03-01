@@ -51,7 +51,7 @@ export function useStorage() {
 
     deleteObject(fileRef)
       .then(() => {
-        updateList(fileList, storageRef);
+        removeFromList(fileList, fileName);
         console.log("file deleted");
       })
       .catch((err) => {
@@ -72,6 +72,9 @@ export function useStorage() {
           deleteFolderFromStorage(folderRef.fullPath);
           console.log(folderRef.fullPath);
         });
+      })
+      .then(() => {
+        removeFromList(fileList, folderName);
       })
       .catch((error) => console.log(error));
   };
@@ -111,6 +114,14 @@ function updateList(fileList, storageRef) {
       fileList.value.push({ name: prefix.name, type: "folder" });
     });
   });
+}
 
-  console.log("updated");
+function addToList(fileList, fileName) {
+  fileList.value.push();
+}
+
+function removeFromList(fileList, fileName) {
+  fileList.value = fileList.value.filter((el) => {
+    return el.name !== fileName;
+  });
 }
