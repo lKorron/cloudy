@@ -113,11 +113,21 @@ function updateList(fileList, storageRef) {
 }
 
 function addToList(fileList, fileName, fileType) {
-  fileList.value.push({ name: fileName, type: fileType });
+  if (isContainsElement(fileList, fileName, fileType)) {
+    fileList.value.push({ name: fileName, type: fileType });
+  }
 }
 
 function removeFromList(fileList, fileName) {
   fileList.value = fileList.value.filter((el) => {
     return el.name !== fileName;
   });
+}
+
+function isContainsElement(fileList, fileName, fileType) {
+  return (
+    fileList.value.filter((el) => {
+      return el.name === fileName && el.type == fileType;
+    }).length <= 0
+  );
 }
