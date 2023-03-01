@@ -39,9 +39,8 @@ export function useStorage() {
     const fileRef = fref(storage, file.name);
 
     uploadBytes(fileRef, file)
-      .then((snapshot) => {
-        updateList(fileList, storageRef);
-        console.log("file uploaded");
+      .then(() => {
+        addToList(fileList, file.name, "document");
       })
       .catch((err) => console.error(err));
   };
@@ -52,7 +51,6 @@ export function useStorage() {
     deleteObject(fileRef)
       .then(() => {
         removeFromList(fileList, fileName);
-        console.log("file deleted");
       })
       .catch((err) => {
         console.error(err);
@@ -60,7 +58,6 @@ export function useStorage() {
   };
 
   const deleteFolderFromStorage = (folderName) => {
-    console.log("folder deleting");
     const folderRef = fref(storage, folderName);
 
     listAll(folderRef)
@@ -70,7 +67,6 @@ export function useStorage() {
         });
         dir.prefixes.forEach((folderRef) => {
           deleteFolderFromStorage(folderRef.fullPath);
-          console.log(folderRef.fullPath);
         });
       })
       .then(() => {
@@ -85,7 +81,7 @@ export function useStorage() {
 
     try {
       await uploadString(ghostFile, "");
-      updateList(fileList, storageRef);
+      addToList(fileList, folderName, "folder");
     } catch (error) {
       console.error(error);
     }
@@ -116,8 +112,8 @@ function updateList(fileList, storageRef) {
   });
 }
 
-function addToList(fileList, fileName) {
-  fileList.value.push();
+function addToList(fileList, fileName, fileType) {
+  fileList.value.push({ name: fileName, type: fileType });
 }
 
 function removeFromList(fileList, fileName) {
