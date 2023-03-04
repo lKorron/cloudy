@@ -8,6 +8,7 @@
     }"
     @click="click"
     @click.right="clickRight"
+    @dblclick="dblClick"
   >
     <CellContextMenu
       :is-active="isContextMenuActive"
@@ -63,8 +64,8 @@ const emit = defineEmits([
   "cellClicked",
   "clickedOutside",
   "deleteFile",
-  "deleteFolder",
   "downloadFile",
+  "openFolder",
 ]);
 
 const isContextMenuActive = ref(false);
@@ -85,6 +86,12 @@ const clickRight = (evt) => {
   cursorXposition.value = evt.clientX;
   cursorYposition.value = evt.clientY;
   emit("cellClicked", key);
+};
+
+const dblClick = () => {
+  if (props.type === "folder") {
+    emit("openFolder", props.name);
+  }
 };
 
 const clickOutside = () => {

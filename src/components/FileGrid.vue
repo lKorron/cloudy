@@ -25,6 +25,7 @@
       @cell-clicked="onClick"
       @delete-file="deleteFile"
       @download-file="downloadFile"
+      @open-folder="openFolder"
       >{{ name }}</FileGridCell
     >
   </div>
@@ -50,8 +51,9 @@ const props = defineProps({
 
 const emit = defineEmits([
   "createFolder",
-  "deleteDocument",
   "deleteFolder",
+  "openFolder",
+  "deleteDocument",
   "downloadFile",
 ]);
 
@@ -101,6 +103,10 @@ const deleteFile = (fileName, fileType) => {
 
 const downloadFile = (fileName, fileType) => {
   emit("downloadFile", fileName, fileType);
+};
+
+const openFolder = (folderName) => {
+  emit("openFolder", folderName);
 };
 
 const clickOutsideConfig = {
