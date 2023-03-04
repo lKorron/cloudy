@@ -41,6 +41,7 @@ const {
   createFolder,
   deleteFileFromStorage,
   deleteFolderFromStorage,
+  downloadFromStorage,
 } = useStorage();
 
 const popup = ref(null);
@@ -64,6 +65,6 @@ const deleteFolder = (folderName) => {
 };
 
 const downloadFile = (fileName, fileType) => {
-  console.log(fileName, fileType);
+  downloadFromStorage(fileName);
 };
 </script>

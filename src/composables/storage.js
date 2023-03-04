@@ -3,6 +3,7 @@ import router from "@/router";
 import { getAuth } from "@firebase/auth";
 import {
   getStorage,
+  getDownloadURL,
   ref as fref,
   uploadBytes,
   uploadString,
@@ -87,6 +88,26 @@ export function useStorage() {
     }
   };
 
+  const downloadFromStorage = (fileName, fileType) => {
+    const fileRef = fref(storage, fileName);
+
+    getDownloadURL(fileRef).then((url) => {
+      fetch(url, {
+        mode: "no-cors",
+      })
+        .then((response) => response.blob())
+        .then((blob) => {
+          let blobUrl = window.URL.createObjectURL(blob);
+          let a = document.createElement("a");
+          a.download = fileName;
+          a.href = blobUrl;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+        });
+    });
+  };
+
   return {
     fileList,
     sortedFileList,
@@ -94,6 +115,7 @@ export function useStorage() {
     deleteFileFromStorage,
     deleteFolderFromStorage,
     createFolder,
+    downloadFromStorage,
   };
 }
 
