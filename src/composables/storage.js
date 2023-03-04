@@ -8,8 +8,11 @@ import {
   uploadBytes,
   uploadString,
   deleteObject,
+  getBlob,
   listAll,
 } from "firebase/storage";
+import { saveAs } from "file-saver";
+import JSZip from "jszip";
 
 export function useAuth() {
   const auth = getAuth();
@@ -89,8 +92,21 @@ export function useStorage() {
   };
 
   const downloadFromStorage = (fileName, fileType) => {
-    const fileRef = fref(storage, fileName);
+    switch (fileType) {
+      case "document":
+        downloadFile(fileName);
+        break;
+      case "folder":
+        downloadFolderAsZip(fileName);
+        break;
 
+      default:
+        break;
+    }
+  };
+
+  const downloadFile = (fileName) => {
+    const fileRef = fref(storage, fileName);
     getDownloadURL(fileRef).then((url) => {
       fetch(url, {
         mode: "no-cors",
@@ -106,6 +122,40 @@ export function useStorage() {
           a.remove();
         });
     });
+  };
+
+  const downloadFolderAsZip = async (directoryPath = "") => {
+    const zip = new JSZip();
+
+    await addFilesFromDirectoryToZip(directoryPath, zip);
+
+    if (Object.keys(zip.files).length > 0) {
+      const blob = await zip.generateAsync({ type: "blob" });
+      const name = directoryPath.split("/").pop();
+      saveAs(blob, name);
+    }
+  };
+
+  const addFilesFromDirectoryToZip = async (directoryPath = "", zip) => {
+    const storage = getStorage();
+
+    const directoryContentsRef = fref(storage, directoryPath);
+
+    const directoryContents = await listAll(directoryContentsRef);
+
+    for (const file of directoryContents.items) {
+      if (file.name === ".ghostfile") {
+        continue;
+      }
+
+      const fileRef = fref(storage, file.fullPath);
+      const fileBlob = await getBlob(fileRef);
+      zip.file(file.fullPath, fileBlob);
+    }
+
+    for (const folder of directoryContents.prefixes) {
+      await addFilesFromDirectoryToZip(folder.fullPath, zip);
+    }
   };
 
   return {

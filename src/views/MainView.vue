@@ -65,6 +65,6 @@ const deleteFolder = (folderName) => {
 };
 
 const downloadFile = (fileName, fileType) => {
-  downloadFromStorage(fileName);
+  downloadFromStorage(fileName, fileType);
 };
 </script>
