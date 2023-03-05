@@ -29,6 +29,7 @@ export function useAuth() {
 
 export function useStorage() {
   const fileList = ref([]);
+  let currentPath = "";
 
   const storage = getStorage();
   const storageRef = fref(storage);
@@ -40,7 +41,8 @@ export function useStorage() {
   updateList(fileList, storageRef);
 
   const uploadToStorage = (file) => {
-    const fileRef = fref(storage, file.name);
+    const filePath = `${currentPath}/${file.name}`;
+    const fileRef = fref(storage, filePath);
 
     uploadBytes(fileRef, file)
       .then(() => {
@@ -49,20 +51,20 @@ export function useStorage() {
       .catch((err) => console.error(err));
   };
 
-  const deleteFileFromStorage = (fileName) => {
-    const fileRef = fref(storage, fileName);
+  const deleteFileFromStorage = (filePath) => {
+    const fileRef = fref(storage, filePath);
 
     deleteObject(fileRef)
       .then(() => {
-        removeFromList(fileList, fileName, "document");
+        removeFromList(fileList, filePath, "document");
       })
       .catch((err) => {
         console.error(err);
       });
   };
 
-  const deleteFolderFromStorage = (folderName) => {
-    const folderRef = fref(storage, folderName);
+  const deleteFolderFromStorage = (folderPath) => {
+    const folderRef = fref(storage, folderPath);
 
     listAll(folderRef)
       .then((dir) => {
@@ -74,13 +76,17 @@ export function useStorage() {
         });
       })
       .then(() => {
-        removeFromList(fileList, folderName, "folder");
+        removeFromList(fileList, folderPath, "folder");
       })
       .catch((error) => console.log(error));
   };
 
   const createFolder = async (folderName) => {
-    const directory = fref(storageRef, folderName);
+    const directoryPath = `${currentPath}/${folderName}`;
+
+    console.log(directoryPath);
+
+    const directory = fref(storageRef, directoryPath);
     const ghostFile = fref(directory, ".ghostfile");
 
     try {
@@ -152,8 +158,9 @@ export function useStorage() {
   };
 
   const openStorageFolder = (folderPath) => {
-    const folderRef = fref(storage, folderPath);
+    currentPath = folderPath;
 
+    const folderRef = fref(storage, folderPath);
     updateList(fileList, folderRef);
   };
 
