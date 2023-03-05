@@ -46,7 +46,7 @@ export function useStorage() {
 
     uploadBytes(fileRef, file)
       .then(() => {
-        addToList(fileList, file.name, "document");
+        addToList(fileList, file.name, filePath, "document");
       })
       .catch((err) => console.error(err));
   };
@@ -66,6 +66,8 @@ export function useStorage() {
   const deleteFolderFromStorage = (folderPath) => {
     const folderRef = fref(storage, folderPath);
 
+    console.log(folderRef);
+
     listAll(folderRef)
       .then((dir) => {
         dir.items.forEach((fileRef) => {
@@ -84,14 +86,12 @@ export function useStorage() {
   const createFolder = async (folderName) => {
     const directoryPath = `${currentPath}/${folderName}`;
 
-    console.log(directoryPath);
-
     const directory = fref(storageRef, directoryPath);
     const ghostFile = fref(directory, ".ghostfile");
 
     try {
       await uploadString(ghostFile, "");
-      addToList(fileList, folderName, "folder");
+      addToList(fileList, folderName, directoryPath, "folder");
     } catch (error) {
       console.error(error);
     }
@@ -201,9 +201,9 @@ function updateList(fileList, storageRef) {
   });
 }
 
-function addToList(fileList, fileName, fileType) {
+function addToList(fileList, fileName, filePath, fileType) {
   if (isContainsElement(fileList, fileName, fileType)) {
-    fileList.value.push({ name: fileName, type: fileType });
+    fileList.value.push({ name: fileName, path: filePath, type: fileType });
   }
 }
 
