@@ -91,13 +91,13 @@ export function useStorage() {
     }
   };
 
-  const downloadFromStorage = (fileName, fileType) => {
+  const downloadFromStorage = (fileName, filePath, fileType) => {
     switch (fileType) {
       case "document":
-        downloadFile(fileName);
+        downloadFile(fileName, filePath);
         break;
       case "folder":
-        downloadFolderAsZip(fileName);
+        downloadFolderAsZip(filePath);
         break;
 
       default:
@@ -105,21 +105,14 @@ export function useStorage() {
     }
   };
 
-  const downloadFile = (fileName) => {
-    const fileRef = fref(storage, fileName);
+  const downloadFile = (fileName, filePath) => {
+    const fileRef = fref(storage, filePath);
     getDownloadURL(fileRef).then((url) => {
-      fetch(url, {
-        mode: "no-cors",
-      })
+      console.log(url);
+      fetch(url)
         .then((response) => response.blob())
         .then((blob) => {
-          let blobUrl = window.URL.createObjectURL(blob);
-          let a = document.createElement("a");
-          a.download = fileName;
-          a.href = blobUrl;
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
+          saveAs(blob, fileName);
         });
     });
   };
@@ -132,6 +125,7 @@ export function useStorage() {
     if (Object.keys(zip.files).length > 0) {
       const blob = await zip.generateAsync({ type: "blob" });
       const name = directoryPath.split("/").pop();
+
       saveAs(blob, name);
     }
   };
@@ -158,6 +152,12 @@ export function useStorage() {
     }
   };
 
+  const openStorageFolder = (folderPath) => {
+    const folderRef = fref(storage, folderPath);
+
+    updateList(fileList, folderRef);
+  };
+
   return {
     fileList,
     sortedFileList,
@@ -165,6 +165,7 @@ export function useStorage() {
     deleteFileFromStorage,
     deleteFolderFromStorage,
     createFolder,
+    openStorageFolder,
     downloadFromStorage,
   };
 }
@@ -172,14 +173,24 @@ export function useStorage() {
 function updateList(fileList, storageRef) {
   fileList.value = [];
   listAll(storageRef).then((res) =>
-    res.items.forEach((item) =>
-      fileList.value.push({ name: item.name, type: "document" })
-    )
+    res.items.forEach((item) => {
+      if (item.name !== ".ghostfile") {
+        fileList.value.push({
+          name: item.name,
+          path: item.fullPath,
+          type: "document",
+        });
+      }
+    })
   );
 
   listAll(storageRef).then(({ prefixes }) => {
     prefixes.forEach((prefix) => {
-      fileList.value.push({ name: prefix.name, type: "folder" });
+      fileList.value.push({
+        name: prefix.name,
+        path: prefix.fullPath,
+        type: "folder",
+      });
     });
   });
 }
