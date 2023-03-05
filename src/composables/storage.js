@@ -108,7 +108,6 @@ export function useStorage() {
   const downloadFile = (fileName, filePath) => {
     const fileRef = fref(storage, filePath);
     getDownloadURL(fileRef).then((url) => {
-      console.log(url);
       fetch(url)
         .then((response) => response.blob())
         .then((blob) => {

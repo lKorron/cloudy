@@ -16,9 +16,10 @@
     @click.self="onClickSelf"
   >
     <FileGridCell
-      v-for="{ name, type } in fileList"
-      :key="name"
+      v-for="{ name, path, type } in fileList"
+      :key="path"
       :name="name"
+      :path="path"
       :boundaries-element="gridElement"
       :selected="isChosen(name)"
       :type="type"
@@ -88,25 +89,25 @@ const createFolder = () => {
   emit("createFolder");
 };
 
-const deleteFile = (fileName, fileType) => {
+const deleteFile = (filePath, fileType) => {
   switch (fileType) {
     case "document":
-      emit("deleteDocument", fileName);
+      emit("deleteDocument", filePath);
       break;
     case "folder":
-      emit("deleteFolder", fileName);
+      emit("deleteFolder", filePath);
       break;
     default:
       break;
   }
 };
 
-const downloadFile = (fileName, fileType) => {
-  emit("downloadFile", fileName, fileType);
+const downloadFile = (fileName, filePath, fileType) => {
+  emit("downloadFile", fileName, filePath, fileType);
 };
 
-const openFolder = (folderName) => {
-  emit("openFolder", folderName);
+const openFolder = (folderPath) => {
+  emit("openFolder", folderPath);
 };
 
 const clickOutsideConfig = {

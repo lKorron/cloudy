@@ -45,6 +45,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  path: {
+    type: String,
+    required: true,
+  },
   selected: {
     type: Boolean,
     required: false,
@@ -90,8 +94,16 @@ const clickRight = (evt) => {
 
 const dblClick = () => {
   if (props.type === "folder") {
-    emit("openFolder", props.name);
+    emit("openFolder", props.path);
   }
+};
+
+const deleteFile = () => {
+  emit("deleteFile", props.path, props.type);
+};
+
+const downloadFile = () => {
+  emit("downloadFile", props.name, props.path, props.type);
 };
 
 const clickOutside = () => {
@@ -101,13 +113,5 @@ const clickOutside = () => {
 const clickOutsideConfig = {
   handler: clickOutside,
   events: ["dblclick", "click", "contextmenu"],
-};
-
-const deleteFile = () => {
-  emit("deleteFile", props.name, props.type);
-};
-
-const downloadFile = () => {
-  emit("downloadFile", props.name, props.type);
 };
 </script>

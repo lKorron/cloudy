@@ -43,6 +43,7 @@ const {
   deleteFileFromStorage,
   deleteFolderFromStorage,
   downloadFromStorage,
+  openStorageFolder,
 } = useStorage();
 
 const popup = ref(null);
@@ -57,19 +58,19 @@ const uploadFolder = (folderName) => {
   popup.value.close();
 };
 
-const deleteDocument = (fileName) => {
-  deleteFileFromStorage(fileName);
+const deleteDocument = (filePath) => {
+  deleteFileFromStorage(filePath);
 };
 
-const deleteFolder = (folderName) => {
-  deleteFolderFromStorage(folderName);
+const deleteFolder = (folderPath) => {
+  deleteFolderFromStorage(folderPath);
 };
 
-const openFolder = (folderName) => {
-  console.log(folderName);
+const openFolder = (folderPath) => {
+  openStorageFolder(folderPath);
 };
 
-const downloadFile = (fileName, fileType) => {
-  downloadFromStorage(fileName, fileType);
+const downloadFile = (fileName, filePath, fileType) => {
+  downloadFromStorage(fileName, filePath, fileType);
 };
 </script>
