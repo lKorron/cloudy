@@ -66,8 +66,6 @@ export function useStorage() {
   const deleteFolderFromStorage = (folderPath) => {
     const folderRef = fref(storage, folderPath);
 
-    console.log(folderRef);
-
     listAll(folderRef)
       .then((dir) => {
         dir.items.forEach((fileRef) => {
@@ -207,9 +205,9 @@ function addToList(fileList, fileName, filePath, fileType) {
   }
 }
 
-function removeFromList(fileList, fileName, fileType) {
+function removeFromList(fileList, filePath, fileType) {
   fileList.value = fileList.value.filter((el) => {
-    return el.name !== fileName || el.type !== fileType;
+    return el.path !== filePath || el.type !== fileType;
   });
 }
 
