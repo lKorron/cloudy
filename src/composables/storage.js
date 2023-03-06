@@ -147,6 +147,7 @@ export function useStorage() {
 
       const fileRef = fref(storage, file.fullPath);
       const fileBlob = await getBlob(fileRef);
+
       zip.file(file.fullPath, fileBlob);
     }
 
@@ -217,4 +218,15 @@ function isContainsElement(fileList, fileName, fileType) {
       return el.name === fileName && el.type == fileType;
     }).length <= 0
   );
+}
+
+function generatePath(initialPath) {
+  const pathArray = initialPath.split("/");
+  const shiftCount = pathArray.length - 1;
+
+  const resultingArray = pathArray.splice(shiftCount);
+
+  const resultingPath = resultingArray.join("/");
+
+  return resultingPath;
 }
