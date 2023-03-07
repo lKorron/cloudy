@@ -1,18 +1,14 @@
-import { listAll, ref } from "firebase/storage";
+import { ref } from "firebase/storage";
 
-export default function useFileManager(storage) {
-  const openFolder = async (folderPath) => {
+export function useFileManager(storage, fileList, updateList, currentPath) {
+  const openStorageFolder = (folderPath) => {
+    currentPath.value = folderPath;
+
     const folderRef = ref(storage, folderPath);
-    const list = await listAll(folderRef);
-
-    let resultingList = [];
-
-    list.items.forEach((item) => {});
-
-    console.log(list);
+    updateList(fileList, folderRef);
   };
 
   return {
-    openFolder,
+    openStorageFolder,
   };
 }

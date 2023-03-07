@@ -11,10 +11,11 @@ import {
 } from "firebase/storage";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
+import { useFileManager } from "./fileManager";
 
 export function useStorage() {
   const fileList = ref([]);
-  let currentPath = "";
+  const currentPath = ref("");
 
   const storage = getStorage();
   const storageRef = fref(storage);
@@ -26,7 +27,7 @@ export function useStorage() {
   updateList(fileList, storageRef);
 
   const uploadToStorage = (file) => {
-    const filePath = `${currentPath}/${file.name}`;
+    const filePath = `${currentPath.value}/${file.name}`;
     const fileRef = fref(storage, filePath);
 
     uploadBytes(fileRef, file)
@@ -67,7 +68,7 @@ export function useStorage() {
   };
 
   const createFolder = async (folderName) => {
-    const directoryPath = `${currentPath}/${folderName}`;
+    const directoryPath = `${currentPath.value}/${folderName}`;
 
     const directory = fref(storageRef, directoryPath);
     const ghostFile = fref(directory, ".ghostfile");
@@ -133,7 +134,7 @@ export function useStorage() {
       const fileRef = fref(storage, file.fullPath);
       const fileBlob = await getBlob(fileRef);
 
-      zip.file(generatePath(file.fullPath, currentPath), fileBlob);
+      zip.file(generatePath(file.fullPath, currentPath.value), fileBlob);
     }
 
     for (const folder of directoryContents.prefixes) {
@@ -141,12 +142,12 @@ export function useStorage() {
     }
   };
 
-  const openStorageFolder = (folderPath) => {
-    currentPath = folderPath;
-
-    const folderRef = fref(storage, folderPath);
-    updateList(fileList, folderRef);
-  };
+  const { openStorageFolder } = useFileManager(
+    storage,
+    fileList,
+    updateList,
+    currentPath
+  );
 
   return {
     fileList,
