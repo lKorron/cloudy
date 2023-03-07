@@ -31,7 +31,8 @@ import ContentPanel from "@/components/ContentPanel.vue";
 import FileGrid from "../components/FileGrid.vue";
 
 import { ref } from "vue";
-import { useStorage, useAuth } from "@/composables/storage";
+import { useStorage } from "@/composables/storage";
+import { useAuth } from "@/composables/auth";
 import AsyncPopup from "@/components/AsyncPopup.vue";
 import FolderCreation from "@/components/FolderCreation.vue";
 

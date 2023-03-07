@@ -1,6 +1,4 @@
 import { ref, computed } from "vue";
-import router from "@/router";
-import { getAuth } from "@firebase/auth";
 import {
   getStorage,
   getDownloadURL,
@@ -13,19 +11,6 @@ import {
 } from "firebase/storage";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
-
-export function useAuth() {
-  const auth = getAuth();
-  const username = ref("");
-
-  auth.onAuthStateChanged((user) => {
-    if (!user) {
-      router.replace({ name: "login" });
-    } else username.value = auth.currentUser?.displayName;
-  });
-
-  return { username };
-}
 
 export function useStorage() {
   const fileList = ref([]);
