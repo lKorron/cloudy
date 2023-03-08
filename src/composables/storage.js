@@ -1,15 +1,10 @@
 import { ref, computed } from "vue";
-import {
-  getStorage,
-  ref as fref,
-  uploadBytes,
-  uploadString,
-  listAll,
-} from "firebase/storage";
+import { getStorage, ref as fref, listAll } from "firebase/storage";
 
 import { useFileManager } from "./fileManager";
 import { useDownload } from "./download";
 import { useDeletion } from "./deletion";
+import { useUpload } from "./upload";
 
 export function useStorage() {
   const fileList = ref([]);
@@ -24,31 +19,6 @@ export function useStorage() {
 
   updateList(fileList, storageRef);
 
-  const uploadToStorage = (file) => {
-    const filePath = `${currentPath.value}/${file.name}`;
-    const fileRef = fref(storage, filePath);
-
-    uploadBytes(fileRef, file)
-      .then(() => {
-        addToList(fileList, file.name, filePath, "document");
-      })
-      .catch((err) => console.error(err));
-  };
-
-  const createFolder = async (folderName) => {
-    const directoryPath = `${currentPath.value}/${folderName}`;
-
-    const directory = fref(storageRef, directoryPath);
-    const ghostFile = fref(directory, ".ghostfile");
-
-    try {
-      await uploadString(ghostFile, "");
-      addToList(fileList, folderName, directoryPath, "folder");
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const { openStorageFolder } = useFileManager(
     storage,
     fileList,
@@ -59,6 +29,12 @@ export function useStorage() {
   const { downloadFromStorage } = useDownload(storage, currentPath);
 
   const { deleteFromStorage } = useDeletion(storage, fileList);
+
+  const { uploadToStorage, createFolder } = useUpload(
+    storage,
+    fileList,
+    currentPath
+  );
 
   return {
     fileList,
@@ -94,18 +70,4 @@ function updateList(fileList, storageRef) {
       });
     });
   });
-}
-
-function addToList(fileList, fileName, filePath, fileType) {
-  if (isContainsElement(fileList, fileName, fileType)) {
-    fileList.value.push({ name: fileName, path: filePath, type: fileType });
-  }
-}
-
-function isContainsElement(fileList, fileName, fileType) {
-  return (
-    fileList.value.filter((el) => {
-      return el.name === fileName && el.type == fileType;
-    }).length <= 0
-  );
 }
