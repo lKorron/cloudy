@@ -37,7 +37,7 @@
 </template>
 
 <script setup>
-import { defineProps, getCurrentInstance, defineEmits, ref } from "vue";
+import { defineProps, defineEmits, ref } from "vue";
 import CellContextMenu from "./CellContextMenu.vue";
 
 const props = defineProps({
@@ -76,12 +76,10 @@ const isContextMenuActive = ref(false);
 const cursorXposition = ref(0);
 const cursorYposition = ref(0);
 
-const key = getCurrentInstance().vnode.key;
-
 const click = () => {
   isContextMenuActive.value = false;
 
-  emit("cellClicked", key);
+  emit("cellClicked", props.name);
 };
 
 const clickRight = (evt) => {
@@ -89,7 +87,7 @@ const clickRight = (evt) => {
 
   cursorXposition.value = evt.clientX;
   cursorYposition.value = evt.clientY;
-  emit("cellClicked", key);
+  emit("cellClicked", props.name);
 };
 
 const dblClick = () => {
