@@ -58,20 +58,16 @@ export function useStorage() {
 
   const { downloadFromStorage } = useDownload(storage, currentPath);
 
-  const { deleteFileFromStorage, deleteFolderFromStorage } = useDeletion(
-    storage,
-    fileList
-  );
+  const { deleteFromStorage } = useDeletion(storage, fileList);
 
   return {
     fileList,
     sortedFileList,
     uploadToStorage,
-    deleteFileFromStorage,
-    deleteFolderFromStorage,
     createFolder,
     openStorageFolder,
     downloadFromStorage,
+    deleteFromStorage,
   };
 }
 

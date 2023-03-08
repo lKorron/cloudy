@@ -52,10 +52,9 @@ const props = defineProps({
 
 const emit = defineEmits([
   "createFolder",
-  "deleteFolder",
   "openFolder",
-  "deleteDocument",
   "downloadFile",
+  "deleteFile",
 ]);
 
 const isChosen = (name) => name === chosenCellName.value;
@@ -90,16 +89,7 @@ const createFolder = () => {
 };
 
 const deleteFile = (filePath, fileType) => {
-  switch (fileType) {
-    case "document":
-      emit("deleteDocument", filePath);
-      break;
-    case "folder":
-      emit("deleteFolder", filePath);
-      break;
-    default:
-      break;
-  }
+  emit("deleteFile", filePath, fileType);
 };
 
 const downloadFile = (fileName, filePath, fileType) => {

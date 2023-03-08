@@ -10,10 +10,9 @@
       <FileGrid
         :file-list="sortedFileList"
         @create-folder="popup.open()"
-        @delete-folder="deleteFolder"
         @open-folder="openFolder"
-        @delete-document="deleteDocument"
         @download-file="downloadFile"
+        @delete-file="deleteFile"
       />
       <input
         id="fileElem"
@@ -41,9 +40,8 @@ const {
   sortedFileList,
   uploadToStorage,
   createFolder,
-  deleteFileFromStorage,
-  deleteFolderFromStorage,
   downloadFromStorage,
+  deleteFromStorage,
   openStorageFolder,
 } = useStorage();
 
@@ -59,19 +57,15 @@ const uploadFolder = (folderName) => {
   popup.value.close();
 };
 
-const deleteDocument = (filePath) => {
-  deleteFileFromStorage(filePath);
-};
-
-const deleteFolder = (folderPath) => {
-  deleteFolderFromStorage(folderPath);
-};
-
 const openFolder = (folderPath) => {
   openStorageFolder(folderPath);
 };
 
 const downloadFile = (fileName, filePath, fileType) => {
   downloadFromStorage(fileName, filePath, fileType);
+};
+
+const deleteFile = (filePath, fileType) => {
+  deleteFromStorage(filePath, fileType);
 };
 </script>
