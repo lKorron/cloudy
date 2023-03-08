@@ -49,8 +49,9 @@ export function useStorage() {
 
 function updateList(fileList, storageRef) {
   fileList.value = [];
-  listAll(storageRef).then((res) =>
-    res.items.forEach((item) => {
+
+  listAll(storageRef).then(({ items, prefixes }) => {
+    items.forEach((item) => {
       if (item.name !== ".ghostfile") {
         fileList.value.push({
           name: item.name,
@@ -58,10 +59,8 @@ function updateList(fileList, storageRef) {
           type: "document",
         });
       }
-    })
-  );
+    });
 
-  listAll(storageRef).then(({ prefixes }) => {
     prefixes.forEach((prefix) => {
       fileList.value.push({
         name: prefix.name,
