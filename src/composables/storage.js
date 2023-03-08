@@ -4,12 +4,12 @@ import {
   ref as fref,
   uploadBytes,
   uploadString,
-  deleteObject,
   listAll,
 } from "firebase/storage";
 
 import { useFileManager } from "./fileManager";
 import { useDownload } from "./download";
+import { useDeletion } from "./deletion";
 
 export function useStorage() {
   const fileList = ref([]);
@@ -35,36 +35,6 @@ export function useStorage() {
       .catch((err) => console.error(err));
   };
 
-  const deleteFileFromStorage = (filePath) => {
-    const fileRef = fref(storage, filePath);
-
-    deleteObject(fileRef)
-      .then(() => {
-        removeFromList(fileList, filePath, "document");
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
-
-  const deleteFolderFromStorage = (folderPath) => {
-    const folderRef = fref(storage, folderPath);
-
-    listAll(folderRef)
-      .then((dir) => {
-        dir.items.forEach((fileRef) => {
-          deleteFileFromStorage(fileRef.fullPath);
-        });
-        dir.prefixes.forEach((folderRef) => {
-          deleteFolderFromStorage(folderRef.fullPath);
-        });
-      })
-      .then(() => {
-        removeFromList(fileList, folderPath, "folder");
-      })
-      .catch((error) => console.log(error));
-  };
-
   const createFolder = async (folderName) => {
     const directoryPath = `${currentPath.value}/${folderName}`;
 
@@ -87,6 +57,11 @@ export function useStorage() {
   );
 
   const { downloadFromStorage } = useDownload(storage, currentPath);
+
+  const { deleteFileFromStorage, deleteFolderFromStorage } = useDeletion(
+    storage,
+    fileList
+  );
 
   return {
     fileList,
@@ -129,12 +104,6 @@ function addToList(fileList, fileName, filePath, fileType) {
   if (isContainsElement(fileList, fileName, fileType)) {
     fileList.value.push({ name: fileName, path: filePath, type: fileType });
   }
-}
-
-function removeFromList(fileList, filePath, fileType) {
-  fileList.value = fileList.value.filter((el) => {
-    return el.path !== filePath || el.type !== fileType;
-  });
 }
 
 function isContainsElement(fileList, fileName, fileType) {
