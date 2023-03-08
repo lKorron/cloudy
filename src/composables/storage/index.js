@@ -1,10 +1,10 @@
 import { ref, computed } from "vue";
 import { getStorage, ref as fref, listAll } from "firebase/storage";
 
-import { useFileManager } from "./fileManager";
-import { useDownload } from "./download";
-import { useDeletion } from "./deletion";
-import { useUpload } from "./upload";
+import { useFileManager } from "./parts/fileManager";
+import { useDownload } from "./parts/download";
+import { useDeletion } from "./parts/deletion";
+import { useUpload } from "./parts/upload";
 
 export function useStorage() {
   const fileList = ref([]);
