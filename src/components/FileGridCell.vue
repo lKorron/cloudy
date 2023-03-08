@@ -37,7 +37,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits, ref } from "vue";
+import { ref } from "vue";
 import CellContextMenu from "./CellContextMenu.vue";
 
 const props = defineProps({

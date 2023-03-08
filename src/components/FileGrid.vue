@@ -35,7 +35,7 @@
 <script setup>
 import FileGridContextMenu from "./FileGridContextMenu.vue";
 import FileGridCell from "./FileGridCell.vue";
-import { defineProps, defineEmits, ref } from "vue";
+import { ref } from "vue";
 
 const gridElement = ref(null);
 const isContextMenuActive = ref(false);

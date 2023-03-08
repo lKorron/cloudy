@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import { createPopper } from "@popperjs/core";
 
 const props = defineProps({

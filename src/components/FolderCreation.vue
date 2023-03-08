@@ -25,7 +25,7 @@
 
 <script setup>
 import BaseButton from "./base/BaseButton.vue";
-import { ref, defineEmits, computed } from "vue";
+import { ref, computed } from "vue";
 
 const emit = defineEmits(["form-submitted"]);
 
