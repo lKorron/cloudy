@@ -6,6 +6,7 @@
     :y-position="cursorYposition"
     @create-folder="createFolder"
   />
+  <BroadCrump :item-list="['Микуся', 'Рисунки', 'Лето']" />
   <div
     ref="gridElement"
     v-click-outside="clickOutsideConfig"
@@ -35,6 +36,7 @@
 <script setup>
 import FileGridContextMenu from "./FileGridContextMenu.vue";
 import FileGridCell from "./FileGridCell.vue";
+import BroadCrump from "./BroadCrump.vue";
 import { ref } from "vue";
 
 const gridElement = ref(null);
