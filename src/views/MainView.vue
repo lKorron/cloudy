@@ -13,6 +13,7 @@
         @open-folder="openFolder"
         @download-file="downloadFile"
         @delete-file="deleteFile"
+        @broad-click="changePath"
       />
       <input
         id="fileElem"
@@ -67,5 +68,9 @@ const downloadFile = (fileName, filePath, fileType) => {
 
 const deleteFile = (filePath, fileType) => {
   deleteFromStorage(filePath, fileType);
+};
+
+const changePath = (value) => {
+  console.log(value);
 };
 </script>

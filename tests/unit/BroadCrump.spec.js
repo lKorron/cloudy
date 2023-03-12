@@ -50,7 +50,7 @@ describe("BroadCrump.vue", () => {
     ];
 
     testCases.forEach(({ itemList, clickedItem, result }) => {
-      it("should rewrite path after click", async () => {
+      it("should rewrite path after click and emit it", async () => {
         const wrapper = mount(BroadCrump, {
           props: {
             itemList,
@@ -62,6 +62,8 @@ describe("BroadCrump.vue", () => {
         const element = wrapper.find("div");
 
         expect(element.text()).toBe(result);
+
+        expect(wrapper.emitted("itemClicked").at(0).at(0)).toBe(clickedItem);
       });
     });
   });

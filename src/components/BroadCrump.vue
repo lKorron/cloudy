@@ -23,11 +23,13 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits(["itemClicked"]);
+
 const items = ref(props.itemList);
 
 const click = (value) => {
-  console.log(value);
   changeCrump(value);
+  emit("itemClicked", value);
 };
 
 const changeCrump = (itemName) => {

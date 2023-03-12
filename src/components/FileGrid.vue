@@ -6,7 +6,10 @@
     :y-position="cursorYposition"
     @create-folder="createFolder"
   />
-  <BroadCrump :item-list="['Микуся', 'Рисунки', 'Лето']" />
+  <BroadCrump
+    :item-list="['Микуся', 'Рисунки', 'Лето']"
+    @item-clicked="onBroadClick"
+  />
   <div
     ref="gridElement"
     v-click-outside="clickOutsideConfig"
@@ -57,6 +60,7 @@ const emit = defineEmits([
   "openFolder",
   "downloadFile",
   "deleteFile",
+  "broadClick",
 ]);
 
 const isChosen = (name) => name === chosenCellName.value;
@@ -84,6 +88,10 @@ const onRightClick = (evt) => {
 const onClick = (name) => {
   chosenCellName.value = name;
   isContextMenuActive.value = false;
+};
+
+const onBroadClick = (value) => {
+  emit("broadClick", value);
 };
 
 const createFolder = () => {

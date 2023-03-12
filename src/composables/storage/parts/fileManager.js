@@ -8,7 +8,12 @@ export function useFileManager(storage, fileList, updateList, currentPath) {
     updateList(fileList, folderRef);
   };
 
+  const changePath = (currentPath, newPath) => {
+    currentPath.value = newPath;
+  };
+
   return {
     openStorageFolder,
+    changePath,
   };
 }
