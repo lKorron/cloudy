@@ -1,16 +1,18 @@
 <template>
   <div class="flex flex-row justify-center">
     <BroadCrumpItem
-      v-for="(item, index) in itemList"
+      v-for="(item, index) in items"
       :key="index"
       :value="item"
-      :last="index === itemList.length - 1"
+      :last="index === items.length - 1"
+      data-test="item"
       @item-clicked="click"
     />
   </div>
 </template>
 
 <script setup>
+import { ref } from "vue";
 import BroadCrumpItem from "./BroadCrumpItem.vue";
 
 const props = defineProps({
@@ -21,7 +23,25 @@ const props = defineProps({
   },
 });
 
+const items = ref(props.itemList);
+
 const click = (value) => {
   console.log(value);
+  changeCrump(value);
+};
+
+const changeCrump = (itemName) => {
+  const updatedItems = [];
+
+  for (let i = 0; i < items.value.length; i++) {
+    const element = items.value[i];
+    updatedItems.push(element);
+
+    if (element === itemName) {
+      break;
+    }
+  }
+
+  items.value = updatedItems;
 };
 </script>
