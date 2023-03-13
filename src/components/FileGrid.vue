@@ -7,9 +7,10 @@
     @create-folder="createFolder"
   />
   <BroadCrump
-    :item-list="['Микуся', 'Рисунки', 'Лето']"
+    :item-list="pathList"
     @item-clicked="onBroadClick"
   />
+
   <div
     ref="gridElement"
     v-click-outside="clickOutsideConfig"
@@ -40,7 +41,7 @@
 import FileGridContextMenu from "./FileGridContextMenu.vue";
 import FileGridCell from "./FileGridCell.vue";
 import BroadCrump from "./BroadCrump.vue";
-import { ref } from "vue";
+import { ref, computed, onMounted } from "vue";
 
 const gridElement = ref(null);
 const isContextMenuActive = ref(false);
@@ -53,6 +54,10 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  currentPath: {
+    type: String,
+    default: () => "",
+  },
 });
 
 const emit = defineEmits([
@@ -62,6 +67,8 @@ const emit = defineEmits([
   "deleteFile",
   "broadClick",
 ]);
+
+const pathList = computed(() => props.currentPath.split("/"));
 
 const isChosen = (name) => name === chosenCellName.value;
 

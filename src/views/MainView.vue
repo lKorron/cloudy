@@ -9,6 +9,7 @@
       <div class="mb-5">Login as {{ username }}</div>
       <FileGrid
         :file-list="sortedFileList"
+        :current-path="currentPath"
         @create-folder="popup.open()"
         @open-folder="openFolder"
         @download-file="downloadFile"
@@ -39,6 +40,7 @@ import FolderCreation from "@/components/FolderCreation.vue";
 const { username } = useAuth();
 const {
   sortedFileList,
+  currentPath,
   uploadToStorage,
   createFolder,
   downloadFromStorage,

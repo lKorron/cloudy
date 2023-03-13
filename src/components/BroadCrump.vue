@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import BroadCrumpItem from "./BroadCrumpItem.vue";
 
 const props = defineProps({
@@ -26,6 +26,13 @@ const props = defineProps({
 const emit = defineEmits(["itemClicked"]);
 
 const items = ref(props.itemList);
+
+watch(
+  () => props.itemList,
+  () => {
+    items.value = props.itemList;
+  }
+);
 
 const click = (value) => {
   changeCrump(value);
