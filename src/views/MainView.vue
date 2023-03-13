@@ -72,7 +72,7 @@ const deleteFile = (filePath, fileType) => {
   deleteFromStorage(filePath, fileType);
 };
 
-const changePath = (value) => {
-  console.log(value);
+const changePath = (path) => {
+  openStorageFolder(path);
 };
 </script>

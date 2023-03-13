@@ -63,7 +63,7 @@ describe("BroadCrump.vue", () => {
 
         expect(element.text()).toBe(result);
 
-        expect(wrapper.emitted("itemClicked").at(0).at(0)).toBe(clickedItem);
+        expect(wrapper.emitted("itemClicked").at(0).at(0)).toBe(result);
       });
     });
   });

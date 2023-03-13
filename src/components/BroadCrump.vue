@@ -34,9 +34,9 @@ watch(
   }
 );
 
-const click = (value) => {
-  changeCrump(value);
-  emit("itemClicked", value);
+const click = (itemName) => {
+  changeCrump(itemName);
+  emit("itemClicked", items.value.join("/"));
 };
 
 const changeCrump = (itemName) => {

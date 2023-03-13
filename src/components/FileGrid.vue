@@ -97,8 +97,8 @@ const onClick = (name) => {
   isContextMenuActive.value = false;
 };
 
-const onBroadClick = (value) => {
-  emit("broadClick", value);
+const onBroadClick = (path) => {
+  emit("broadClick", path);
 };
 
 const createFolder = () => {
