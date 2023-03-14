@@ -15,8 +15,7 @@ export function useUpload(storage, fileList, currentPath) {
   const createFolder = async (folderName) => {
     const directoryPath = `${currentPath.value}/${folderName}`;
 
-    const storageRef = ref(storage);
-    const directory = ref(storageRef, directoryPath);
+    const directory = ref(storage, directoryPath);
     const ghostFile = ref(directory, ".ghostfile");
 
     try {

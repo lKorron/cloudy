@@ -8,17 +8,17 @@ import { useUpload } from "./parts/upload";
 
 export function useStorage() {
   const fileList = ref([]);
-  const currentPath = ref("");
+  const currentPath = ref("user/CiUOfL3Zi1eaHe0fHz6sQPCLNfq2");
 
   const storage = getStorage();
-  const storageRef = fref(storage);
+  const storageRef = fref(storage, currentPath.value);
 
   const sortedFileList = computed(() =>
     fileList.value.sort((a, b) => (a.name > b.name ? 1 : -1))
   );
 
   watch(currentPath, () => {
-    console.log(currentPath.value);
+    // console.log(currentPath.value);
   });
 
   updateList(fileList, storageRef);
