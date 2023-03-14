@@ -1,6 +1,13 @@
 <template>
   <div class="flex flex-row justify-center">
     <BroadCrumpItem
+      v-if="baseItem"
+      :value="baseItem"
+      :last="items.at(0) === ''"
+      @item-clicked="baseItemClick"
+    />
+
+    <BroadCrumpItem
       v-for="(item, index) in items"
       :key="index"
       :value="item"
@@ -21,6 +28,11 @@ const props = defineProps({
     reqruired: true,
     default: () => ["foo", "baz", "bar"],
   },
+  baseItem: {
+    type: String,
+    reqruired: false,
+    default: () => null,
+  },
 });
 
 const emit = defineEmits(["itemClicked"]);
@@ -34,8 +46,15 @@ watch(
   }
 );
 
+const baseItemClick = (itemName) => {
+  items.value = [""];
+
+  emit("itemClicked", "");
+};
+
 const click = (itemName) => {
   changeCrump(itemName);
+
   emit("itemClicked", items.value.join("/"));
 };
 

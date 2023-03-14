@@ -8,6 +8,7 @@
   />
   <BroadCrump
     :item-list="pathList"
+    :base-item="'documents'"
     @item-clicked="onBroadClick"
   />
 

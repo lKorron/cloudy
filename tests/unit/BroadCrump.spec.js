@@ -39,32 +39,57 @@ describe("BroadCrump.vue", () => {
     const testCases = [
       {
         itemList: ["a", "b", "c", "d"],
+        baseItem: null,
         clickedItem: "c",
-        result: "a/b/c",
+        rendered: "a/b/c",
+        emitted: "a/b/c",
       },
       {
         itemList: ["photo", "Luga", "nature"],
+        baseItem: null,
         clickedItem: "photo",
-        result: "photo",
+        rendered: "photo",
+        emitted: "photo",
+      },
+      {
+        itemList: ["photo", "Luga", "nature"],
+        baseItem: "Leto",
+        clickedItem: "photo",
+        rendered: "Leto/photo",
+        emitted: "photo",
+      },
+      {
+        itemList: ["photo", "Luga", "nature"],
+        baseItem: "Leto",
+        clickedItem: "Leto",
+        rendered: "Leto",
+        emitted: "",
       },
     ];
 
-    testCases.forEach(({ itemList, clickedItem, result }) => {
-      it("should rewrite path after click and emit it", async () => {
-        const wrapper = mount(BroadCrump, {
-          props: {
-            itemList,
-          },
+    testCases.forEach(
+      ({ itemList, baseItem, clickedItem, rendered, emitted }) => {
+        it("should rewrite path after click and emit it", async () => {
+          const wrapper = mount(BroadCrump, {
+            props: {
+              itemList,
+              baseItem,
+            },
+          });
+
+          if (clickedItem === baseItem) {
+            await wrapper.vm.baseItemClick(clickedItem);
+          } else {
+            await wrapper.vm.click(clickedItem);
+          }
+
+          const element = wrapper.find("div");
+
+          expect(element.text()).toBe(rendered);
+
+          expect(wrapper.emitted("itemClicked").at(0).at(0)).toBe(emitted);
         });
-
-        await wrapper.vm.click(clickedItem);
-
-        const element = wrapper.find("div");
-
-        expect(element.text()).toBe(result);
-
-        expect(wrapper.emitted("itemClicked").at(0).at(0)).toBe(result);
-      });
-    });
+      }
+    );
   });
 });
