@@ -1,16 +1,32 @@
 import { ref } from "vue";
 import router from "@/router";
-import { getAuth } from "@firebase/auth";
+import { getAuth, onAuthStateChanged } from "@firebase/auth";
 
 export function useAuth() {
   const auth = getAuth();
   const username = ref("");
+  const uid = ref("");
 
-  auth.onAuthStateChanged((user) => {
+  onAuthStateChanged(auth, (user) => {
     if (!user) {
       router.replace({ name: "login" });
-    } else username.value = auth.currentUser?.displayName;
+    } else {
+      username.value = user.displayName;
+      uid.value = user.uid;
+    }
   });
 
-  return { username };
+  const getUser = () => {
+    return new Promise((resolve, reject) => {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          resolve(user);
+        } else {
+          reject("user is not defined");
+        }
+      });
+    });
+  };
+
+  return { username, getUser };
 }

@@ -6,9 +6,9 @@ import { useDownload } from "./parts/download";
 import { useDeletion } from "./parts/deletion";
 import { useUpload } from "./parts/upload";
 
-export function useStorage() {
+export function useStorage(user) {
   const fileList = ref([]);
-  const currentPath = ref("user/CiUOfL3Zi1eaHe0fHz6sQPCLNfq2");
+  const currentPath = ref(`user/${user.uid}`);
 
   const storage = getStorage();
   const storageRef = fref(storage, currentPath.value);
