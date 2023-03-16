@@ -18,13 +18,22 @@ export function useAuth() {
 
   const getUser = () => {
     return new Promise((resolve, reject) => {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          resolve(user);
-        } else {
-          reject("user is not defined");
-        }
-      });
+      const userString = localStorage.getItem("userData");
+
+      if (userString) {
+        resolve(JSON.parse(userString));
+      } else {
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            let userData = JSON.stringify(user);
+
+            localStorage.setItem("userData", userData);
+            resolve(user);
+          } else {
+            reject(new Error("user is not defined"));
+          }
+        });
+      }
     });
   };
 
