@@ -33,7 +33,6 @@ import FileGrid from "./FileGrid.vue";
 
 import { ref } from "vue";
 import { useStorage } from "@/composables/storage";
-import { useAuth } from "@/composables/auth";
 import AsyncPopup from "@/components/AsyncPopup.vue";
 import FolderCreation from "@/components/FolderCreation.vue";
 
@@ -43,10 +42,6 @@ const props = defineProps({
     required: true,
   },
 });
-
-// const { username, getUser } = useAuth();
-
-const username = "testing";
 
 const {
   sortedFileList,

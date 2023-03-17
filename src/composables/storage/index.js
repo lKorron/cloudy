@@ -18,7 +18,7 @@ export function useStorage(user) {
   );
 
   watch(currentPath, () => {
-    // console.log(currentPath.value);
+    // console.log(currentPath.value);x
   });
 
   updateList(fileList, storageRef);
