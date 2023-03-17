@@ -7,7 +7,7 @@
     @create-folder="createFolder"
   />
   <BroadCrump
-    :item-list="pathList"
+    :item-list="shortPathList"
     :base-item="'documents'"
     @item-clicked="onBroadClick"
   />
@@ -42,7 +42,7 @@
 import FileGridContextMenu from "./FileGridContextMenu.vue";
 import FileGridCell from "./FileGridCell.vue";
 import BroadCrump from "./BroadCrump.vue";
-import { ref, computed, onMounted } from "vue";
+import { ref, computed } from "vue";
 
 const gridElement = ref(null);
 const isContextMenuActive = ref(false);
@@ -70,6 +70,11 @@ const emit = defineEmits([
 ]);
 
 const pathList = computed(() => props.currentPath.split("/"));
+
+const shortPathList = computed(() => {
+  const techItemsNumber = 2;
+  return pathList.value.slice(techItemsNumber);
+});
 
 const isChosen = (name) => name === chosenCellName.value;
 
@@ -99,7 +104,11 @@ const onClick = (name) => {
 };
 
 const onBroadClick = (path) => {
-  emit("broadClick", path);
+  const basePathArray = [...pathList.value].splice(0, 2);
+  const pathArray = [...basePathArray, ...path.split("/")];
+  const pathString = pathArray.join("/");
+
+  emit("broadClick", pathString);
 };
 
 const createFolder = () => {

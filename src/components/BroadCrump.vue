@@ -46,7 +46,7 @@ watch(
   }
 );
 
-const baseItemClick = (itemName) => {
+const baseItemClick = () => {
   items.value = [""];
 
   emit("itemClicked", "");
