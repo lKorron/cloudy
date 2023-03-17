@@ -11,6 +11,10 @@ export function useAuth() {
     if (!user) {
       router.replace({ name: "login" });
     } else {
+      username.value !== user.displayName &&
+        username.value !== "" &&
+        localStorage.removeItem("userData");
+
       username.value = user.displayName;
       uid.value = user.uid;
     }
