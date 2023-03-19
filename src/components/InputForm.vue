@@ -10,7 +10,7 @@
     >
       <div>
         <input
-          v-model="folderName"
+          v-model="enteredName"
           :placeholder="props.placeholder"
           class="border-gray-400 border-2 pl-2 rounded focus:border-blue-400 focus:border-2 focus:outline-none w-[100%] h-9"
           type="text"
@@ -30,15 +30,15 @@ import { ref, computed } from "vue";
 const props = defineProps({
   placeholder: {
     type: String,
-    default: "New folder",
+    default: "New file",
   },
 });
 const emit = defineEmits(["form-submitted"]);
 
-const folderName = ref("");
-const isValid = computed(() => folderName.value.length > 0);
+const enteredName = ref("");
+const isValid = computed(() => enteredName.value.length > 0);
 
 const submit = () => {
-  emit("form-submitted", folderName.value);
+  emit("form-submitted", enteredName.value);
 };
 </script>

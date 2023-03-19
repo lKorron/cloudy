@@ -1,6 +1,11 @@
 <template>
   <AsyncPopup ref="creatingPopup">
-    <InputForm @form-submitted="uploadFolder"> Enter folder name </InputForm>
+    <InputForm
+      :placeholder="'New folder'"
+      @form-submitted="uploadFolder"
+    >
+      Enter folder name
+    </InputForm>
   </AsyncPopup>
 
   <AsyncPopup ref="renamingPopup">
