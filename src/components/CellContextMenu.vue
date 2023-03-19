@@ -50,10 +50,10 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["deleteFile", "downloadFile"]);
+const emit = defineEmits(["deleteFile", "downloadFile", "renameFile"]);
 
 const renameFile = () => {
-  console.log("renaming");
+  emit("renameFile");
 };
 
 const deleteFile = () => {

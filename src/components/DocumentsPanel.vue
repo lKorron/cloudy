@@ -1,6 +1,10 @@
 <template>
-  <AsyncPopup ref="popup">
-    <FolderCreation @form-submitted="uploadFolder" />
+  <AsyncPopup ref="creatingPopup">
+    <InputForm @form-submitted="uploadFolder"> Enter folder name </InputForm>
+  </AsyncPopup>
+
+  <AsyncPopup ref="renamingPopup">
+    <InputForm @form-submitted="uploadFolder"> Rename </InputForm>
   </AsyncPopup>
 
   <ContentPanel desktop>
@@ -10,10 +14,11 @@
       <FileGrid
         :file-list="sortedFileList"
         :current-path="currentPath"
-        @create-folder="popup.open()"
+        @create-folder="creatingPopup.open()"
         @open-folder="openFolder"
-        @download-file="downloadFile"
+        @rename-file="renameFile"
         @delete-file="deleteFile"
+        @download-file="downloadFile"
         @broad-click="changePath"
       />
       <input
@@ -34,7 +39,7 @@ import FileGrid from "./FileGrid.vue";
 import { ref } from "vue";
 import { useStorage } from "@/composables/storage";
 import AsyncPopup from "@/components/AsyncPopup.vue";
-import FolderCreation from "@/components/FolderCreation.vue";
+import InputForm from "@/components/InputForm.vue";
 
 const props = defineProps({
   user: {
@@ -53,7 +58,8 @@ const {
   openStorageFolder,
 } = useStorage(props.user);
 
-const popup = ref(null);
+const creatingPopup = ref(null);
+const renamingPopup = ref(null);
 
 const uploadFile = (evt) => {
   const file = evt.target.files[0];
@@ -62,19 +68,23 @@ const uploadFile = (evt) => {
 
 const uploadFolder = (folderName) => {
   createFolder(folderName);
-  popup.value.close();
+  creatingPopup.value.close();
 };
 
 const openFolder = (folderPath) => {
   openStorageFolder(folderPath);
 };
 
-const downloadFile = (fileName, filePath, fileType) => {
-  downloadFromStorage(fileName, filePath, fileType);
+const renameFile = (filePath, fileType) => {
+  console.log("renaming", filePath, fileType);
+  renamingPopup.value.open();
 };
 
 const deleteFile = (filePath, fileType) => {
   deleteFromStorage(filePath, fileType);
+};
+const downloadFile = (fileName, filePath, fileType) => {
+  downloadFromStorage(fileName, filePath, fileType);
 };
 
 const changePath = (path) => {

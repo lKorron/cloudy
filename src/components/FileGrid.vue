@@ -30,6 +30,7 @@
       :selected="isChosen(name)"
       :type="type"
       @cell-clicked="onClick"
+      @rename-file="renameFile"
       @delete-file="deleteFile"
       @download-file="downloadFile"
       @open-folder="openFolder"
@@ -64,6 +65,7 @@ const props = defineProps({
 const emit = defineEmits([
   "createFolder",
   "openFolder",
+  "renameFile",
   "downloadFile",
   "deleteFile",
   "broadClick",
@@ -113,6 +115,10 @@ const onBroadClick = (path) => {
 
 const createFolder = () => {
   emit("createFolder");
+};
+
+const renameFile = (filePath, fileType) => {
+  emit("renameFile", filePath, fileType);
 };
 
 const deleteFile = (filePath, fileType) => {

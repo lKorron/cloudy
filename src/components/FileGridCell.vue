@@ -15,6 +15,7 @@
       :boundaries-element="boundariesElement"
       :x-position="cursorXposition"
       :y-position="cursorYposition"
+      @rename-file="renameFile"
       @delete-file="deleteFile"
       @download-file="downloadFile"
     />
@@ -67,6 +68,7 @@ const props = defineProps({
 const emit = defineEmits([
   "cellClicked",
   "clickedOutside",
+  "renameFile",
   "deleteFile",
   "downloadFile",
   "openFolder",
@@ -94,6 +96,10 @@ const dblClick = () => {
   if (props.type === "folder") {
     emit("openFolder", props.path);
   }
+};
+
+const renameFile = () => {
+  emit("renameFile", props.path, props.type);
 };
 
 const deleteFile = () => {
