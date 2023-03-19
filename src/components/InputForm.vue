@@ -11,7 +11,7 @@
       <div>
         <input
           v-model="folderName"
-          placeholder="New folder"
+          :placeholder="props.placeholder"
           class="border-gray-400 border-2 pl-2 rounded focus:border-blue-400 focus:border-2 focus:outline-none w-[100%] h-9"
           type="text"
         />
@@ -27,6 +27,12 @@
 import BaseButton from "./base/BaseButton.vue";
 import { ref, computed } from "vue";
 
+const props = defineProps({
+  placeholder: {
+    type: String,
+    default: "New folder",
+  },
+});
 const emit = defineEmits(["form-submitted"]);
 
 const folderName = ref("");

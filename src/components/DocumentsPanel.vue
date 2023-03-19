@@ -4,7 +4,12 @@
   </AsyncPopup>
 
   <AsyncPopup ref="renamingPopup">
-    <InputForm @form-submitted="uploadFolder"> Rename </InputForm>
+    <InputForm
+      :placeholder="renamingPopupPlaceholder"
+      @form-submitted="renameFile"
+    >
+      {{ renamingPopupHeader }}
+    </InputForm>
   </AsyncPopup>
 
   <ContentPanel desktop>
@@ -16,7 +21,7 @@
         :current-path="currentPath"
         @create-folder="creatingPopup.open()"
         @open-folder="openFolder"
-        @rename-file="renameFile"
+        @rename-file="openRenaming"
         @delete-file="deleteFile"
         @download-file="downloadFile"
         @broad-click="changePath"
@@ -75,9 +80,29 @@ const openFolder = (folderPath) => {
   openStorageFolder(folderPath);
 };
 
-const renameFile = (filePath, fileType) => {
-  console.log("renaming", filePath, fileType);
+const renamingPopupHeader = ref("");
+const renamingPopupPlaceholder = ref("");
+
+const openRenaming = (filePath, fileType) => {
+  const name = filePath.split("/").at(-1);
+
+  renamingPopupHeader.value = `Rename ${name}`;
+
+  switch (fileType) {
+    case "document":
+      renamingPopupPlaceholder.value = "New file name";
+      break;
+    case "folder":
+      renamingPopupPlaceholder.value = "New folder name";
+      break;
+  }
+
   renamingPopup.value.open();
+};
+
+const renameFile = () => {
+  console.log("renaming logic");
+  renamingPopup.value.close();
 };
 
 const deleteFile = (filePath, fileType) => {
