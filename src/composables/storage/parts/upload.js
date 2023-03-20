@@ -1,4 +1,5 @@
 import { ref, uploadBytes, uploadString } from "firebase/storage";
+import { addToList } from "./visualFunctions";
 
 export function useUpload(storage, fileList, currentPath) {
   const uploadToStorage = (file) => {
@@ -27,18 +28,4 @@ export function useUpload(storage, fileList, currentPath) {
   };
 
   return { uploadToStorage, createFolder };
-}
-
-function addToList(fileList, fileName, filePath, fileType) {
-  if (isContainsElement(fileList, fileName, fileType)) {
-    fileList.value.push({ name: fileName, path: filePath, type: fileType });
-  }
-}
-
-function isContainsElement(fileList, fileName, fileType) {
-  return (
-    fileList.value.filter((el) => {
-      return el.name === fileName && el.type == fileType;
-    }).length <= 0
-  );
 }

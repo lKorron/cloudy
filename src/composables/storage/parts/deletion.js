@@ -1,4 +1,5 @@
 import { ref, listAll, deleteObject } from "firebase/storage";
+import { removeFromList } from "./visualFunctions";
 
 export function useDeletion(storage, fileList) {
   const deleteFromStorage = (filePath, fileType) => {
@@ -46,10 +47,4 @@ export function useDeletion(storage, fileList) {
   };
 
   return { deleteFromStorage };
-}
-
-function removeFromList(fileList, filePath, fileType) {
-  fileList.value = fileList.value.filter((el) => {
-    return el.path !== filePath || el.type !== fileType;
-  });
 }
