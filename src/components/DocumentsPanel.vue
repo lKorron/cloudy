@@ -65,6 +65,7 @@ const {
   createFolder,
   downloadFromStorage,
   deleteFromStorage,
+  renameStorageFile,
   openStorageFolder,
 } = useStorage(props.user);
 
@@ -87,6 +88,7 @@ const openFolder = (folderPath) => {
 
 const renamingPopupHeader = ref("");
 const renamingPopupPlaceholder = ref("");
+const renamingFileName = ref("");
 
 const openRenaming = (filePath, fileType) => {
   const name = filePath.split("/").at(-1);
@@ -102,11 +104,13 @@ const openRenaming = (filePath, fileType) => {
       break;
   }
 
+  renamingFileName.value = name;
+
   renamingPopup.value.open();
 };
 
-const renameFile = () => {
-  console.log("renaming logic");
+const renameFile = (fileName) => {
+  renameStorageFile(renamingFileName.value, fileName);
   renamingPopup.value.close();
 };
 

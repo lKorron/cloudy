@@ -17,10 +17,6 @@ export function useStorage(user) {
     fileList.value.sort((a, b) => (a.name > b.name ? 1 : -1))
   );
 
-  watch(currentPath, () => {
-    // console.log(currentPath.value);x
-  });
-
   updateList(fileList, storageRef);
 
   const { openStorageFolder } = useFileManager(
@@ -30,7 +26,10 @@ export function useStorage(user) {
     currentPath
   );
 
-  const { downloadFromStorage } = useDownload(storage, currentPath);
+  const { downloadFromStorage, getFileBlob } = useDownload(
+    storage,
+    currentPath
+  );
 
   const { deleteFromStorage } = useDeletion(storage, fileList);
 
@@ -39,6 +38,17 @@ export function useStorage(user) {
     fileList,
     currentPath
   );
+
+  const renameStorageFile = (oldName, newName, fileType) => {
+    const filePath = `${currentPath.value}/${oldName}`;
+
+    getFileBlob(filePath)
+      .then((blob) => new File([blob], newName))
+      .then((file) => {
+        deleteFromStorage(filePath, "document");
+        uploadToStorage(file);
+      });
+  };
 
   return {
     fileList,
@@ -49,6 +59,7 @@ export function useStorage(user) {
     openStorageFolder,
     downloadFromStorage,
     deleteFromStorage,
+    renameStorageFile,
   };
 }
 

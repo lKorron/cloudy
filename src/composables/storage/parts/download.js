@@ -28,6 +28,11 @@ export function useDownload(storage, currentPath) {
     });
   };
 
+  const getFileBlob = (filePath) => {
+    const fileRef = ref(storage, filePath);
+    return getBlob(fileRef);
+  };
+
   const downloadFolderAsZip = async (directoryPath = "") => {
     const zip = new JSZip();
 
@@ -64,6 +69,7 @@ export function useDownload(storage, currentPath) {
 
   return {
     downloadFromStorage,
+    getFileBlob,
   };
 }
 
