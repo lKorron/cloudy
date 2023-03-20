@@ -25,18 +25,26 @@
 
 <script setup>
 import BaseButton from "./base/BaseButton.vue";
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 
 const props = defineProps({
   placeholder: {
     type: String,
     default: "New file",
   },
+  inputValue: {
+    type: String,
+    default: "",
+  },
 });
 const emit = defineEmits(["form-submitted"]);
 
 const enteredName = ref("");
 const isValid = computed(() => enteredName.value.length > 0);
+
+onMounted(() => {
+  enteredName.value = props.inputValue;
+});
 
 const submit = () => {
   emit("form-submitted", enteredName.value);

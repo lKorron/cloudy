@@ -11,6 +11,7 @@
   <AsyncPopup ref="renamingPopup">
     <InputForm
       :placeholder="renamingPopupPlaceholder"
+      :input-value="renamingFileName"
       @form-submitted="renameFile"
     >
       {{ renamingPopupHeader }}
