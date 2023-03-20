@@ -1,10 +1,11 @@
-import { ref, computed, watch } from "vue";
+import { ref, computed } from "vue";
 import { getStorage, ref as fref, listAll } from "firebase/storage";
 
 import { useFileManager } from "./parts/fileManager";
 import { useDownload } from "./parts/download";
 import { useDeletion } from "./parts/deletion";
 import { useUpload } from "./parts/upload";
+import { reAddToList } from "./parts/visualFunctions";
 
 export function useStorage(user) {
   const fileList = ref([]);
@@ -47,7 +48,12 @@ export function useStorage(user) {
       .then((file) => {
         deleteFromStorage(filePath, "document");
         uploadToStorage(file);
+      })
+      .catch((error) => {
+        console.log(error);
       });
+
+    reAddToList(fileList, filePath, newName, "document");
   };
 
   return {

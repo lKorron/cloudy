@@ -17,3 +17,13 @@ export function removeFromList(fileList, filePath, fileType) {
     return el.path !== filePath || el.type !== fileType;
   });
 }
+
+export function reAddToList(fileList, filePath, newName, fileType) {
+  removeFromList(fileList, filePath, fileType);
+
+  const pathArr = filePath.split("/");
+  pathArr[pathArr.length - 1] = newName;
+  const newPath = pathArr.join("/");
+
+  addToList(fileList, newName, newPath, fileType);
+}
