@@ -37,7 +37,7 @@ const props = defineProps({
     default: "",
   },
 });
-const emit = defineEmits(["form-submitted"]);
+const emit = defineEmits(["formSubmitted"]);
 
 const enteredName = ref("");
 const isValid = computed(() => enteredName.value.length > 0);
@@ -47,6 +47,6 @@ onMounted(() => {
 });
 
 const submit = () => {
-  emit("form-submitted", enteredName.value);
+  emit("formSubmitted", enteredName.value);
 };
 </script>

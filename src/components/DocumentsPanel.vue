@@ -9,13 +9,22 @@
   </AsyncPopup>
 
   <AsyncPopup ref="renamingPopup">
-    <InputForm
+    <!-- <InputForm
       :placeholder="renamingPopupPlaceholder"
       :input-value="renamingFileName"
       @form-submitted="renameFile"
     >
       {{ renamingPopupHeader }}
-    </InputForm>
+    </InputForm> -->
+
+    <RenameForm
+      :placeholder="renamingPopupPlaceholder"
+      :input-value="renamingFileName"
+      :old-name="renamingFileName"
+      :file-type="renamingFileType"
+      @rename-submitted="renameFile"
+      >{{ renamingPopupHeader }}</RenameForm
+    >
   </AsyncPopup>
 
   <ContentPanel desktop>
@@ -51,6 +60,7 @@ import { ref } from "vue";
 import { useStorage } from "@/composables/storage";
 import AsyncPopup from "@/components/AsyncPopup.vue";
 import InputForm from "@/components/InputForm.vue";
+import RenameForm from "./RenameForm.vue";
 
 const props = defineProps({
   user: {
@@ -90,6 +100,7 @@ const openFolder = (folderPath) => {
 const renamingPopupHeader = ref("");
 const renamingPopupPlaceholder = ref("");
 const renamingFileName = ref("");
+const renamingFileType = ref("document");
 
 const openRenaming = (filePath, fileType) => {
   const name = filePath.split("/").at(-1);
@@ -106,12 +117,13 @@ const openRenaming = (filePath, fileType) => {
   }
 
   renamingFileName.value = name;
+  renamingFileType.value = fileType;
 
   renamingPopup.value.open();
 };
 
-const renameFile = (fileName) => {
-  renameStorageFile(renamingFileName.value, fileName);
+const renameFile = ({ oldName, newName, fileType }) => {
+  renameStorageFile(oldName, newName);
   renamingPopup.value.close();
 };
 
