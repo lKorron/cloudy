@@ -1,4 +1,5 @@
 import { ref, listAll } from "firebase/storage";
+
 import { reAddToList } from "./visualFunctions";
 
 export function useRenaming(
@@ -38,22 +39,32 @@ export function useRenaming(
   };
 
   const renameFolder = (path, name) => {
-    const oldName = path.split("/").at(-1);
     const folderIndex = path.split("/").length - 1;
 
-    copyFolder(path);
+    copyFolder(path, name, folderIndex);
+
+    deleteFromStorage(path, "folder");
   };
 
-  const copyFolder = (path) => {
+  const copyFolder = (path, directoryName, index) => {
     const folderRef = ref(storage, path);
     listAll(folderRef)
       .then((dir) => {
         dir.items.forEach((fileRef) => {
-          console.log(fileRef.fullPath);
+          getFileBlob(fileRef.fullPath)
+            .then((blob) => new File([blob], fileRef.name))
+            .then((file) => {
+              const uploadingPath = renamePath(
+                fileRef.fullPath,
+                directoryName,
+                index
+              );
+              uploadToStorage(file, uploadingPath);
+            });
         });
 
         dir.prefixes.forEach((folderRef) => {
-          copyFolder(folderRef.fullPath);
+          copyFolder(folderRef.fullPath, directoryName, index);
         });
       })
       .catch((error) => console.log(error));

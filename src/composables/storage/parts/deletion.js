@@ -46,5 +46,5 @@ export function useDeletion(storage, fileList) {
       .catch((error) => console.log(error));
   };
 
-  return { deleteFromStorage };
+  return { deleteFromStorage, deleteFolderFromStorage };
 }
