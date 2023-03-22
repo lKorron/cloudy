@@ -41,6 +41,7 @@ export function useStorage(user) {
   );
 
   const { renameStorageFile } = useRenaming(
+    storage,
     fileList,
     currentPath,
     getFileBlob,
