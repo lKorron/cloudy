@@ -123,7 +123,7 @@ const openRenaming = (filePath, fileType) => {
 };
 
 const renameFile = ({ oldName, newName, fileType }) => {
-  renameStorageFile(oldName, newName);
+  renameStorageFile(oldName, newName, fileType);
   renamingPopup.value.close();
 };
 

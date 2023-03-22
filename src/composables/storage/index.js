@@ -5,7 +5,7 @@ import { useFileManager } from "./parts/fileManager";
 import { useDownload } from "./parts/download";
 import { useDeletion } from "./parts/deletion";
 import { useUpload } from "./parts/upload";
-import { reAddToList } from "./parts/visualFunctions";
+import { useRenaming } from "./parts/renaming";
 
 export function useStorage(user) {
   const fileList = ref([]);
@@ -40,21 +40,13 @@ export function useStorage(user) {
     currentPath
   );
 
-  const renameStorageFile = (oldName, newName, fileType) => {
-    const filePath = `${currentPath.value}/${oldName}`;
-
-    getFileBlob(filePath)
-      .then((blob) => new File([blob], newName))
-      .then((file) => {
-        deleteFromStorage(filePath, "document");
-        uploadToStorage(file);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    reAddToList(fileList, filePath, newName, "document");
-  };
+  const { renameStorageFile } = useRenaming(
+    fileList,
+    currentPath,
+    getFileBlob,
+    deleteFromStorage,
+    uploadToStorage
+  );
 
   return {
     fileList,
