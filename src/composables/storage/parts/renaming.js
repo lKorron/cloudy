@@ -8,20 +8,33 @@ export function useRenaming(
   uploadToStorage
 ) {
   const renameStorageFile = (oldName, newName, fileType) => {
-    const filePath = `${currentPath.value}/${oldName}`;
+    const path = `${currentPath.value}/${oldName}`;
 
-    getFileBlob(filePath)
-      .then((blob) => new File([blob], newName))
+    switch (fileType) {
+      case "document":
+        renameDocument(path, newName);
+        break;
+
+      case "folder":
+        break;
+    }
+  };
+
+  const renameDocument = (path, name) => {
+    getFileBlob(path)
+      .then((blob) => new File([blob], name))
       .then((file) => {
-        deleteFromStorage(filePath, fileType);
+        deleteFromStorage(path, "document");
         uploadToStorage(file);
       })
       .catch((error) => {
         console.log(error);
       });
 
-    reAddToList(fileList, filePath, newName, fileType);
+    reAddToList(fileList, path, name, "document");
   };
+
+  const renameFolder = () => {};
 
   return {
     renameStorageFile,
