@@ -47,6 +47,7 @@ export function useRenaming(
 
   const copyFolder = (path, directoryName, index) => {
     const folderRef = ref(storage, path);
+    reAddToList(fileList, path, directoryName, "folder");
     return listAll(folderRef)
       .then((dir) => {
         dir.items.forEach((fileRef) => {
