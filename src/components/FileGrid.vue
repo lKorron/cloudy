@@ -106,9 +106,15 @@ const onClick = (name) => {
 };
 
 const onBroadClick = (path) => {
+  let pathString;
   const basePathArray = [...pathList.value].splice(0, 2);
-  const pathArray = [...basePathArray, ...path.split("/")];
-  const pathString = pathArray.join("/");
+
+  if (path) {
+    const pathArray = [...basePathArray, ...path.split("/")];
+    pathString = pathArray.join("/");
+  } else {
+    pathString = basePathArray.join("/");
+  }
 
   emit("broadClick", pathString);
 };
