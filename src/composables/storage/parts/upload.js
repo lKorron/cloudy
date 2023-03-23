@@ -2,7 +2,7 @@ import { ref, uploadBytes, uploadString } from "firebase/storage";
 import { addToList } from "./visualFunctions";
 
 export function useUpload(storage, fileList, currentPath) {
-  const uploadToStorage = (file, filePath) => {
+  const uploadToStorage = (file, filePath, isUpdateVisual = true) => {
     if (!filePath) {
       filePath = `${currentPath.value}/${file.name}`;
     }
@@ -11,7 +11,7 @@ export function useUpload(storage, fileList, currentPath) {
 
     uploadBytes(fileRef, file)
       .then(() => {
-        addToList(fileList, file.name, filePath, "document");
+        isUpdateVisual && addToList(fileList, file.name, filePath, "document");
       })
       .catch((err) => console.error(err));
   };

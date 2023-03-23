@@ -1,5 +1,4 @@
 import { ref, listAll } from "firebase/storage";
-
 import { reAddToList } from "./visualFunctions";
 
 export function useRenaming(
@@ -41,14 +40,14 @@ export function useRenaming(
   const renameFolder = (path, name) => {
     const folderIndex = path.split("/").length - 1;
 
-    copyFolder(path, name, folderIndex);
-
-    deleteFromStorage(path, "folder");
+    copyFolder(path, name, folderIndex).finally(() => {
+      deleteFromStorage(path, "folder");
+    });
   };
 
   const copyFolder = (path, directoryName, index) => {
     const folderRef = ref(storage, path);
-    listAll(folderRef)
+    return listAll(folderRef)
       .then((dir) => {
         dir.items.forEach((fileRef) => {
           getFileBlob(fileRef.fullPath)
@@ -59,7 +58,7 @@ export function useRenaming(
                 directoryName,
                 index
               );
-              uploadToStorage(file, uploadingPath);
+              uploadToStorage(file, uploadingPath, false);
             });
         });
 
