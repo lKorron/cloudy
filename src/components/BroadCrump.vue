@@ -3,7 +3,7 @@
     <BroadCrumpItem
       v-if="baseItem"
       :value="baseItem"
-      :last="items.at(0) === ''"
+      :last="items.at(0) === '' || items.at(0) == null"
       @item-clicked="baseItemClick"
     />
 
