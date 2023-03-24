@@ -36,6 +36,7 @@
       @open-folder="openFolder"
       >{{ name }}</FileGridCell
     >
+    <EmptyCell @right-click="onRightClick" />
   </div>
 </template>
 
@@ -44,6 +45,7 @@ import FileGridContextMenu from "./FileGridContextMenu.vue";
 import FileGridCell from "./FileGridCell.vue";
 import BroadCrump from "./BroadCrump.vue";
 import { ref, computed } from "vue";
+import EmptyCell from "./EmptyCell.vue";
 
 const gridElement = ref(null);
 const isContextMenuActive = ref(false);
