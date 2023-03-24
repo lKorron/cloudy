@@ -10,6 +10,10 @@ export function useRenaming(
   uploadToStorage
 ) {
   const renameStorageFile = (oldName, newName, fileType) => {
+    if (oldName === newName) {
+      return;
+    }
+
     const path = `${currentPath.value}/${oldName}`;
 
     switch (fileType) {
