@@ -1,6 +1,10 @@
 import { ref } from "vue";
 import router from "@/router";
-import { getAuth, onAuthStateChanged } from "@firebase/auth";
+import {
+  getAuth,
+  onAuthStateChanged,
+  signOut as firebaseSignOut,
+} from "@firebase/auth";
 
 export function useAuth() {
   const auth = getAuth();
@@ -41,5 +45,9 @@ export function useAuth() {
     });
   };
 
-  return { username, getUser };
+  const signOut = () => {
+    firebaseSignOut(auth);
+  };
+
+  return { username, getUser, signOut };
 }

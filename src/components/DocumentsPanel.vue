@@ -9,14 +9,6 @@
   </AsyncPopup>
 
   <AsyncPopup ref="renamingPopup">
-    <!-- <InputForm
-      :placeholder="renamingPopupPlaceholder"
-      :input-value="renamingFileName"
-      @form-submitted="renameFile"
-    >
-      {{ renamingPopupHeader }}
-    </InputForm> -->
-
     <RenameForm
       :placeholder="renamingPopupPlaceholder"
       :input-value="renamingFileName"
@@ -28,9 +20,9 @@
   </AsyncPopup>
 
   <ContentPanel desktop>
-    <template #header>Store files</template>
     <template #default>
-      <div class="mb-5">Login as {{ props.user.displayName }}</div>
+      <CurrentUser :user="props.user" />
+      <h1 class="text-[25px] font-bold">Store files</h1>
       <FileGrid
         :file-list="sortedFileList"
         :current-path="currentPath"
@@ -61,6 +53,7 @@ import { useStorage } from "@/composables/storage";
 import AsyncPopup from "@/components/AsyncPopup.vue";
 import InputForm from "@/components/InputForm.vue";
 import RenameForm from "./RenameForm.vue";
+import CurrentUser from "./CurrentUser.vue";
 
 const props = defineProps({
   user: {
