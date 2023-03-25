@@ -1,7 +1,8 @@
 <template>
   <div class="flex justify-end w-[90%] mx-auto">
-    <div class="">{{ user.displayName }}</div>
+    <div data-test="username">{{ user.displayName }}</div>
     <BaseButton
+      data-test="logoutButton"
       class="ml-2"
       @click="signOut"
       >Sign out</BaseButton

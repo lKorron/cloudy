@@ -54,5 +54,7 @@ export function useAuth() {
 
 export function signOut() {
   const auth = getAuth();
-  firebaseSignOut(auth);
+  firebaseSignOut(auth).catch((error) =>
+    console.log(`Signed out error: ${error}`)
+  );
 }
