@@ -11,7 +11,7 @@
 
 <script setup>
 import BaseButton from "./base/BaseButton.vue";
-import { useAuth } from "@/composables/auth";
+import { signOut } from "@/composables/auth";
 
 defineProps({
   user: {
@@ -19,6 +19,4 @@ defineProps({
     required: true,
   },
 });
-
-const { signOut } = useAuth();
 </script>

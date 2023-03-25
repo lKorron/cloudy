@@ -51,3 +51,8 @@ export function useAuth() {
 
   return { username, getUser, signOut };
 }
+
+export function signOut() {
+  const auth = getAuth();
+  firebaseSignOut(auth);
+}
