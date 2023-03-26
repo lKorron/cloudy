@@ -1,5 +1,6 @@
-import { mount } from "@vue/test-utils";
+import { mount, shallowMount } from "@vue/test-utils";
 import CurrentUser from "@/components/CurrentUser";
+import AsyncPupup from "@/components/AsyncPopup";
 import { signOut } from "@/composables/auth";
 
 jest.mock("@/composables/auth", () => {
@@ -15,7 +16,7 @@ describe("CurrentUser.vue", () => {
 
   beforeEach(() => {
     user = {
-      displayName: "Ivan",
+      displayName: "Korron",
     };
 
     wrapper = mount(CurrentUser, {
@@ -28,14 +29,16 @@ describe("CurrentUser.vue", () => {
   it("should render username", () => {
     let name = wrapper.get("[data-test='username']");
 
-    expect(name.text()).toBe("Ivan");
+    expect(name.text()).toBe("Korron");
   });
 
   it("should sign out by clicking button", async () => {
+    const mockOpen = (wrapper.vm.openPopup = jest.fn());
+
     let logoutButton = wrapper.get("[data-test='logoutButton'");
 
     await logoutButton.trigger("click");
 
-    expect(signOut).toBeCalledTimes(1);
+    expect(mockOpen).toHaveBeenCalled();
   });
 });
