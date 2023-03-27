@@ -3,8 +3,8 @@
     <YesNoForm
       @confirm-choice="signOut()"
       @reject-choice="signoutPopup.close()"
-      >Do you want to sign out?</YesNoForm
-    >
+      >Do you want to sign out?
+    </YesNoForm>
   </AsyncPopup>
 
   <div class="flex justify-end w-[90%] mx-auto">
@@ -12,7 +12,7 @@
     <BaseButton
       data-test="logoutButton"
       class="ml-2"
-      @click="openPopup"
+      @click="openPopup()"
     >
       Sign out
     </BaseButton>
