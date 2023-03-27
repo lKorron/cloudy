@@ -32,7 +32,7 @@ describe("CurrentUser.vue", () => {
     expect(name.text()).toBe("Korron");
   });
 
-  it("should sign out by clicking button", async () => {
+  it("should open popup by clicking button", async () => {
     const mockOpen = (wrapper.vm.openPopup = jest.fn());
 
     let logoutButton = wrapper.get("[data-test='logoutButton'");
