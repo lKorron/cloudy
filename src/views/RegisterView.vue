@@ -96,6 +96,14 @@
         </div>
 
         <BaseButton :disabled="!meta.valid">Sign up</BaseButton>
+        <div class="leading-5 mt-1">or</div>
+
+        <button
+          class="text-xs hover:underline"
+          @click.prevent="goToLogin"
+        >
+          Sign in
+        </button>
       </Form>
     </template>
   </ContentPanel>
@@ -140,6 +148,10 @@ const signUp = () => {
         `Creating user error ${errorMessage} with code ${errorCode}`
       );
     });
+};
+
+const goToLogin = () => {
+  router.push({ name: "login" });
 };
 </script>
 
