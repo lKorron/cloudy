@@ -18,9 +18,11 @@
         <td><img width="300" src="/screens/phone2.png"/></td>
     </tr>
     </table>
+    <table>
+    <tr>
+    <td><img width="627" src="/screens/preview2.png"/></td>
+    </tr></table>
 </div>
-
-![main screen](/screens/preview2.png)
 
 ## Stack
 
