@@ -1,29 +1,29 @@
-# cloudy
+# Cloudy
 
-## Project setup
-```
-npm install
-```
+![animated preview](/screens/preview.gif)
+Небольшое облачное хранилище данных. Хотя в данный момент идет разработка, основные функции уже готовы. К ним относятся:
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+1. Регистрация и авторизация пользователей
+2. Отдельное хранилище для каждого пользователя
+3. Загрузка файлов
+4. Создание папок
+5. Переименование папок и файлов
+6. Загрузка папок с автоматическим архивированием и сохранением файлововой структуры
+7. Навигация по системе при помощи "хлебных крошек"
 
-### Compiles and minifies for production
-```
-npm run build
-```
+<div align="center">
+    <table>
+    <tr>
+        <td><img width="300" src="/screens/phone1.png"/></td>
+        <td><img width="300" src="/screens/phone2.png"/></td>
+    </tr>
+    </table>
+</div>
 
-### Run your unit tests
-```
-npm run test:unit
-```
+![main screen](/screens/preview2.png)
 
-### Lints and fixes files
-```
-npm run lint
-```
+## Stack
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+```
+vue3 (composition/options api), vue-router, vee-validate, firebase, tailwind.css, popper.js, etc.
+```
