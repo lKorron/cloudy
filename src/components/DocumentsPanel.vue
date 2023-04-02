@@ -33,6 +33,12 @@
         @download-file="downloadFile"
         @broad-click="changePath"
       />
+
+      <MobileMenu
+        v-if="isMobile()"
+        @create-folder="creatingPopup.open()"
+      />
+
       <input
         id="fileElem"
         class="mb-10 hidden"
@@ -54,6 +60,7 @@ import AsyncPopup from "@/components/AsyncPopup.vue";
 import InputForm from "@/components/InputForm.vue";
 import RenameForm from "./RenameForm.vue";
 import CurrentUser from "./CurrentUser.vue";
+import MobileMenu from "./MobileMenu.vue";
 
 const props = defineProps({
   user: {
@@ -61,6 +68,22 @@ const props = defineProps({
     required: true,
   },
 });
+
+const isMobile = () => {
+  const toMatch = [
+    /Android/i,
+    /webOS/i,
+    /iPhone/i,
+    /iPad/i,
+    /iPod/i,
+    /BlackBerry/i,
+    /Windows Phone/i,
+  ];
+
+  return toMatch.some((toMatchItem) => {
+    return navigator.userAgent.match(toMatchItem);
+  });
+};
 
 const {
   sortedFileList,
