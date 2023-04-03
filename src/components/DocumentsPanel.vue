@@ -26,6 +26,7 @@
       <FileGrid
         :file-list="sortedFileList"
         :current-path="currentPath"
+        :with-empty-cell="!isMobile()"
         @create-folder="creatingPopup.open()"
         @open-folder="openFolder"
         @rename-file="openRenaming"

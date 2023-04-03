@@ -36,7 +36,10 @@
       @open-folder="openFolder"
       >{{ name }}</FileGridCell
     >
-    <EmptyCell @right-click="onRightClick" />
+    <EmptyCell
+      v-if="props.withEmptyCell"
+      @right-click="onRightClick"
+    />
   </div>
 </template>
 
@@ -61,6 +64,9 @@ const props = defineProps({
   currentPath: {
     type: String,
     default: () => "",
+  },
+  withEmptyCell: {
+    type: Boolean,
   },
 });
 
