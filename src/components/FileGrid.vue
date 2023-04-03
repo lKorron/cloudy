@@ -67,6 +67,7 @@ const props = defineProps({
   },
   withEmptyCell: {
     type: Boolean,
+    default: true,
   },
 });
 
