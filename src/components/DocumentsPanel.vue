@@ -65,6 +65,7 @@ import InputForm from "@/components/InputForm.vue";
 import RenameForm from "./RenameForm.vue";
 import CurrentUser from "./CurrentUser.vue";
 import MobileMenu from "./MobileMenu.vue";
+import isMobile from "@/modules/isMobile";
 
 const props = defineProps({
   user: {
@@ -72,12 +73,6 @@ const props = defineProps({
     required: true,
   },
 });
-
-const isMobile = () => {
-  const touchDevice = "ontouchstart" in document.documentElement;
-
-  return touchDevice;
-};
 
 const {
   sortedFileList,
