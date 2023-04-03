@@ -19,10 +19,18 @@
     >
   </AsyncPopup>
 
-  <ContentPanel desktop>
+  <ContentPanel
+    desktop
+    class="mb-5"
+  >
     <template #default>
       <CurrentUser :user="props.user" />
+      <MobileMenu
+        v-if="isMobile()"
+        @create-folder="creatingPopup.open()"
+      />
       <h1 class="text-[25px] font-bold">Store files</h1>
+
       <FileGrid
         :file-list="sortedFileList"
         :current-path="currentPath"
@@ -33,11 +41,6 @@
         @delete-file="deleteFile"
         @download-file="downloadFile"
         @broad-click="changePath"
-      />
-
-      <MobileMenu
-        v-if="isMobile()"
-        @create-folder="creatingPopup.open()"
       />
 
       <input
