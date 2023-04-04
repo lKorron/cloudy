@@ -7,8 +7,9 @@
         selected,
     }"
     @click="click"
-    @click.right="clickRight"
-    @dblclick="dblClick"
+    @click.right="openContext"
+    @dblclick="openFolder"
+    @touchend="openMobileContext"
   >
     <CellContextMenu
       :is-active="isContextMenuActive"
@@ -40,6 +41,7 @@
 <script setup>
 import { ref } from "vue";
 import CellContextMenu from "./CellContextMenu.vue";
+import isMobile from "@/modules/isMobile";
 
 const props = defineProps({
   name: {
@@ -78,13 +80,13 @@ const isContextMenuActive = ref(false);
 const cursorXposition = ref(0);
 const cursorYposition = ref(0);
 
-const click = () => {
-  isContextMenuActive.value = false;
+const mobile = isMobile();
 
-  emit("cellClicked", props.name);
+const click = () => {
+  mobile ? emit("openFolder", props.path) : emit("cellClicked", props.name);
 };
 
-const clickRight = (evt) => {
+const openContext = (evt) => {
   isContextMenuActive.value = true;
 
   cursorXposition.value = evt.clientX;
@@ -92,7 +94,11 @@ const clickRight = (evt) => {
   emit("cellClicked", props.name);
 };
 
-const dblClick = () => {
+const openMobileContext = () => {
+  console.log("context");
+};
+
+const openFolder = () => {
   if (props.type === "folder") {
     emit("openFolder", props.path);
   }
