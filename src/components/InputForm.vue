@@ -1,5 +1,5 @@
 <template>
-  <div class="w-96">
+  <div class="w-60 xxs:w-80 xs:w-96">
     <div class="flex flex-start">
       <h2 class="font-bold text-lg"><slot></slot></h2>
     </div>
