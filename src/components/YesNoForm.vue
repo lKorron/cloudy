@@ -1,7 +1,7 @@
 <template>
-  <div class="w-96">
+  <div class="mx-auto">
     <h2 class="mb-10"><slot></slot></h2>
-    <div class="flex justify-between w-2/6 mx-auto">
+    <div class="flex justify-between w-3/5 xxs:w-1/2 xs:w-2/6 mx-auto">
       <BaseButton @click="confirm">Yes</BaseButton>
       <BaseButton @click="reject">No</BaseButton>
     </div>

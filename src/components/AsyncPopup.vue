@@ -9,7 +9,7 @@
       @click="ignoreKeys ? '' : close()"
     >
       <div
-        class="mb-40 bg-white rounded-md shadow-md relative p-3"
+        class="mb-40 bg-white rounded-md shadow-md relative p-3 w-60 xxs:w-80 xs:w-96"
         @click.stop
       >
         <div>
