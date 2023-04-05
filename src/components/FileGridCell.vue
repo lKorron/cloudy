@@ -1,7 +1,7 @@
 <template>
   <div
     v-click-outside="clickOutsideConfig"
-    class="flex flex-col-reverse max-w-sm border-solid border-2 border-white rounded hover:bg-gray-100 hover:border-gray-100 justify-end"
+    class="flex flex-col-reverse max-w-sm border-solid border-2 border-white rounded hover:bg-gray-100 hover:border-gray-100 justify-end relative"
     :class="{
       'bg-gray-100 border-gray-100 hover:bg-gray-200 hover:border-gray-200':
         selected,
@@ -20,6 +20,18 @@
       @delete-file="deleteFile"
       @download-file="downloadFile"
     />
+
+    <div
+      v-if="mobile"
+      class="w-5 h-5 absolute top-2 right-2"
+    >
+      <img
+        class="w-5 h-5"
+        src="../assets/settings.png"
+        alt="settings"
+      />
+    </div>
+
     <h1 class="last break-words mt-2">{{ props.name }}</h1>
     <div class="h-[80px] w-[80px] my-0 mx-auto mt-2">
       <img
@@ -94,9 +106,7 @@ const openContext = (evt) => {
   emit("cellClicked", props.name);
 };
 
-const openMobileContext = () => {
-  console.log("context");
-};
+const openMobileContext = () => {};
 
 const openFolder = () => {
   if (props.type === "folder") {
