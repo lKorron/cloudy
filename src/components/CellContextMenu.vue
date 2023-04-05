@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="z-10">
     <ContextMenu
       :is-active="isActive"
       :boundaries-element="boundariesElement"
