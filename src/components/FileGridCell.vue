@@ -9,7 +9,6 @@
     @click="click"
     @click.right="openContext"
     @dblclick="openFolder"
-    @touchend="openMobileContext"
   >
     <CellContextMenu
       :is-active="isContextMenuActive"
@@ -21,16 +20,10 @@
       @download-file="downloadFile"
     />
 
-    <div
+    <BaseSettings
       v-if="mobile"
-      class="w-5 h-5 absolute top-2 right-2"
-    >
-      <img
-        class="w-5 h-5"
-        src="../assets/settings.png"
-        alt="settings"
-      />
-    </div>
+      @click.stop="openContext"
+    />
 
     <h1 class="last break-words mt-2">{{ props.name }}</h1>
     <div class="h-[80px] w-[80px] my-0 mx-auto mt-2">
@@ -54,6 +47,7 @@
 import { ref } from "vue";
 import CellContextMenu from "./CellContextMenu.vue";
 import isMobile from "@/modules/isMobile";
+import BaseSettings from "./base/BaseSettings.vue";
 
 const props = defineProps({
   name: {
