@@ -33,6 +33,7 @@
     <EmptyCell
       v-if="props.withEmptyCell"
       @right-click="onRightClick"
+      @click="onClickOutside"
     />
   </div>
 
