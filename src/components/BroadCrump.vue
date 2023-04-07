@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row justify-center">
+  <div class="flex flex-row justify-center flex-wrap">
     <BroadCrumpItem
       v-if="baseItem"
       :value="baseItem"

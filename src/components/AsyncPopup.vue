@@ -6,7 +6,10 @@
     <div
       v-if="isOpen"
       class="backdrop backdrop-blur-sm flex flex-row justify-center"
-      @click="ignoreKeys ? '' : close()"
+      @mouseover.self="state = 'wait'"
+      @mouseout.self="state = 'idle'"
+      @mousedown.self="state = 'down'"
+      @mouseup.self="state == 'down' && (ignoreKeys ? '' : close())"
     >
       <div
         class="mb-40 bg-white rounded-md shadow-md relative p-3 w-60 xxs:w-80 xs:w-96"
@@ -56,6 +59,7 @@ export default {
   data() {
     return {
       isOpen: false,
+      state: "idle",
     };
   },
 
