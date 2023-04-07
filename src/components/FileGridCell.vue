@@ -10,16 +10,6 @@
     @click.right="openContext"
     @dblclick="openFolder"
   >
-    <CellContextMenu
-      :is-active="isContextMenuActive"
-      :boundaries-element="boundariesElement"
-      :x-position="cursorXposition"
-      :y-position="cursorYposition"
-      @rename-file="renameFile"
-      @delete-file="deleteFile"
-      @download-file="downloadFile"
-    />
-
     <BaseSettings
       v-if="mobile"
       @click.stop="openContext"
@@ -45,7 +35,6 @@
 
 <script setup>
 import { ref } from "vue";
-import CellContextMenu from "./CellContextMenu.vue";
 import isMobile from "@/modules/isMobile";
 import BaseSettings from "./base/BaseSettings.vue";
 
@@ -80,6 +69,7 @@ const emit = defineEmits([
   "deleteFile",
   "downloadFile",
   "openFolder",
+  "openCellContext",
 ]);
 
 const isContextMenuActive = ref(false);
@@ -93,11 +83,26 @@ const click = () => {
 };
 
 const openContext = (evt) => {
-  isContextMenuActive.value = true;
-
   cursorXposition.value = evt.clientX;
   cursorYposition.value = evt.clientY;
+
   emit("cellClicked", props.name);
+
+  const mouseData = {
+    x: evt.clientX,
+    y: evt.clientY,
+  };
+
+  const itemData = {
+    name: props.name,
+    path: props.path,
+    type: props.type,
+  };
+
+  Object.freeze(mouseData);
+  Object.freeze(itemData);
+
+  emit("openCellContext", mouseData, itemData);
 };
 
 const openMobileContext = () => {};
@@ -110,14 +115,17 @@ const openFolder = () => {
 
 const renameFile = () => {
   emit("renameFile", props.path, props.type);
+  isContextMenuActive.value = false;
 };
 
 const deleteFile = () => {
   emit("deleteFile", props.path, props.type);
+  isContextMenuActive.value = false;
 };
 
 const downloadFile = () => {
   emit("downloadFile", props.name, props.path, props.type);
+  isContextMenuActive.value = false;
 };
 
 const clickOutside = () => {

@@ -1,11 +1,4 @@
 <template>
-  <FileGridContextMenu
-    :is-active="isContextMenuActive"
-    :boundaries-element="gridElement"
-    :x-position="cursorXposition"
-    :y-position="cursorYposition"
-    @create-folder="createFolder"
-  />
   <BroadCrump
     :item-list="shortPathList"
     :base-item="'documents'"
@@ -34,6 +27,7 @@
       @delete-file="deleteFile"
       @download-file="downloadFile"
       @open-folder="openFolder"
+      @open-cell-context="openCellContext"
       >{{ name }}</FileGridCell
     >
     <EmptyCell
@@ -41,10 +35,28 @@
       @right-click="onRightClick"
     />
   </div>
+
+  <FileGridContextMenu
+    :is-active="isContextMenuActive"
+    :boundaries-element="gridElement"
+    :x-position="cursorXposition"
+    :y-position="cursorYposition"
+    @create-folder="createFolder"
+  />
+  <CellContextMenu
+    :is-active="isCellContextActive"
+    :boundaries-element="gridElement"
+    :x-position="cellContextX"
+    :y-position="cellContextY"
+    @rename-file="renameFile"
+    @delete-file="deleteFile"
+    @download-file="downloadFile"
+  />
 </template>
 
 <script setup>
 import FileGridContextMenu from "./FileGridContextMenu.vue";
+import CellContextMenu from "./CellContextMenu.vue";
 import FileGridCell from "./FileGridCell.vue";
 import BroadCrump from "./BroadCrump.vue";
 import { ref, computed } from "vue";
@@ -92,6 +104,7 @@ const isChosen = (name) => name === chosenCellName.value;
 const onClickOutside = () => {
   chosenCellName.value = null;
   isContextMenuActive.value = false;
+  isCellContextActive.value = false;
 };
 
 const onClickSelf = () => {
@@ -100,6 +113,7 @@ const onClickSelf = () => {
 
 const onLeftClick = () => {
   isContextMenuActive.value = false;
+  isCellContextActive.value = false;
 };
 
 const onRightClick = (evt) => {
@@ -128,20 +142,39 @@ const onBroadClick = (path) => {
   emit("broadClick", pathString);
 };
 
+const isCellContextActive = ref(false);
+const cellContextX = ref(0);
+const cellContextY = ref(0);
+
+const fileName = ref("");
+const filePath = ref("");
+const fileType = ref("");
+
+const openCellContext = ({ x, y }, { name, path, type }) => {
+  isCellContextActive.value = true;
+
+  cellContextX.value = x;
+  cellContextY.value = y;
+
+  fileName.value = name;
+  filePath.value = path;
+  fileType.value = type;
+};
+
 const createFolder = () => {
   emit("createFolder");
 };
 
-const renameFile = (filePath, fileType) => {
-  emit("renameFile", filePath, fileType);
+const renameFile = () => {
+  emit("renameFile", filePath.value, fileType.value);
 };
 
-const deleteFile = (filePath, fileType) => {
-  emit("deleteFile", filePath, fileType);
+const deleteFile = () => {
+  emit("deleteFile", filePath.value, fileType.value);
 };
 
-const downloadFile = (fileName, filePath, fileType) => {
-  emit("downloadFile", fileName, filePath, fileType);
+const downloadFile = () => {
+  emit("downloadFile", fileName.value, filePath.value, fileType.value);
 };
 
 const openFolder = (folderPath) => {
