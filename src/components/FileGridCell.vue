@@ -1,6 +1,5 @@
 <template>
   <div
-    v-click-outside="clickOutsideConfig"
     class="flex flex-col-reverse max-w-sm border-solid border-2 border-white rounded hover:bg-gray-100 hover:border-gray-100 justify-end relative"
     :class="{
       'bg-gray-100 border-gray-100 hover:bg-gray-200 hover:border-gray-200':
@@ -62,19 +61,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits([
-  "cellClicked",
-  "clickedOutside",
-  "renameFile",
-  "deleteFile",
-  "downloadFile",
-  "openFolder",
-  "openCellContext",
-]);
-
-const isContextMenuActive = ref(false);
-const cursorXposition = ref(0);
-const cursorYposition = ref(0);
+const emit = defineEmits(["cellClicked", "openFolder", "openCellContext"]);
 
 const mobile = isMobile();
 
@@ -83,9 +70,6 @@ const click = () => {
 };
 
 const openContext = (evt) => {
-  cursorXposition.value = evt.clientX;
-  cursorYposition.value = evt.clientY;
-
   emit("cellClicked", props.name);
 
   const mouseData = {
@@ -105,35 +89,9 @@ const openContext = (evt) => {
   emit("openCellContext", mouseData, itemData);
 };
 
-const openMobileContext = () => {};
-
 const openFolder = () => {
   if (props.type === "folder") {
     emit("openFolder", props.path);
   }
-};
-
-const renameFile = () => {
-  emit("renameFile", props.path, props.type);
-  isContextMenuActive.value = false;
-};
-
-const deleteFile = () => {
-  emit("deleteFile", props.path, props.type);
-  isContextMenuActive.value = false;
-};
-
-const downloadFile = () => {
-  emit("downloadFile", props.name, props.path, props.type);
-  isContextMenuActive.value = false;
-};
-
-const clickOutside = () => {
-  isContextMenuActive.value = false;
-};
-
-const clickOutsideConfig = {
-  handler: clickOutside,
-  events: ["dblclick", "click", "contextmenu"],
 };
 </script>
