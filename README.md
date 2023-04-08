@@ -14,8 +14,9 @@
 <div align="center">
     <table>
     <tr>
-        <td><img width="300" src="/screens/phone1.png"/></td>
-        <td><img width="300" src="/screens/phone2.png"/></td>
+        <td><img width="200" src="/screens/phone1.png"/></td>
+        <td><img width="200" src="/screens/phone2.png"/></td>
+        <td><img width="200" src="/screens/phone3.png"/></td>
     </tr>
     </table>
     <table>
