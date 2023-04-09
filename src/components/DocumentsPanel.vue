@@ -63,7 +63,6 @@
         @rename-file="openRenaming"
         @delete-file="deleteFile"
         @download-file="downloadFile"
-        @broad-click="changePath"
       />
 
       <input
