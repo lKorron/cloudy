@@ -1,9 +1,27 @@
 <template>
-  <BroadCrump
-    :item-list="shortPathList"
-    :base-item="'documents'"
-    @item-clicked="onBroadClick"
-  />
+  <div class="flex justify-between w-[88%] mx-auto">
+    <BroadCrump
+      class="self-center"
+      :item-list="shortPathList"
+      :base-item="'documents'"
+      @item-clicked="onBroadClick"
+    />
+
+    <div class="flex">
+      <div class="w-[25px]">
+        <img
+          class="w-[25px]"
+          src="@/assets/sort.png"
+          alt="sort"
+        />
+      </div>
+
+      <select class="outline-none">
+        <option value="By name">By name</option>
+        <option value="By name">By date</option>
+      </select>
+    </div>
+  </div>
 
   <div
     ref="gridElement"
