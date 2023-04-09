@@ -1,28 +1,4 @@
 <template>
-  <div class="flex justify-between w-[88%] mx-auto">
-    <BroadCrump
-      class="self-center"
-      :item-list="shortPathList"
-      :base-item="'documents'"
-      @item-clicked="onBroadClick"
-    />
-
-    <div class="flex">
-      <div class="w-[25px]">
-        <img
-          class="w-[25px]"
-          src="@/assets/sort.png"
-          alt="sort"
-        />
-      </div>
-
-      <select class="outline-none">
-        <option value="By name">By name</option>
-        <option value="By name">By date</option>
-      </select>
-    </div>
-  </div>
-
   <div
     ref="gridElement"
     v-click-outside="clickOutsideConfig"
@@ -77,8 +53,7 @@
 import FileGridContextMenu from "./FileGridContextMenu.vue";
 import CellContextMenu from "./CellContextMenu.vue";
 import FileGridCell from "./FileGridCell.vue";
-import BroadCrump from "./BroadCrump.vue";
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import EmptyCell from "./EmptyCell.vue";
 
 const gridElement = ref(null);
@@ -108,15 +83,7 @@ const emit = defineEmits([
   "renameFile",
   "downloadFile",
   "deleteFile",
-  "broadClick",
 ]);
-
-const pathList = computed(() => props.currentPath.split("/"));
-
-const shortPathList = computed(() => {
-  const techItemsNumber = 2;
-  return pathList.value.slice(techItemsNumber);
-});
 
 const isChosen = (name) => name === chosenCellName.value;
 
@@ -145,20 +112,6 @@ const onRightClick = (evt) => {
 const onClick = (name) => {
   chosenCellName.value = name;
   isContextMenuActive.value = false;
-};
-
-const onBroadClick = (path) => {
-  let pathString;
-  const basePathArray = [...pathList.value].splice(0, 2);
-
-  if (path) {
-    const pathArray = [...basePathArray, ...path.split("/")];
-    pathString = pathArray.join("/");
-  } else {
-    pathString = basePathArray.join("/");
-  }
-
-  emit("broadClick", pathString);
 };
 
 const isCellContextActive = ref(false);

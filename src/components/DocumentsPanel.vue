@@ -30,6 +30,29 @@
         @create-folder="creatingPopup.open()"
       />
       <h1 class="text-[25px] font-bold">Store files</h1>
+      <div class="flex justify-between w-[88%] mx-auto">
+        <BroadCrump
+          class="self-center"
+          :item-list="shortPathList"
+          :base-item="'documents'"
+          @item-clicked="onBroadClick"
+        />
+
+        <div class="flex">
+          <div class="w-[25px]">
+            <img
+              class="w-[25px]"
+              src="@/assets/sort.png"
+              alt="sort"
+            />
+          </div>
+
+          <select class="outline-none">
+            <option value="By name">By name</option>
+            <option value="By name">By date</option>
+          </select>
+        </div>
+      </div>
 
       <FileGrid
         :file-list="sortedFileList"
@@ -58,13 +81,14 @@
 import ContentPanel from "@/components/ContentPanel.vue";
 import FileGrid from "./FileGrid.vue";
 
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useStorage } from "@/composables/storage";
 import AsyncPopup from "@/components/AsyncPopup.vue";
 import InputForm from "@/components/InputForm.vue";
 import RenameForm from "./RenameForm.vue";
 import CurrentUser from "./CurrentUser.vue";
 import MobileMenu from "./MobileMenu.vue";
+import BroadCrump from "./BroadCrump.vue";
 import isMobile from "@/modules/isMobile";
 
 const props = defineProps({
@@ -84,6 +108,27 @@ const {
   renameStorageFile,
   openStorageFolder,
 } = useStorage(props.user);
+
+const pathList = computed(() => currentPath.value.split("/"));
+
+const shortPathList = computed(() => {
+  const techItemsNumber = 2;
+  return pathList.value.slice(techItemsNumber);
+});
+
+const onBroadClick = (path) => {
+  let pathString;
+  const basePathArray = [...pathList.value].splice(0, 2);
+
+  if (path) {
+    const pathArray = [...basePathArray, ...path.split("/")];
+    pathString = pathArray.join("/");
+  } else {
+    pathString = basePathArray.join("/");
+  }
+
+  changePath(pathString);
+};
 
 const creatingPopup = ref(null);
 const renamingPopup = ref(null);
