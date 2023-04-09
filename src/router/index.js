@@ -27,6 +27,13 @@ const routes = [
     name: "main",
     component: () => import("../views/MainView.vue"),
   },
+
+  {
+    path: "/main/:id",
+    name: "mainId",
+    props: true,
+    component: () => import("../views/MainView.vue"),
+  },
 ];
 
 const router = createRouter({

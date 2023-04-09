@@ -10,6 +10,13 @@ import DocumentsPanel from "@/components/DocumentsPanel.vue";
 import { ref } from "vue";
 import { useAuth } from "@/composables/auth";
 
+defineProps({
+  directory: {
+    type: String,
+    default: "",
+  },
+});
+
 const user = ref("");
 
 const { getUser } = useAuth();

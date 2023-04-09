@@ -89,6 +89,7 @@ import CurrentUser from "./CurrentUser.vue";
 import MobileMenu from "./MobileMenu.vue";
 import BroadCrump from "./BroadCrump.vue";
 import isMobile from "@/modules/isMobile";
+import router from "@/router";
 
 const props = defineProps({
   user: {
@@ -143,6 +144,7 @@ const uploadFolder = (folderName) => {
 };
 
 const openFolder = (folderPath) => {
+  onPathChanged(folderPath);
   openStorageFolder(folderPath);
 };
 
@@ -184,6 +186,28 @@ const downloadFile = (fileName, filePath, fileType) => {
 };
 
 const changePath = (path) => {
+  onPathChanged(path);
   openStorageFolder(path);
+};
+
+const onPathChanged = (path) => {
+  let prettyPath = path.split("/").splice(2).join("/");
+
+  const prettyArray = prettyPath.split("/");
+  prettyArray.pop();
+
+  const directory = prettyPath.split("/").pop().toString();
+  prettyPath = prettyArray.join("/");
+
+  console.log(prettyPath);
+  console.log(directory);
+
+  router.addRoute({
+    path: "/" + prettyPath + "/:directory",
+    name: "t",
+    props: true,
+    component: () => import("@/views/MainView.vue"),
+  });
+  router.push({ name: "t", params: { directory } });
 };
 </script>
