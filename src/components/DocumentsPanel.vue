@@ -1,86 +1,88 @@
 <template>
-  <AsyncPopup ref="creatingPopup">
-    <InputForm
-      :placeholder="'New folder'"
-      @form-submitted="uploadFolder"
-    >
-      Enter folder name
-    </InputForm>
-  </AsyncPopup>
+  <div>
+    <AsyncPopup ref="creatingPopup">
+      <InputForm
+        :placeholder="'New folder'"
+        @form-submitted="uploadFolder"
+      >
+        Enter folder name
+      </InputForm>
+    </AsyncPopup>
 
-  <AsyncPopup ref="renamingPopup">
-    <RenameForm
-      :placeholder="renamingPopupPlaceholder"
-      :input-value="renamingFileName"
-      :old-name="renamingFileName"
-      :file-type="renamingFileType"
-      @rename-submitted="renameFile"
-      >{{ renamingPopupHeader }}</RenameForm
-    >
-  </AsyncPopup>
+    <AsyncPopup ref="renamingPopup">
+      <RenameForm
+        :placeholder="renamingPopupPlaceholder"
+        :input-value="renamingFileName"
+        :old-name="renamingFileName"
+        :file-type="renamingFileType"
+        @rename-submitted="renameFile"
+        >{{ renamingPopupHeader }}</RenameForm
+      >
+    </AsyncPopup>
 
-  <ContentPanel
-    desktop
-    class="mb-5"
-  >
-    <template #default>
-      <CurrentUser :user="props.user" />
-      <MobileMenu
-        v-if="isMobile()"
-        @create-folder="creatingPopup.open()"
-      />
-      <h1 class="text-[25px] font-bold">Store files</h1>
-      <div class="flex justify-between w-[88%] mx-auto">
-        <BroadCrump
-          class="self-center"
-          :item-list="shortPathList"
-          :base-item="'documents'"
-          @item-clicked="onBroadClick"
+    <ContentPanel
+      desktop
+      class="mb-5"
+    >
+      <template #default>
+        <CurrentUser :user="props.user" />
+        <MobileMenu
+          v-if="isMobile()"
+          @create-folder="creatingPopup.open()"
+        />
+        <h1 class="text-[25px] font-bold">Store files</h1>
+        <div class="flex justify-between w-[88%] mx-auto">
+          <BroadCrump
+            class="self-center"
+            :item-list="shortPathList"
+            :base-item="'documents'"
+            @item-clicked="onBroadClick"
+          />
+
+          <div class="flex">
+            <div class="w-[25px]">
+              <img
+                class="w-[25px]"
+                src="@/assets/sort.png"
+                alt="sort"
+              />
+            </div>
+
+            <select class="outline-none">
+              <option value="By name">By name</option>
+              <option value="By name">By date</option>
+            </select>
+          </div>
+        </div>
+
+        <FileGrid
+          :file-list="sortedFileList"
+          :current-path="currentPath"
+          :with-empty-cell="!isMobile()"
+          @create-folder="creatingPopup.open()"
+          @open-folder="openFolder"
+          @rename-file="openRenaming"
+          @delete-file="deleteFile"
+          @download-file="downloadFile"
         />
 
-        <div class="flex">
-          <div class="w-[25px]">
-            <img
-              class="w-[25px]"
-              src="@/assets/sort.png"
-              alt="sort"
-            />
-          </div>
-
-          <select class="outline-none">
-            <option value="By name">By name</option>
-            <option value="By name">By date</option>
-          </select>
-        </div>
-      </div>
-
-      <FileGrid
-        :file-list="sortedFileList"
-        :current-path="currentPath"
-        :with-empty-cell="!isMobile()"
-        @create-folder="creatingPopup.open()"
-        @open-folder="openFolder"
-        @rename-file="openRenaming"
-        @delete-file="deleteFile"
-        @download-file="downloadFile"
-      />
-
-      <input
-        id="fileElem"
-        class="mb-10 hidden"
-        type="file"
-        name="file"
-        @change="uploadFile"
-      />
-    </template>
-  </ContentPanel>
+        <input
+          id="fileElem"
+          class="mb-10 hidden"
+          type="file"
+          name="file"
+          @change="uploadFile"
+        />
+      </template>
+    </ContentPanel>
+  </div>
 </template>
 
 <script setup>
 import ContentPanel from "@/components/ContentPanel.vue";
 import FileGrid from "./FileGrid.vue";
 
-import { ref, computed } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 import { useStorage } from "@/composables/storage";
 import AsyncPopup from "@/components/AsyncPopup.vue";
 import InputForm from "@/components/InputForm.vue";
@@ -193,21 +195,20 @@ const changePath = (path) => {
 const onPathChanged = (path) => {
   let prettyPath = path.split("/").splice(2).join("/");
 
-  const prettyArray = prettyPath.split("/");
-  prettyArray.pop();
+  let slash = "/";
+  !prettyPath && (slash = "");
 
-  const directory = prettyPath.split("/").pop().toString();
-  prettyPath = prettyArray.join("/");
-
-  console.log(prettyPath);
-  console.log(directory);
+  const resultingPath = "/main" + slash + prettyPath;
 
   router.addRoute({
-    path: "/" + prettyPath + "/:directory",
-    name: "t",
+    path: resultingPath,
+    name: resultingPath,
     props: true,
     component: () => import("@/views/MainView.vue"),
+    beforeEnter: (to) => {
+      console.log(to.fullPath);
+    },
   });
-  router.push({ name: "t", params: { directory } });
+  router.push({ name: resultingPath });
 };
 </script>

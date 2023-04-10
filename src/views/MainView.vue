@@ -7,7 +7,7 @@
 
 <script setup>
 import DocumentsPanel from "@/components/DocumentsPanel.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useAuth } from "@/composables/auth";
 
 defineProps({
