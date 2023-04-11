@@ -18,8 +18,6 @@ export function useStorage(user) {
     fileList.value.sort((a, b) => (a.name > b.name ? 1 : -1))
   );
 
-  updateList(fileList, storageRef);
-
   const { openStorageFolder } = useFileManager(
     storage,
     fileList,

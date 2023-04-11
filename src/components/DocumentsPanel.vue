@@ -102,6 +102,19 @@ const props = defineProps({
   },
 });
 
+router.addRoute({
+  path: "/main/documents",
+  name: "documents",
+  component: () => import("@/views/MainView.vue"),
+  beforeEnter: (to) => {
+    let path = currentPath.value.split("/").slice(0, 2).join("/");
+
+    openStorageFolder(path);
+  },
+});
+
+router.push({ name: "documents" });
+
 const {
   sortedFileList,
   currentPath,
@@ -198,7 +211,7 @@ const onPathChanged = (path) => {
   let slash = "/";
   !prettyPath && (slash = "");
 
-  const resultingPath = "/main" + slash + prettyPath;
+  const resultingPath = "/main/documents" + slash + prettyPath;
 
   router.addRoute({
     path: resultingPath,
@@ -206,7 +219,6 @@ const onPathChanged = (path) => {
     props: true,
     component: () => import("@/views/MainView.vue"),
     beforeEnter: (to) => {
-      console.log(to);
       openStorageFolder(path);
     },
   });
