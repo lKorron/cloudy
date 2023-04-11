@@ -93,6 +93,8 @@ import BroadCrump from "./BroadCrump.vue";
 import isMobile from "@/modules/isMobile";
 import router from "@/router";
 
+window.router = router;
+
 const props = defineProps({
   user: {
     type: Object,
@@ -147,7 +149,6 @@ const uploadFolder = (folderName) => {
 
 const openFolder = (folderPath) => {
   onPathChanged(folderPath);
-  openStorageFolder(folderPath);
 };
 
 const renamingPopupHeader = ref("");
@@ -189,7 +190,6 @@ const downloadFile = (fileName, filePath, fileType) => {
 
 const changePath = (path) => {
   onPathChanged(path);
-  openStorageFolder(path);
 };
 
 const onPathChanged = (path) => {
@@ -206,7 +206,8 @@ const onPathChanged = (path) => {
     props: true,
     component: () => import("@/views/MainView.vue"),
     beforeEnter: (to) => {
-      console.log(to.fullPath);
+      console.log(to);
+      openStorageFolder(path);
     },
   });
   router.push({ name: resultingPath });
