@@ -106,7 +106,7 @@ router.addRoute({
   path: "/main/documents",
   name: "documents",
   component: () => import("@/views/MainView.vue"),
-  beforeEnter: (to) => {
+  beforeEnter: () => {
     let path = currentPath.value.split("/").slice(0, 2).join("/");
 
     openStorageFolder(path);
@@ -114,6 +114,15 @@ router.addRoute({
 });
 
 router.push({ name: "documents" });
+
+onMounted(() => {
+  getPathsArray().forEach((path) => {
+    const fullpath = currentPath.value + path;
+
+    addRoute(fullpath);
+    // router.push({ name: routeName });
+  });
+});
 
 const {
   sortedFileList,
@@ -206,7 +215,15 @@ const changePath = (path) => {
 };
 
 const onPathChanged = (path) => {
-  let prettyPath = path.split("/").splice(2).join("/");
+  const resultingPath = addRoute(path);
+
+  router.push({ name: resultingPath });
+
+  setPathsStorage(resultingPath);
+};
+
+const addRoute = (fullpath) => {
+  let prettyPath = fullpath.split("/").splice(2).join("/");
 
   let slash = "/";
   !prettyPath && (slash = "");
@@ -218,10 +235,41 @@ const onPathChanged = (path) => {
     name: resultingPath,
     props: true,
     component: () => import("@/views/MainView.vue"),
-    beforeEnter: (to) => {
-      openStorageFolder(path);
+    beforeEnter: () => {
+      openStorageFolder(fullpath);
     },
   });
-  router.push({ name: resultingPath });
+
+  return resultingPath;
 };
+
+const setPathsStorage = (path) => {
+  const itemName = "documentsPaths";
+
+  if (!sessionStorage.getItem(itemName)) {
+    sessionStorage.setItem(itemName, []);
+  }
+
+  const pathsArray = getPathsArray();
+
+  if (pathsArray.includes(path)) {
+    return;
+  }
+
+  pathsArray.push(path);
+
+  sessionStorage.setItem(itemName, pathsArray);
+};
+
+function getPathsArray() {
+  const itemName = "documentsPaths";
+
+  const pathsArray = sessionStorage.getItem(itemName).split(",");
+
+  if (pathsArray.at(0) === "" && pathsArray.length === 1) {
+    return [];
+  }
+
+  return pathsArray;
+}
 </script>
