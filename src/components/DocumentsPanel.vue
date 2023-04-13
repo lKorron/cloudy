@@ -83,6 +83,7 @@ import ContentPanel from "@/components/ContentPanel.vue";
 import FileGrid from "./FileGrid.vue";
 
 import { ref, computed, onMounted, watch } from "vue";
+import router from "@/router";
 import { useStorage } from "@/composables/storage";
 import AsyncPopup from "@/components/AsyncPopup.vue";
 import InputForm from "@/components/InputForm.vue";
@@ -91,7 +92,7 @@ import CurrentUser from "./CurrentUser.vue";
 import MobileMenu from "./MobileMenu.vue";
 import BroadCrump from "./BroadCrump.vue";
 import isMobile from "@/modules/isMobile";
-import router from "@/router";
+import { setPathsStorage } from "@/modules/pathsStorage";
 
 const props = defineProps({
   user: {
@@ -241,43 +242,9 @@ const addRoute = (fullpath) => {
   router.addRoute({
     path: resultingPath,
     name: resultingPath,
-    props: true,
     component: () => import("@/views/MainView.vue"),
-    beforeEnter: () => {
-      // openStorageFolder(fullpath);
-    },
   });
 
   return resultingPath;
 };
-
-const setPathsStorage = (path) => {
-  const itemName = "documentsPaths";
-
-  if (!sessionStorage.getItem(itemName)) {
-    sessionStorage.setItem(itemName, []);
-  }
-
-  const pathsArray = getPathsArray();
-
-  if (pathsArray.includes(path)) {
-    return;
-  }
-
-  pathsArray.push(path);
-
-  sessionStorage.setItem(itemName, pathsArray);
-};
-
-function getPathsArray() {
-  const itemName = "documentsPaths";
-
-  const pathsArray = sessionStorage.getItem(itemName).split(",");
-
-  if (pathsArray.at(0) === "" && pathsArray.length === 1) {
-    return [];
-  }
-
-  return pathsArray;
-}
 </script>

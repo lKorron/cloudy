@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import { getPathsArray } from "@/modules/pathsStorage";
 
 const routes = [
   {
@@ -50,59 +51,3 @@ getPathsArray()?.forEach((path) => {
 });
 
 export default router;
-
-const setPathsStorage = (path) => {
-  const itemName = "documentsPaths";
-
-  if (!sessionStorage.getItem(itemName)) {
-    sessionStorage.setItem(itemName, []);
-  }
-
-  const pathsArray = getPathsArray();
-
-  if (pathsArray.includes(path)) {
-    return;
-  }
-
-  pathsArray.push(path);
-
-  sessionStorage.setItem(itemName, pathsArray);
-};
-
-function getPathsArray() {
-  const itemName = "documentsPaths";
-
-  const pathsArray = sessionStorage.getItem(itemName)?.split(",");
-
-  if (!pathsArray) {
-    return;
-  }
-
-  if (pathsArray.at(0) === "" && pathsArray.length === 1) {
-    return [];
-  }
-
-  return pathsArray;
-}
-
-function addRoute(fullpath) {
-  let prettyPath = fullpath.split("/").splice(2).join("/");
-
-  let slash = "/";
-  !prettyPath && (slash = "");
-
-  const resultingPath = "/main/documents" + slash + prettyPath;
-
-  router.addRoute({
-    path: resultingPath,
-    name: resultingPath,
-    props: true,
-    component: () => import("@/views/MainView.vue"),
-    beforeEnter: () => {
-      console.log("rote");
-      // openStorageFolder(fullpath);
-    },
-  });
-
-  return resultingPath;
-}
