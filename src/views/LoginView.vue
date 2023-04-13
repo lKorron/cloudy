@@ -105,7 +105,7 @@ const goToRegister = () => {
 };
 
 const goToMainPage = () => {
-  router.push({ name: "main" });
+  router.push({ name: "documents" });
 };
 </script>
 

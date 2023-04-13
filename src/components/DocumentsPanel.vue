@@ -233,12 +233,12 @@ const addRoute = (fullpath) => {
   let slash = "/";
   !prettyPath && (slash = "");
 
-  const resultingPath = "/main" + slash + prettyPath;
+  const resultingPath = "/documents" + slash + prettyPath;
 
   router.addRoute({
     path: resultingPath,
     name: resultingPath,
-    component: () => import("@/views/MainView.vue"),
+    component: () => import("@/views/DocumentsView.vue"),
   });
 
   return resultingPath;

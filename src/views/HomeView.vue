@@ -10,7 +10,7 @@ const auth = getAuth();
 
 auth.onAuthStateChanged((user) => {
   if (user) {
-    router.replace({ name: "main" });
+    router.replace({ name: "documents" });
   } else {
     router.replace({ name: "login" });
   }

@@ -24,16 +24,9 @@ const routes = [
     component: () => import("../views/RegisterView.vue"),
   },
   {
-    path: "/main",
-    name: "main",
-    component: () => import("../views/MainView.vue"),
-  },
-
-  {
-    path: "/main/:id",
-    name: "mainId",
-    props: true,
-    component: () => import("../views/MainView.vue"),
+    path: "/documents",
+    name: "documents",
+    component: () => import("../views/DocumentsView.vue"),
   },
 ];
 
@@ -46,7 +39,7 @@ getPathsArray()?.forEach((path) => {
   router.addRoute({
     path,
     name: path,
-    component: () => import("@/views/MainView.vue"),
+    component: () => import("@/views/DocumentsView.vue"),
   });
 });
 
