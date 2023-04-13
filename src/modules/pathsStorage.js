@@ -19,7 +19,11 @@ export function setPathsStorage(path) {
 export function getPathsArray() {
   const itemName = "documentsPaths";
 
-  const pathsArray = sessionStorage.getItem(itemName).split(",");
+  const pathsArray = sessionStorage.getItem(itemName)?.split(",");
+
+  if (!pathsArray) {
+    return;
+  }
 
   if (pathsArray.at(0) === "" && pathsArray.length === 1) {
     return [];

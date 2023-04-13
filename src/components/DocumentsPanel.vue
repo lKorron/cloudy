@@ -101,22 +101,18 @@ const props = defineProps({
   },
 });
 
-router.addRoute({
-  path: "/main/documents",
-  name: "documents",
-  component: () => import("@/views/MainView.vue"),
-  beforeEnter: () => {
-    openStorageFolder(basePath.value);
-  },
-});
-
-// router.push({ name: "documents" });
-
 onMounted(() => {
   const currentPath = router.currentRoute.value.fullPath;
 
-  const resultingPath =
-    basePath.value + "/" + currentPath.split("/").slice(3).join("/");
+  const shortPath = currentPath.split("/").slice(2).join("/");
+
+  let slash = "/";
+
+  if (shortPath === "") {
+    slash = "";
+  }
+
+  const resultingPath = basePath.value + slash + shortPath;
 
   openStorageFolder(resultingPath);
 });
@@ -144,7 +140,7 @@ const basePath = computed(() =>
 );
 
 watch(router.currentRoute, (route) => {
-  const shortPath = route.fullPath.split("/").slice(3).join("/");
+  const shortPath = route.fullPath.split("/").slice(2).join("/");
 
   const newPath = `${basePath.value}/${shortPath}`;
 
@@ -237,7 +233,7 @@ const addRoute = (fullpath) => {
   let slash = "/";
   !prettyPath && (slash = "");
 
-  const resultingPath = "/main/documents" + slash + prettyPath;
+  const resultingPath = "/main" + slash + prettyPath;
 
   router.addRoute({
     path: resultingPath,
