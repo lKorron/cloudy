@@ -82,7 +82,7 @@
 import ContentPanel from "@/components/ContentPanel.vue";
 import FileGrid from "./FileGrid.vue";
 
-import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
 import { useStorage } from "@/composables/storage";
 import AsyncPopup from "@/components/AsyncPopup.vue";
 import InputForm from "@/components/InputForm.vue";
@@ -92,8 +92,6 @@ import MobileMenu from "./MobileMenu.vue";
 import BroadCrump from "./BroadCrump.vue";
 import isMobile from "@/modules/isMobile";
 import router from "@/router";
-
-window.router = router;
 
 const props = defineProps({
   user: {
@@ -107,21 +105,19 @@ router.addRoute({
   name: "documents",
   component: () => import("@/views/MainView.vue"),
   beforeEnter: () => {
-    let path = currentPath.value.split("/").slice(0, 2).join("/");
-
-    openStorageFolder(path);
+    openStorageFolder(basePath.value);
   },
 });
 
-router.push({ name: "documents" });
+// router.push({ name: "documents" });
 
 onMounted(() => {
-  getPathsArray().forEach((path) => {
-    const fullpath = currentPath.value + path;
+  const currentPath = router.currentRoute.value.fullPath;
 
-    addRoute(fullpath);
-    // router.push({ name: routeName });
-  });
+  const resultingPath =
+    basePath.value + "/" + currentPath.split("/").slice(3).join("/");
+
+  openStorageFolder(resultingPath);
 });
 
 const {
@@ -140,6 +136,18 @@ const pathList = computed(() => currentPath.value.split("/"));
 const shortPathList = computed(() => {
   const techItemsNumber = 2;
   return pathList.value.slice(techItemsNumber);
+});
+
+const basePath = computed(() =>
+  currentPath.value.split("/").slice(0, 2).join("/")
+);
+
+watch(router.currentRoute, (route) => {
+  const shortPath = route.fullPath.split("/").slice(3).join("/");
+
+  const newPath = `${basePath.value}/${shortPath}`;
+
+  openStorageFolder(newPath);
 });
 
 const onBroadClick = (path) => {
@@ -236,7 +244,7 @@ const addRoute = (fullpath) => {
     props: true,
     component: () => import("@/views/MainView.vue"),
     beforeEnter: () => {
-      openStorageFolder(fullpath);
+      // openStorageFolder(fullpath);
     },
   });
 
