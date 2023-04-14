@@ -92,7 +92,7 @@ import CurrentUser from "./CurrentUser.vue";
 import MobileMenu from "./MobileMenu.vue";
 import BroadCrump from "./BroadCrump.vue";
 import isMobile from "@/modules/isMobile";
-import { setPathsStorage } from "@/modules/pathsStorage";
+import { setPathsStorage, getPathsArray } from "@/modules/pathsStorage";
 
 const props = defineProps({
   user: {
@@ -131,7 +131,7 @@ const basePath = computed(() =>
 );
 
 watch(router.currentRoute, (route) => {
-  const prettyPath = route.fullPath;
+  const prettyPath = decodeURI(route.fullPath);
 
   const realPath = transformPath(prettyPath, basePath.value);
 
@@ -211,27 +211,28 @@ const changePath = (path) => {
 };
 
 const onPathChanged = (path) => {
-  const resultingPath = addRoute(path);
+  const resultingPath = transformPath(path, "/documents");
+
+  if (
+    !!(getPathsArray() && getPathsArray()?.includes(resultingPath)) === false
+  ) {
+    addRoute(resultingPath);
+    setPathsStorage(resultingPath);
+  }
 
   router.push({ name: resultingPath });
-
-  setPathsStorage(resultingPath);
 };
 
-const addRoute = (fullpath) => {
-  const prettyPath = transformPath(fullpath, "/documents");
-
+const addRoute = (prettyPath) => {
   router.addRoute({
     path: prettyPath,
     name: prettyPath,
     component: () => import("@/views/DocumentsView.vue"),
   });
-
-  return prettyPath;
 };
 
-const transformPath = (prettyPath, basePath) => {
-  const shortPath = prettyPath.split("/").slice(2).join("/");
+const transformPath = (path, basePath) => {
+  const shortPath = path.split("/").slice(2).join("/");
 
   let slash = "/";
   !shortPath && (slash = "");

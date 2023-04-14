@@ -1,4 +1,5 @@
 export function setPathsStorage(path) {
+  console.log("setting");
   const itemName = "documentsPaths";
 
   if (!sessionStorage.getItem(itemName)) {
