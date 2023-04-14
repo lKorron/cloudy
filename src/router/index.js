@@ -37,7 +37,7 @@ const router = createRouter({
 
 getPathsArray()?.forEach((path) => {
   router.addRoute({
-    path,
+    path: encodeURI(path),
     name: path,
     component: () => import("@/views/DocumentsView.vue"),
   });

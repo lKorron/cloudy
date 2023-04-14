@@ -114,7 +114,7 @@ onMounted(() => {
 
   const resultingPath = basePath.value + slash + shortPath;
 
-  openStorageFolder(resultingPath);
+  openStorageFolder(decodeURI(resultingPath));
 });
 
 const {
