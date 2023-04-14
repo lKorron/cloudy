@@ -1,4 +1,5 @@
-import { ref, listAll, deleteObject } from "firebase/storage";
+import { ref, deleteObject } from "firebase/storage";
+import listDirectory from "./listDirectory";
 import { removeFromList } from "./visualFunctions";
 
 export function useDeletion(storage, fileList) {
@@ -31,16 +32,9 @@ export function useDeletion(storage, fileList) {
   const deleteFolderFromStorage = (folderPath) => {
     const folderRef = ref(storage, folderPath);
 
-    listAll(folderRef)
-      .then((dir) => {
-        dir.items.forEach((fileRef) => {
-          deleteFileFromStorage(fileRef.fullPath);
-        });
-        dir.prefixes.forEach((folderRef) => {
-          deleteFolderFromStorage(folderRef.fullPath);
-        });
-      })
+    listDirectory(folderRef, deleteFileFromStorage)
       .then(() => {
+        console.log("removing");
         removeFromList(fileList, folderPath, "folder");
       })
       .catch((error) => console.log(error));
