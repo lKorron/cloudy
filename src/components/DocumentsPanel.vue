@@ -102,19 +102,10 @@ const props = defineProps({
 });
 
 onMounted(() => {
-  const currentPath = router.currentRoute.value.fullPath;
+  const prettyPath = router.currentRoute.value.fullPath;
+  const realPath = transformPath(prettyPath, basePath.value);
 
-  const shortPath = currentPath.split("/").slice(2).join("/");
-
-  let slash = "/";
-
-  if (shortPath === "") {
-    slash = "";
-  }
-
-  const resultingPath = basePath.value + slash + shortPath;
-
-  openStorageFolder(decodeURI(resultingPath));
+  openStorageFolder(decodeURI(realPath));
 });
 
 const {
@@ -140,17 +131,11 @@ const basePath = computed(() =>
 );
 
 watch(router.currentRoute, (route) => {
-  const shortPath = route.fullPath.split("/").slice(2).join("/");
+  const prettyPath = route.fullPath;
 
-  let slash = "/";
+  const realPath = transformPath(prettyPath, basePath.value);
 
-  if (shortPath === "") {
-    slash = "";
-  }
-
-  const newPath = `${basePath.value}${slash}${shortPath}`;
-
-  openStorageFolder(newPath);
+  openStorageFolder(realPath);
 });
 
 const onBroadClick = (path) => {
@@ -234,18 +219,24 @@ const onPathChanged = (path) => {
 };
 
 const addRoute = (fullpath) => {
-  let prettyPath = fullpath.split("/").splice(2).join("/");
-
-  let slash = "/";
-  !prettyPath && (slash = "");
-
-  const resultingPath = "/documents" + slash + prettyPath;
+  const prettyPath = transformPath(fullpath, "/documents");
 
   router.addRoute({
-    path: resultingPath,
-    name: resultingPath,
+    path: prettyPath,
+    name: prettyPath,
     component: () => import("@/views/DocumentsView.vue"),
   });
+
+  return prettyPath;
+};
+
+const transformPath = (prettyPath, basePath) => {
+  const shortPath = prettyPath.split("/").slice(2).join("/");
+
+  let slash = "/";
+  !shortPath && (slash = "");
+
+  const resultingPath = basePath + slash + shortPath;
 
   return resultingPath;
 };
