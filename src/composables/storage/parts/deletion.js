@@ -34,7 +34,6 @@ export function useDeletion(storage, fileList) {
 
     listDirectory(folderRef, deleteFileFromStorage)
       .then(() => {
-        console.log("removing");
         removeFromList(fileList, folderPath, "folder");
       })
       .catch((error) => console.log(error));

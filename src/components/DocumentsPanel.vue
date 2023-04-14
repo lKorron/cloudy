@@ -142,7 +142,13 @@ const basePath = computed(() =>
 watch(router.currentRoute, (route) => {
   const shortPath = route.fullPath.split("/").slice(2).join("/");
 
-  const newPath = `${basePath.value}/${shortPath}`;
+  let slash = "/";
+
+  if (shortPath === "") {
+    slash = "";
+  }
+
+  const newPath = `${basePath.value}${slash}${shortPath}`;
 
   openStorageFolder(newPath);
 });
