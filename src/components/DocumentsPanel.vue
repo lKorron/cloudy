@@ -224,7 +224,6 @@ const onPathChanged = (path) => {
     setPathsStorage(resultingPath);
   }
 
-  console.log(resultingPath);
   router.push(resultingPath);
 };
 
