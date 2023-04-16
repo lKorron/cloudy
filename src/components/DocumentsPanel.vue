@@ -153,7 +153,6 @@ const onBroadClick = (path) => {
     pathString = basePathArray.join("/");
   }
 
-  console.log(pathString);
   changePath(pathString);
 };
 
@@ -225,7 +224,8 @@ const onPathChanged = (path) => {
     setPathsStorage(resultingPath);
   }
 
-  router.push({ name: resultingPath });
+  console.log(resultingPath);
+  router.push(resultingPath);
 };
 
 const addRoute = (prettyPath) => {

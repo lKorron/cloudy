@@ -6,7 +6,7 @@ import { useDownload } from "./parts/download";
 import { useDeletion } from "./parts/deletion";
 import { useUpload } from "./parts/upload";
 import { useRenaming } from "./parts/renaming";
-import { listDirectoryOrdered } from "./parts/listDirectory";
+import listDirectory from "./parts/listDirectory";
 import router from "@/router";
 import { setPathsStorage, transformPath } from "@/modules/pathsStorage";
 
@@ -21,10 +21,11 @@ export function useStorage(user) {
     fileList.value.sort((a, b) => (a.name > b.name ? 1 : -1))
   );
 
-  listDirectoryOrdered(storageRef, null, (path) => {
-    setPathsStorage(transformPath(path, "/documents"));
-  }).then(() => {
-    router.loadSessionRoutes();
+  listDirectory(storageRef, null, (path) => {
+    const prettyPath = transformPath(path, "/documents");
+
+    router.loadSessionRoute(prettyPath);
+    setPathsStorage(prettyPath);
   });
 
   const { openStorageFolder } = useFileManager(

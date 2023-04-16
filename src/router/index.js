@@ -50,6 +50,14 @@ router.loadSessionRoutes = function () {
   });
 };
 
+router.loadSessionRoute = function (path) {
+  router.addRoute({
+    path: encodeURI(path),
+    name: path,
+    component: () => import("@/views/DocumentsView.vue"),
+  });
+};
+
 window.router = router;
 
 export default router;
