@@ -28,6 +28,11 @@ const routes = [
     name: "documents",
     component: () => import("../views/DocumentsView.vue"),
   },
+
+  {
+    path: "/documents/:folder+",
+    component: () => import("../views/DocumentsView.vue"),
+  },
 ];
 
 const router = createRouter({
@@ -44,5 +49,7 @@ router.loadSessionRoutes = function () {
     });
   });
 };
+
+window.router = router;
 
 export default router;

@@ -153,6 +153,7 @@ const onBroadClick = (path) => {
     pathString = basePathArray.join("/");
   }
 
+  console.log(pathString);
   changePath(pathString);
 };
 
