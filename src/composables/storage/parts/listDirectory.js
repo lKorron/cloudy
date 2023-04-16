@@ -5,13 +5,31 @@ export default async function listDirectory(
   fileHandler,
   folderHandler
 ) {
-  return listAll(folderRef).then((dir) => {
+  listAll(folderRef).then((dir) => {
     dir.items.forEach((fileRef) => {
       fileHandler && fileHandler(fileRef.fullPath);
     });
+
     dir.prefixes.forEach((folderRef) => {
-      listDirectory(folderRef, fileHandler, folderHandler);
       folderHandler && folderHandler(folderRef.fullPath);
+      listDirectory(folderRef, fileHandler, folderHandler);
     });
   });
+}
+
+export async function listDirectoryOrdered(
+  folderRef,
+  fileHandler,
+  folderHandler
+) {
+  const directoty = await listAll(folderRef);
+
+  for (const fileRef of directoty.items) {
+    fileHandler && fileHandler(fileRef.fullPath);
+  }
+
+  for (const folderRef of directoty.prefixes) {
+    folderHandler && folderHandler(folderRef.fullPath);
+    await listDirectoryOrdered(folderRef, fileHandler, folderHandler);
+  }
 }

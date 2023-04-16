@@ -35,12 +35,14 @@ const router = createRouter({
   routes,
 });
 
-getPathsArray()?.forEach((path) => {
-  router.addRoute({
-    path: encodeURI(path),
-    name: path,
-    component: () => import("@/views/DocumentsView.vue"),
+router.loadSessionRoutes = function () {
+  getPathsArray()?.forEach((path) => {
+    router.addRoute({
+      path: encodeURI(path),
+      name: path,
+      component: () => import("@/views/DocumentsView.vue"),
+    });
   });
-});
+};
 
 export default router;

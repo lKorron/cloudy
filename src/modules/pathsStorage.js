@@ -1,5 +1,5 @@
 export function setPathsStorage(path) {
-  console.log("setting");
+  // console.log("setting");
   const itemName = "documentsPaths";
 
   if (!sessionStorage.getItem(itemName)) {
@@ -31,4 +31,15 @@ export function getPathsArray() {
   }
 
   return pathsArray;
+}
+
+export function transformPath(path, basePath) {
+  const shortPath = path.split("/").slice(2).join("/");
+
+  let slash = "/";
+  !shortPath && (slash = "");
+
+  const resultingPath = basePath + slash + shortPath;
+
+  return resultingPath;
 }
