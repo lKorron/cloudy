@@ -30,7 +30,9 @@
           v-if="isMobile()"
           @create-folder="creatingPopup.open()"
         />
-        <h1 class="text-[25px] font-bold">Store files</h1>
+        <h1 class="text-[25px] font-bold text-left w-[88%] mx-auto">
+          Store files
+        </h1>
         <div class="flex justify-between w-[88%] mx-auto">
           <BroadCrump
             class="self-center"
@@ -49,8 +51,8 @@
             </div>
 
             <select class="outline-none">
-              <option value="By name">By name</option>
               <option value="By name">By date</option>
+              <option value="By name">By name</option>
             </select>
           </div>
         </div>

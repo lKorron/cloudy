@@ -32,6 +32,9 @@ nav {
 }
 
 body {
+  //background-image: linear-gradient(to right, rgb(6 182 212), rgb(59 130 246));
+
+  // background-image: url("@/assets/background.jpg");
   background-color: rgb(56 189 248);
 }
 </style>
