@@ -58,6 +58,4 @@ router.loadSessionRoute = function (path) {
   });
 };
 
-window.router = router;
-
 export default router;
