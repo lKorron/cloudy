@@ -50,9 +50,13 @@
               />
             </div>
 
-            <select class="outline-none">
-              <option value="By name">By date</option>
+            <select
+              v-model="sortingType"
+              class="outline-none"
+            >
               <option value="By name">By name</option>
+              <option value="Reverse">Reverse</option>
+              <option value="By date">By date</option>
             </select>
           </div>
         </div>
@@ -107,6 +111,35 @@ const props = defineProps({
   },
 });
 
+const sortingType = ref("Reverse");
+const sortingFunction = ref((a, b) =>
+  a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1
+);
+
+setSortingFunction(sortingType.value);
+
+watch(sortingType, (value) => {
+  setSortingFunction(value);
+});
+
+function setSortingFunction(sortingType) {
+  debugger;
+  switch (sortingType) {
+    case "By name":
+      sortingFunction.value = (a, b) =>
+        a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
+      break;
+    case "Reverse":
+      sortingFunction.value = (a, b) =>
+        a.name.toLowerCase() < b.name.toLowerCase() ? 1 : -1;
+      break;
+    default:
+      sortingFunction.value = (a, b) =>
+        a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
+      break;
+  }
+}
+
 onMounted(() => {
   const prettyPath = router.currentRoute.value.fullPath;
   const realPath = transformPath(prettyPath, basePath.value);
@@ -115,7 +148,6 @@ onMounted(() => {
 });
 
 const {
-  sortedFileList,
   currentPath,
   uploadToStorage,
   createFolder,
@@ -123,7 +155,14 @@ const {
   deleteFromStorage,
   renameStorageFile,
   openStorageFolder,
+  fileList,
 } = useStorage(props.user);
+
+const sortedFileList = computed(() => {
+  const list = fileList.value;
+
+  return list.sort(sortingFunction.value);
+});
 
 const pathList = computed(() => currentPath.value.split("/"));
 

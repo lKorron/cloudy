@@ -1,4 +1,4 @@
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { getStorage, ref as fref, listAll } from "firebase/storage";
 
 import { useFileManager } from "./parts/fileManager";
@@ -16,10 +16,6 @@ export function useStorage(user) {
 
   const storage = getStorage();
   const storageRef = fref(storage, currentPath.value);
-
-  const sortedFileList = computed(() =>
-    fileList.value.sort((a, b) => (a.name > b.name ? 1 : -1))
-  );
 
   listDirectory(storageRef, null, (path) => {
     const prettyPath = transformPath(path, "/documents");
@@ -60,7 +56,6 @@ export function useStorage(user) {
   return {
     fileList,
     currentPath,
-    sortedFileList,
     uploadToStorage,
     createFolder,
     openStorageFolder,
