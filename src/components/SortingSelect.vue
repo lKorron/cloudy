@@ -31,10 +31,16 @@ const sortingFunction = ref((a, b) =>
 
 watch(sortingType, (value) => {
   setSortingFunction(value);
+  localStorage.setItem("sortingType", value);
+
   emit("selectChanged", sortingFunction.value);
 });
 
 onMounted(() => {
+  const type = localStorage.getItem("sortingType");
+
+  type && (sortingType.value = type);
+
   setSortingFunction(sortingType.value);
   emit("selectChanged", sortingFunction.value);
 });
