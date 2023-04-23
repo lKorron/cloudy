@@ -14,7 +14,6 @@
     >
       <option value="By name">By name</option>
       <option value="Reverse">Reverse</option>
-      <option value="By date">By date</option>
     </select>
   </div>
 </template>
