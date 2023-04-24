@@ -33,6 +33,12 @@ const routes = [
     path: "/documents/:folder+",
     component: () => import("../views/DocumentsView.vue"),
   },
+
+  {
+    path: "/user",
+    name: "user",
+    component: () => import("../views/UserView.vue"),
+  },
 ];
 
 const router = createRouter({

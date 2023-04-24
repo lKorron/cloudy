@@ -8,7 +8,12 @@
   </AsyncPopup>
 
   <div class="flex justify-end w-[90%] mx-auto">
-    <div data-test="username">{{ user.displayName }}</div>
+    <RouterLink
+      to="user"
+      class="hover:underline hover:text-blue-500"
+      ><div data-test="username">{{ user.displayName }}</div></RouterLink
+    >
+
     <BaseButton
       data-test="logoutButton"
       class="ml-2"
