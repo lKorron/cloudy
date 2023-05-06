@@ -21,26 +21,28 @@
           </div>
         </div>
 
-        <section class="mb-2 pl-2 pr-2">
-          <div class="flex justify-between mx-auto max-w-[280px] mt-2">
-            <div class="mr-4">Username</div>
-            <div class="break-all">Korron_ext</div>
-          </div>
+        <section class="mb-2 pl-3 pr-3 flex justify-center items-center">
+          <div class="w-[100%] max-w-md">
+            <div class="flex justify-between mx-auto mt-2">
+              <div class="mr-4">Username</div>
+              <div class="break-all">Korron_ext</div>
+            </div>
 
-          <div class="flex justify-between mx-auto max-w-[280px]">
-            <div class="mr-4">Email</div>
-            <div class="break-all">lkorron@yandex.ru</div>
-          </div>
+            <div class="flex justify-between mx-auto">
+              <div class="mr-4">Email</div>
+              <div class="break-all">lkorron@yandex.ru</div>
+            </div>
 
-          <div class="flex justify-between mx-auto max-w-[280px]">
-            <div class="mr-4">Password</div>
-            <div class="break-all">*******</div>
+            <div class="flex justify-between mx-auto">
+              <div class="mr-4">Password</div>
+              <div class="break-all">*******</div>
+            </div>
           </div>
         </section>
 
         <RouterLink
           to="documents"
-          class="mb-2"
+          class="mb-2 hover:underline hover:text-blue-500 w-fit mx-auto"
           >Back to main page</RouterLink
         >
       </div>
