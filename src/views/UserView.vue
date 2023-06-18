@@ -1,12 +1,12 @@
 <template>
   <ContentPanel desktop>
-    <template #header>User settings</template>
+    <template #header>User data</template>
     <template #default>
       <div class="flex flex-col">
         <div class="w-24 rounded-full mx-auto relative">
           <img
             class="w-24"
-            src="@/assets/avatar.png"
+            :src="avatar"
             alt="avatar"
           />
 
@@ -25,12 +25,12 @@
           <div class="w-[100%] max-w-md">
             <div class="flex justify-between mx-auto mt-2">
               <div class="mr-4">Username</div>
-              <div class="break-all">Korron_ext</div>
+              <div class="break-all">{{ username }}</div>
             </div>
 
             <div class="flex justify-between mx-auto">
               <div class="mr-4">Email</div>
-              <div class="break-all">lkorron@yandex.ru</div>
+              <div class="break-all">{{ email }}</div>
             </div>
 
             <div class="flex justify-between mx-auto">
@@ -52,4 +52,24 @@
 
 <script setup>
 import ContentPanel from "../components/ContentPanel.vue";
+import { getAuth, onAuthStateChanged } from "@firebase/auth";
+
+import { ref, computed } from "vue";
+
+const username = ref("");
+const email = ref("");
+const avatarUrl = ref(null);
+
+const avatar = computed(() => {
+  if (avatarUrl.value) {
+    return require(avatarUrl.value);
+  } else return require("@/assets/avatar.png");
+});
+
+const auth = getAuth();
+onAuthStateChanged(auth, () => {
+  username.value = auth.currentUser.displayName;
+  email.value = auth.currentUser.email;
+  avatarUrl.value = auth.currentUser.photoURL;
+});
 </script>
